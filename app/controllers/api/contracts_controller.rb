@@ -8,6 +8,11 @@ module Api
       render json: { error: e.message }, status: :internal_server_error
     end
 
+    def show
+          contract = Contract.find(params[:id])
+          render json: contract
+    end
+
     private
 
     def contract_params

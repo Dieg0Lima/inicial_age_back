@@ -1,6 +1,5 @@
 class Contract < ApplicationRecord
     def self.custom_query(client_name = nil, page: 1, per_page: 10)    sql = <<-SQL
-      SELECT DISTINCT ON (ac.equipment_serial_number) ...
       SELECT
         c.contract_number as "Contrato",
         c.v_status as "Status Contrato",
