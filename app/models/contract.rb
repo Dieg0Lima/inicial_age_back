@@ -1,34 +1,30 @@
 class Contract < ApplicationRecord
-    def self.custom_query(client_name = nil, page: 1, per_page: 10)    sql = <<-SQL
-      SELECT
-        c.contract_number as "Contrato",
-        c.v_status as "Status Contrato",
-        c.v_stage as "Estagio Contrato",
-        c.beginning_date as "Inicio do Contrato",
-        c.unblock_attempt_count as "Desbloqueios Realizados",
-        pa.street as "Endereco",
-        pa.postal_code as "CEP",
-        sp.title as "Plano",
-        p.name as "Cliente",
-        p.tx_id as "CPF/CNPJ"
-      FROM erp.contracts c
-      LEFT JOIN erp.people_addresses pa ON c.people_address_id = pa.id
-      LEFT JOIN erp.contract_items ci ON c.id = ci.contract_id
-      LEFT JOIN erp.service_products sp ON ci.service_product_id = sp.id
-      LEFT JOIN erp.people p ON c.client_id = p.id
-      AND sp.title ILIKE '%plano%';
-    SQL
+  # Associações (ajuste-as conforme seu modelo)
+  belongs_to :client, class_name: 'Person', foreign_key: 'client_id'
+  belongs_to :people_address
+  has_many :contract_items
+  has_many :service_products, through: :contract_items
 
-    binds = []
-    if client_name.present?
-      sql += " WHERE p.name ILIKE :client_name "
-      binds << ActiveRecord::Relation::QueryAttribute.new("client_name", "%#{client_name}%", ActiveRecord::Type::String.new)
-    end
+  # Supondo que estas associações estejam definidas em seus respectivos modelos
 
-    sql += "AND sp.title ILIKE '%plano%'"
+  def self.custom_query(client_name = nil, page: 1, per_page: 10)
+    contracts = Contract.joins(:client, :people_address, :service_products)
+                        .select(
+                          'contracts.contract_number AS contrato',
+                          'contracts.v_status AS status_contrato',
+                          'contracts.v_stage AS estagio_contrato',
+                          'contracts.beginning_date AS inicio_do_contrato',
+                          'contracts.unblock_attempt_count AS desbloqueios_realizados',
+                          'people_addresses.street AS endereco',
+                          'people_addresses.postal_code AS cep',
+                          'service_products.title AS plano',
+                          'clients.name AS cliente',
+                          'clients.tx_id AS cpf_cnpj'
+                        )
 
-    result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
-    result.to_a
+    contracts = contracts.where('clients.name ILIKE ?', "%#{client_name}%") if client_name.present?
+    contracts = contracts.where('service_products.title ILIKE ?', '%plano%')
+
     Kaminari.paginate_array(contracts).page(page).per(per_page)
   end
 end
