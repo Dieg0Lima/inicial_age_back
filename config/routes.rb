@@ -7,9 +7,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+      get 'contracts/:contract_number', to: 'contracts#show'
+  end
+
 end
 
-Rails.application.routes.draw do
-  get '/contracts/:contract_number', to: 'contracts#show'
-end
 
