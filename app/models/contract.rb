@@ -4,25 +4,22 @@ class Contract < ApplicationRecord
   has_many :contract_items
   has_many :service_products, through: :contract_items
 
-
-  def self.custom_query(client_name = nil)
-    contracts = Contract.joins(:client, :people_address, :service_products)
-                        .select(
-                          'contracts.contract_number AS contrato',
-                          'contracts.v_status AS status_contrato',
-                          'contracts.v_stage AS estagio_contrato',
-                          'contracts.beginning_date AS inicio_do_contrato',
-                          'contracts.unblock_attempt_count AS desbloqueios_realizados',
-                          'people_addresses.street AS endereco',
-                          'people_addresses.postal_code AS cep',
-                          'service_products.title AS plano',
-                          'clients.name AS cliente',
-                          'clients.tx_id AS cpf_cnpj'
-                        )
-
-    contracts = contracts.where('clients.name ILIKE ?', "%#{client_name}%") if client_name.present?
-    contracts = contracts.where('service_products.title ILIKE ?', '%plano%')
-
-    contracts
+  def self.custom_query(contract_id)
+    Contract.joins(:client, :people_address, :contract_items, :service_products)
+            .joins("LEFT JOIN assignments a ON a.id = contracts.assignment_id")
+            .joins("LEFT JOIN authentication_contracts ac ON ac.contract_id = contracts.id")
+            .joins("LEFT JOIN authentication_access_points aap ON aap.maintenance_assignment_id = a.id")
+            .joins("LEFT JOIN authentication_concentrators ac2 ON ac2.id = ac.authentication_concentrator_id")
+            .joins("LEFT JOIN authentication_splitter_ports asp ON asp.authentication_contract_id = ac.id")
+            .select(
+              'DISTINCT ON (ac.equipment_serial_number) ac.equipment_serial_number',
+              'contracts.contract_number AS contrato',
+              'people.name AS cliente',
+              'contracts.v_status AS status_contrato',
+            )
+            .where('ac.slot_olt IS NOT NULL')
+            .where('contracts.id = ?', contract_id)
+            .where('service_products.title ILIKE ?', '%plano%')
   end
 end
+
