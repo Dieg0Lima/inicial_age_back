@@ -62,7 +62,7 @@ class AuthController < ApplicationController
   end
 
   def construct_user_dn(username)
-    # Supondo que o CN é o mesmo que o sAMAccountName
-    "CN=#{username},OU=ToteTelecom,#{base_dn}"
+    "CN=#{username},CN=Users,DC=tote,DC=local"
   end
+
 end
