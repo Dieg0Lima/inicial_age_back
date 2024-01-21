@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  post '/auth/login', to: 'auth#login'
+  post 'auth/login', to: 'auth#login'
 
   namespace :api do
       get 'contracts/:contract_number', to: 'contracts#show'

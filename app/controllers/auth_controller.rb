@@ -1,13 +1,20 @@
-class AuthController < ApplicationController
-  require 'net/ldap'
-  require 'jwt'
+require 'net/ldap'
+require 'jwt'
 
+class AuthController < ApplicationController
   def login
-    user_dn = "cn=#{params[:username]},#{base_dn}"
+    username = params[:username]
     password = params[:password]
 
+    if username.blank? || password.blank?
+      return render json: { error: 'Nome de usuário e senha são obrigatórios' }, status: :bad_request
+    end
+
+    user_dn = construct_user_dn(username)
+
     if authenticate_ldap(user_dn, password)
-      render json: { token: generate_jwt(user_dn) }, status: :ok
+      token = generate_jwt(username)
+      render json: { token: token }, status: :ok
     else
       render json: { error: 'Credenciais inválidas' }, status: :unauthorized
     end
@@ -15,12 +22,16 @@ class AuthController < ApplicationController
 
   private
 
-  def base_dn
-    ENV['LDAP_BASE_DN']
-  end
-
   def ldap_host
     ENV['LDAP_HOST']
+  end
+
+  def ldap_port
+    ENV['LDAP_PORT'] || 389
+  end
+
+  def base_dn
+    ENV['LDAP_BASE_DN']
   end
 
   def jwt_secret
@@ -28,17 +39,30 @@ class AuthController < ApplicationController
   end
 
   def authenticate_ldap(user_dn, password)
-    ldap = Net::LDAP.new(host: ldap_host, port: 389)
+    ldap = Net::LDAP.new(host: ldap_host, port: ldap_port, base: base_dn)
     ldap.auth(user_dn, password)
-    ldap.bind
+
+    if ldap.bind
+      # Autenticação bem-sucedida
+      true
+    else
+      # Falha na autenticação, logue a mensagem de erro
+      Rails.logger.error(ldap.get_operation_result.message)
+      false
+    end
   end
 
-  def generate_jwt(user_dn)
+  def generate_jwt(username)
     payload = {
-      user: user_dn,
-      exp: Time.now.to_i + 60 * 60,
+      username: username,
+      exp: Time.now.to_i + 60 * 60, # Token expira em uma hora
       iat: Time.now.to_i
     }
     JWT.encode(payload, jwt_secret, 'HS256')
+  end
+
+  def construct_user_dn(username)
+    # Supondo que o CN é o mesmo que o sAMAccountName
+    "CN=#{username},OU=ToteTelecom,#{base_dn}"
   end
 end
