@@ -10,8 +10,6 @@ Rails.application.routes.draw do
 end
 
 Rails.application.routes.draw do
-  namespace :api do
-    get 'contracts/:id', to: 'contracts#show'
-  end
+  get '/contracts/:contract_number', to: 'contracts#show'
 end
 

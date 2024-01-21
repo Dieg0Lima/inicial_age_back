@@ -1,22 +1,14 @@
 module Api
   class ContractsController < ApplicationController
-    def index
-      client_name = contract_params[:client_name]
-      contracts = Contract.custom_query(client_name, page: params[:page], per_page: params[:per_page])
-      render json: contracts
-    rescue => e
-      render json: { error: e.message }, status: :internal_server_error
-    end
-
     def show
-          contract = Contract.find(params[:id])
-          render json: contract
-    end
+        contract_number = params[:contract_number]
+        contract = Contract.where(contract_number: contract_number).pluck(:contract_number).first
 
-    private
-
-    def contract_params
-      params.permit(:client_name)
-    end
+        if contract
+          render json: { contract_number: contract }
+        else
+          render json: { error: "Contrato não encontrado." }, status: :not_found
+        end
+      end
   end
 end
