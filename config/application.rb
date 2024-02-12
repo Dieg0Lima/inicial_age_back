@@ -16,6 +16,7 @@ module InicialBackend
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_paths << Rails.root.join('app/services')
 
     config.active_record.schema_format = :sql
     config.active_record.maintain_test_schema = false

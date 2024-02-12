@@ -1,0 +1,2 @@
+class AssignmentProfilePersonTab < ApplicationRecord
+end

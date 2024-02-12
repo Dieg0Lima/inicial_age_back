@@ -1,0 +1,2 @@
+class NewsUpload < ApplicationRecord
+end

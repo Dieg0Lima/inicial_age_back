@@ -1,0 +1,2 @@
+class SaleCompanyPlaceParametersCollectionType < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class AssignmentServiceLevelAgreementsChanged < ApplicationRecord
+end

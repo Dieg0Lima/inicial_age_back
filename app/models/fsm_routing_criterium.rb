@@ -1,0 +1,2 @@
+class FsmRoutingCriterium < ApplicationRecord
+end

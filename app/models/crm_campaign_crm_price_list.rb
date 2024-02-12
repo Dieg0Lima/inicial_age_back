@@ -1,0 +1,2 @@
+class CrmCampaignCrmPriceList < ApplicationRecord
+end

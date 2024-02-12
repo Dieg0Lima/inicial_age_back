@@ -1,0 +1,2 @@
+class SapEvent < ApplicationRecord
+end

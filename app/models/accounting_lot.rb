@@ -1,0 +1,2 @@
+class AccountingLot < ApplicationRecord
+end

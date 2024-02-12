@@ -1,0 +1,2 @@
+class LawsuitExpedientNotesEvent < ApplicationRecord
+end

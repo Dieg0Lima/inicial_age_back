@@ -1,0 +1,2 @@
+class KnowledgeBaseDocumentUpload < ApplicationRecord
+end

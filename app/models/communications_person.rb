@@ -1,0 +1,2 @@
+class CommunicationsPerson < ApplicationRecord
+end

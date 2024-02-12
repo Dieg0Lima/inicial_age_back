@@ -1,0 +1,2 @@
+class ServiceKitItem < ApplicationRecord
+end

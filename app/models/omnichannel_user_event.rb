@@ -1,0 +1,2 @@
+class OmnichannelUserEvent < ApplicationRecord
+end

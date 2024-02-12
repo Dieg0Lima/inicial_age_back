@@ -1,0 +1,7 @@
+development:
+  host: 10.25.0.1
+  port: 389
+  base: dc=tote,dc=local
+  username: CN=diego.lima,OU=Users,DC=tote,DC=local
+  password: TanyaDegurechaff69.
+  auth_method: :simple

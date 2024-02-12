@@ -1,0 +1,2 @@
+class FinancialReceivableTitleExpiration < ApplicationRecord
+end

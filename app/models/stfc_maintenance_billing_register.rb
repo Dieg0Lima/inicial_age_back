@@ -1,0 +1,2 @@
+class StfcMaintenanceBillingRegister < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class CrmOpportunityBudgetItem < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class KnowledgeBaseDocumentKeyword < ApplicationRecord
+end

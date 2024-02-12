@@ -1,0 +1,2 @@
+class SprintAssignmentIncident < ApplicationRecord
+end

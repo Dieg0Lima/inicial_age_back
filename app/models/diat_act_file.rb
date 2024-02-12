@@ -1,0 +1,2 @@
+class DiatActFile < ApplicationRecord
+end

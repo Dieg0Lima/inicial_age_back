@@ -1,0 +1,2 @@
+class AssignmentReportsUpdatesUserView < ApplicationRecord
+end

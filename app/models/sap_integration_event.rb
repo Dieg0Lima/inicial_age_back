@@ -1,0 +1,2 @@
+class SapIntegrationEvent < ApplicationRecord
+end

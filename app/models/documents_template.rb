@@ -1,0 +1,2 @@
+class DocumentsTemplate < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class CommunicationTemplate < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class UserLgpdLogRegister < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class AuthenticationConcentratorIp < ApplicationRecord
+end

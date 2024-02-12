@@ -1,0 +1,2 @@
+class StandardIntegration < ApplicationRecord
+end

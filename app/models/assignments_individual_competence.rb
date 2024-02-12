@@ -1,0 +1,2 @@
+class AssignmentsIndividualCompetence < ApplicationRecord
+end

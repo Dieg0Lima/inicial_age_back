@@ -1,0 +1,2 @@
+class AvailableRegionApiConfigsHistory < ApplicationRecord
+end

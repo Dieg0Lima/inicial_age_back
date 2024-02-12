@@ -1,0 +1,2 @@
+class SaleRequestBillingRegisterItem < ApplicationRecord
+end

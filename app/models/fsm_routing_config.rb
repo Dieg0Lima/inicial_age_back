@@ -1,0 +1,2 @@
+class FsmRoutingConfig < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class PatrimonyOccurrence < ApplicationRecord
+end

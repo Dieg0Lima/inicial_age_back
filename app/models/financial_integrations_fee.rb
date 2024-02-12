@@ -1,0 +1,2 @@
+class FinancialIntegrationsFee < ApplicationRecord
+end

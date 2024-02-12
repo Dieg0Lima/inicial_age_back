@@ -1,0 +1,2 @@
+class NnScheduledMaintenancesLog < ApplicationRecord
+end

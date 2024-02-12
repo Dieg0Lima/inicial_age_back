@@ -1,0 +1,2 @@
+class PrintBilletBatch < ApplicationRecord
+end

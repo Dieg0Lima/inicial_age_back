@@ -1,0 +1,2 @@
+class CrmSellingPlacesRegionsCodeCitiesNeighborhood < ApplicationRecord
+end

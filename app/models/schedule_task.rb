@@ -1,0 +1,2 @@
+class ScheduleTask < ApplicationRecord
+end

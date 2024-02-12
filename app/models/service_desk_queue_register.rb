@@ -1,0 +1,2 @@
+class ServiceDeskQueueRegister < ApplicationRecord
+end

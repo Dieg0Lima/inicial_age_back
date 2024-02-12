@@ -1,0 +1,2 @@
+class CommunicationRulerServer < ApplicationRecord
+end

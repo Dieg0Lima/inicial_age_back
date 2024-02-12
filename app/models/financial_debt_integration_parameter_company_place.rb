@@ -1,0 +1,2 @@
+class FinancialDebtIntegrationParameterCompanyPlace < ApplicationRecord
+end

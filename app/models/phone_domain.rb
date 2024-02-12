@@ -1,0 +1,2 @@
+class PhoneDomain < ApplicationRecord
+end

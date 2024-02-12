@@ -1,0 +1,3 @@
+class OpenDoorController < ApplicationController
+
+end

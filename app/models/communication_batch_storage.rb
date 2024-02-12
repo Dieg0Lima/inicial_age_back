@@ -1,0 +1,2 @@
+class CommunicationBatchStorage < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class LawsuitsOccurrence < ApplicationRecord
+end

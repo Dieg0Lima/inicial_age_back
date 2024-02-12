@@ -1,0 +1,2 @@
+class PatrimoniesIntegration < ApplicationRecord
+end

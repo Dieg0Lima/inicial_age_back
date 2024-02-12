@@ -1,0 +1,2 @@
+class ProductAcquisitionRequestItem < ApplicationRecord
+end

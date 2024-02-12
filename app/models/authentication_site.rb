@@ -1,0 +1,2 @@
+class AuthenticationSite < ApplicationRecord
+end

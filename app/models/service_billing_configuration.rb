@@ -1,0 +1,2 @@
+class ServiceBillingConfiguration < ApplicationRecord
+end

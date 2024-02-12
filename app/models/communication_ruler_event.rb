@@ -1,0 +1,2 @@
+class CommunicationRulerEvent < ApplicationRecord
+end

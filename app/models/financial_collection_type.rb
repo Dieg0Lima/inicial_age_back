@@ -1,0 +1,2 @@
+class FinancialCollectionType < ApplicationRecord
+end

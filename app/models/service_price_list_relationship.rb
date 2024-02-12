@@ -1,0 +1,2 @@
+class ServicePriceListRelationship < ApplicationRecord
+end

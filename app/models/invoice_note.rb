@@ -1,0 +1,2 @@
+class InvoiceNote < ApplicationRecord
+end

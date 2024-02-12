@@ -1,0 +1,2 @@
+class ContractActivationServiceProduct < ApplicationRecord
+end

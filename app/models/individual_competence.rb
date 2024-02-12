@@ -1,0 +1,2 @@
+class IndividualCompetence < ApplicationRecord
+end

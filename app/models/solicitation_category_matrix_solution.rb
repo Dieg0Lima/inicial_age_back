@@ -1,0 +1,2 @@
+class SolicitationCategoryMatrixSolution < ApplicationRecord
+end

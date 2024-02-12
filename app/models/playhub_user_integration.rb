@@ -1,0 +1,2 @@
+class PlayhubUserIntegration < ApplicationRecord
+end

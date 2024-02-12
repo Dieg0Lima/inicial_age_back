@@ -1,0 +1,2 @@
+class ProjectBacker < ApplicationRecord
+end

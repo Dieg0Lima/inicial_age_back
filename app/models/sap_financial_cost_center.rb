@@ -1,0 +1,2 @@
+class SapFinancialCostCenter < ApplicationRecord
+end

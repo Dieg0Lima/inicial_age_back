@@ -1,0 +1,2 @@
+class OmnichannelChatbotProject < ApplicationRecord
+end

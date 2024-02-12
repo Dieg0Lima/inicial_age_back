@@ -1,0 +1,2 @@
+class FiscalAccountingIntegrationCode < ApplicationRecord
+end

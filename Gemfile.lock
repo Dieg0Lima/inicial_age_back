@@ -92,9 +92,15 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    caxlsx (4.0.0)
+      htmlentities (~> 4.3, >= 4.3.4)
+      marcel (~> 1.0)
+      nokogiri (~> 1.10, >= 1.10.4)
+      rubyzip (>= 1.3.0, < 3)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.2.8)
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
@@ -109,6 +115,10 @@ GEM
     erubi (1.12.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    htmlentities (4.3.4)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -148,6 +158,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.21.2)
     msgpack (1.7.2)
+    multi_xml (0.6.0)
     mutex_m (0.2.0)
     net-imap (0.4.9.1)
       date
@@ -159,6 +170,8 @@ GEM
       timeout
     net-smtp (0.4.0.1)
       net-protocol
+    net-ssh (7.2.1)
+    net-telnet (0.2.0)
     nio4r (2.7.0)
     nokogiri (1.16.0-x64-mingw-ucrt)
       racc (~> 1.4)
@@ -284,13 +297,19 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara
+  caxlsx
+  csv
   debug
   dotenv-rails
+  httparty
   importmap-rails
   jbuilder
   jwt
   kaminari
   net-ldap
+  net-ssh
+  net-telnet
+  nokogiri
   pg
   puma (>= 5.0)
   rack-cors

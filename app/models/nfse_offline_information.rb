@@ -1,0 +1,2 @@
+class NfseOfflineInformation < ApplicationRecord
+end

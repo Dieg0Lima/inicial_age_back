@@ -15,6 +15,18 @@ gem 'pg'
 
 gem 'kaminari'
 
+gem 'net-ssh'
+
+gem 'net-telnet'
+
+gem 'nokogiri'
+
+gem 'caxlsx'
+
+gem 'httparty'
+
+gem 'csv'
+
 gem 'net-ldap'
 
 gem 'jwt'

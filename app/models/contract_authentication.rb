@@ -1,0 +1,2 @@
+class ContractAuthentication < ApplicationRecord
+end

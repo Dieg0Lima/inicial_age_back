@@ -1,0 +1,2 @@
+class NnAuthenticationsMassiveIncident < ApplicationRecord
+end

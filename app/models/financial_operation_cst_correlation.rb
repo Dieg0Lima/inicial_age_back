@@ -1,0 +1,2 @@
+class FinancialOperationCstCorrelation < ApplicationRecord
+end

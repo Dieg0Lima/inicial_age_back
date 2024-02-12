@@ -1,0 +1,2 @@
+class FinancialDebtIntegrationEvent < ApplicationRecord
+end

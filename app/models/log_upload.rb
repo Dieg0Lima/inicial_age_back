@@ -1,0 +1,2 @@
+class LogUpload < ApplicationRecord
+end

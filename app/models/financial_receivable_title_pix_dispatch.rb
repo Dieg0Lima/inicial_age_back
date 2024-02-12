@@ -1,0 +1,2 @@
+class FinancialReceivableTitlePixDispatch < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class PrintTemplate < ApplicationRecord
+end

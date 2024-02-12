@@ -1,0 +1,2 @@
+class StfcRecharge < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class AuthenticationSplitterPort < ApplicationRecord
+end

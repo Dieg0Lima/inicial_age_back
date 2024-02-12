@@ -1,0 +1,2 @@
+class CreditScoreDetail < ApplicationRecord
+end

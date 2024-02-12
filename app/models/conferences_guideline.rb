@@ -1,0 +1,2 @@
+class ConferencesGuideline < ApplicationRecord
+end

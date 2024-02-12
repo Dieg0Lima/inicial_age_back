@@ -1,0 +1,2 @@
+class MaterializedViewManagement < ApplicationRecord
+end

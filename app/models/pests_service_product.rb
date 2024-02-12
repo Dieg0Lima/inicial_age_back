@@ -1,0 +1,2 @@
+class PestsServiceProduct < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class PatrimonyTypesIntegrationConfiguration < ApplicationRecord
+end

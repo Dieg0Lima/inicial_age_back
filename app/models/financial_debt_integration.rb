@@ -1,0 +1,2 @@
+class FinancialDebtIntegration < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class CrmConsultSellingStepSequentialBudget < ApplicationRecord
+end

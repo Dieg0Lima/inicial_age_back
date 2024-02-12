@@ -1,0 +1,2 @@
+class KnowledgeBaseDocumentsAnalytic < ApplicationRecord
+end

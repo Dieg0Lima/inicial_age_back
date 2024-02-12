@@ -1,0 +1,2 @@
+class AuthenticationConcentratorEvent < ApplicationRecord
+end

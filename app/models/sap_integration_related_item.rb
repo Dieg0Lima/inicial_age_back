@@ -1,0 +1,2 @@
+class SapIntegrationRelatedItem < ApplicationRecord
+end

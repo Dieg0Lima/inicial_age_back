@@ -1,0 +1,2 @@
+class RegionFsmRoutingConfig < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class LawsuitsPaymentsPeopleGarbage < ApplicationRecord
+end

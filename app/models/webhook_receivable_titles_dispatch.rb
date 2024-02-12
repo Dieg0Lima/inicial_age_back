@@ -1,0 +1,2 @@
+class WebhookReceivableTitlesDispatch < ApplicationRecord
+end

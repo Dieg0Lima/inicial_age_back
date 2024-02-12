@@ -1,0 +1,2 @@
+class SolicitationServiceCategoryDocument < ApplicationRecord
+end

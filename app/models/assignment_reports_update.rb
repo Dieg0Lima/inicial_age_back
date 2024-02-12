@@ -1,0 +1,2 @@
+class AssignmentReportsUpdate < ApplicationRecord
+end

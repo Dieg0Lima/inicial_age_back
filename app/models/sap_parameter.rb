@@ -1,0 +1,2 @@
+class SapParameter < ApplicationRecord
+end

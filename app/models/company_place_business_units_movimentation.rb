@@ -1,0 +1,2 @@
+class CompanyPlaceBusinessUnitsMovimentation < ApplicationRecord
+end

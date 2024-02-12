@@ -1,0 +1,2 @@
+class FinancialOperationsCompanyPlace < ApplicationRecord
+end

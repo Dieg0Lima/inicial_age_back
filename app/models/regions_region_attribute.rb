@@ -1,0 +1,2 @@
+class RegionsRegionAttribute < ApplicationRecord
+end

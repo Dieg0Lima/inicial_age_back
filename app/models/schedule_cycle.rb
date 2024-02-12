@@ -1,0 +1,2 @@
+class ScheduleCycle < ApplicationRecord
+end

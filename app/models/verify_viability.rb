@@ -1,0 +1,2 @@
+class VerifyViability < ApplicationRecord
+end

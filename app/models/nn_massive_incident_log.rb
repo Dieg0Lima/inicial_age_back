@@ -1,0 +1,2 @@
+class NnMassiveIncidentLog < ApplicationRecord
+end

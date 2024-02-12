@@ -1,0 +1,2 @@
+class AuthenticationSplitter < ApplicationRecord
+end

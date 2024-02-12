@@ -1,0 +1,2 @@
+class AssignmentIncidentFeedbackLog < ApplicationRecord
+end

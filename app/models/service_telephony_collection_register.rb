@@ -1,0 +1,2 @@
+class ServiceTelephonyCollectionRegister < ApplicationRecord
+end

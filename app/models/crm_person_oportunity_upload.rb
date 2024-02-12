@@ -1,0 +1,2 @@
+class CrmPersonOportunityUpload < ApplicationRecord
+end

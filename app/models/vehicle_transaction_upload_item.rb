@@ -1,0 +1,2 @@
+class VehicleTransactionUploadItem < ApplicationRecord
+end

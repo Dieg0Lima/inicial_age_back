@@ -1,0 +1,2 @@
+class AuthenticationConcentrator < ApplicationRecord
+end

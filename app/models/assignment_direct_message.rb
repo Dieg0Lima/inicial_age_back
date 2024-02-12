@@ -1,0 +1,2 @@
+class AssignmentDirectMessage < ApplicationRecord
+end
