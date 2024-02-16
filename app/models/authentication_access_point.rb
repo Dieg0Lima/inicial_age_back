@@ -12,4 +12,6 @@ class AuthenticationAccessPoint < ApplicationRecord
             .first
       olt&.title
   end
+
+  serialize :configuration, JSON
 end

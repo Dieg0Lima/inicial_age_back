@@ -319,6 +319,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  timeout
   turbo-rails
   tzinfo-data
   web-console

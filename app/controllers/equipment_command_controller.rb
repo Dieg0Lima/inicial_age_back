@@ -11,8 +11,12 @@ class EquipmentCommandController < ApplicationController
       availability_pon
     when 'provision_onu'
       provision_onu
-    when 'comando2'
-      comando2
+    when 'unprovision_onu'
+      unprovision_onu
+    when 'potency_onu'
+      potency_onu
+    when 'distance_onu'
+      distance_onu
     else
       render json: { error: "Comando não reconhecido: #{command}" }, status: :bad_request
     end
@@ -71,18 +75,120 @@ class EquipmentCommandController < ApplicationController
     ip = fetch_ip_from_olt_id(params[:id])
     return unless ip
 
-    vlan_id = fetch_vlan_id(ip)
+    vlan_id = fetch_vlan_id_from_configuration(params[:id], params[:slot], params[:port])
     return render_error("Nenhuma VLAN IPoE correspondente encontrada.", :not_found) if vlan_id.nil?
 
     adjusted_sernum = params[:sernum]&.sub(/^ALCL/, '')
 
-    if configure_onu(ip, params.slice(:slot, :pon, :port, :contract, :vlan_id).merge(sernum: adjusted_sernum, vlan_id: vlan_id))
-      render json: { success: true }, status: :ok
+    equipment_serial_with_prefix = "ALCL#{adjusted_sernum}"
+
+    if configure_onu(ip, params.slice(:slot, :pon, :port, :contract).merge(sernum: adjusted_sernum, vlan_id: vlan_id))
+      token_response = HTTParty.post("https://erp.agetelecom.com.br:45700/connect/token",
+                                      body: { grant_type: "client_credentials", scope: "syngw", client_id: "1fa86391-e47d-4aab-a3f0-3c45f6927c88", client_secret: "c8438327-e0b3-4792-9d35-6543fcc69b56", syndata: "TWpNMU9EYzVaakk1T0dSaU1USmxaalprWldFd00ySTFZV1JsTTJRMFptUT06WlhsS1ZHVlhOVWxpTTA0d1NXcHZhVTFxUVRKTWFrbDNUa00wZVU1RVozVlBSRmxwVEVOS1ZHVlhOVVZaYVVrMlNXMVNhVnBYTVhkTlJFRXdUMFJyYVV4RFNrVlpiRkkxWTBkVmFVOXBTbmRpTTA0d1dqTktiR041U2prPTpaVGhrTWpNMVlqazBZemxpTkRObVpEZzNNRGxrTWpZMll6QXhNR00zTUdVPQ==" },
+                                      headers: { 'Content-Type' => 'application/x-www-form-urlencoded' })
+      if token_response.success?
+        token = token_response["access_token"]
+
+        update_connection_payload = {
+          id: params[:connection_id],
+          equipmentType: 15,
+          oltId: params[:port].to_i,
+          slotOlt: params[:slot].to_i,
+          portOlt: params[:pon].to_i,
+          isIPoE: true,
+          authenticationAccessPointId: params[:id].to_i,
+          equipmentSerialNumber: equipment_serial_with_prefix,
+          user: equipment_serial_with_prefix,
+        }
+
+        update_connection_response = HTTParty.put("https://erp.agetelecom.com.br:45715/external/integrations/thirdparty/updateconnection/#{params[:connection_id]}",
+                                                  body: update_connection_payload.to_json,
+                                                  headers: { 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{token}" })
+
+        if update_connection_response.success?
+          render json: { success: true }, status: :ok
+        else
+          render_error("Erro ao enviar requisição adicional.", :bad_request)
+        end
+      else
+        render_error("Falha ao obter token de autenticação.", :unauthorized)
+      end
     else
       render_error("Erro ao executar o comando na OLT.", :bad_request)
     end
   end
 
+  def unprovision_onu
+    ip = fetch_ip_from_olt_id(params[:id])
+    return unless ip
+
+    slot = params[:slot]
+    pon = params[:pon]
+    port = params[:port]
+
+    command = <<-COMMAND
+      configure equipment ont interface 1/1/#{slot}/#{pon}/#{port} admin-state down
+      configure equipment ont no interface 1/1/#{slot}/#{pon}/#{port}
+    COMMAND
+
+    post_response = post_olt_command(ip, command)
+    handle_post_response(post_response) do |body|
+      render json: { success: true, message: "ONU desprovisionado com sucesso." }
+    end
+  end
+
+  def potency_onu
+    ip = fetch_ip_from_olt_id(params[:equipment_id])
+    return render json: { success: false, message: "IP não encontrado." } unless ip
+
+    slot = params[:slot]
+    pon = params[:pon]
+    port = params[:olt_id]
+
+    command = <<-COMMAND
+      show equipment ont optics 1/1/#{slot}/#{pon}/#{port}
+    COMMAND
+
+    post_response = post_olt_command(ip, command)
+    handle_post_response(post_response) do |body|
+      match_data = body.match(/1\/1\/#{slot}\/#{pon}\/#{port}\s+(-?\d+\.\d+)/)
+
+      if match_data && match_data[1]
+        rx_signal_level = match_data[1]
+        render json: { success: true, rx_signal_level: rx_signal_level }
+      else
+        render json: { success: false, message: "Não foi possível extrair o rx_signal_level corretamente." }
+      end
+    end
+  end
+
+  def distance_onu
+      ip = fetch_ip_from_olt_id(params[:equipment_id])
+      return render json: { success: false, message: "IP não encontrado." } unless ip
+
+      slot = params[:slot]
+      pon = params[:pon]
+      port = params[:olt_id]
+
+      command = <<-COMMAND
+        show equipment ont optics 1/1/#{slot}/#{pon}/#{port}
+      COMMAND
+
+      post_response = post_olt_command(ip, command)
+      handle_post_response(post_response) do |body|
+        match_data = body.match(/1\/1\/#{slot}\/#{pon}\/#{port}\s+(-?\d+\.\d+)/)
+
+        if match_data && match_data[2]
+          ont_distantce = match_data[2]
+          render json: { success: true, ont_distantce: ont_distantce }
+        else
+          render json: { success: false, message: "Não foi possível extrair o ont_distantce corretamente." }
+        end
+      end
+    end
+
+
+  end
 
   def fetch_ip_from_olt_id(olt_id)
     response = self.class.get("/equipamento/#{olt_id}")
@@ -106,23 +212,14 @@ class EquipmentCommandController < ApplicationController
     end
   end
 
-  def fetch_vlan_id(ip)
-    get_vlan = post_olt_command(ip, "configure vlan\ninfo")
-    if get_vlan.success?
-      vlan_info = get_vlan.body
-      extract_vlan_id(vlan_info)
-    else
-      nil
-    end
-  end
+  def fetch_vlan_id_from_configuration(access_point_id, slot, port)
+    access_point = AuthenticationAccessPoint.find(access_point_id)
+    configuration = access_point.configuration
 
-  def extract_vlan_id(vlan_info)
-    vlan_info.each_line do |line|
-      next unless line.include?('name IPoE')
-      vlan_id_match = line.match(/id (\d{4}) mode residential-bridge/)
-      return vlan_id_match[1] if vlan_id_match
-    end
-    nil
+    slot_config = configuration.dig(slot.to_s, port.to_s)
+    return nil unless slot_config
+
+    slot_config["vlangerencia"]
   end
 
   def configure_onu(ip, params)
@@ -144,4 +241,3 @@ class EquipmentCommandController < ApplicationController
   def render_error(message, status = :internal_server_error)
     render json: { error: message }, status: status
   end
-end

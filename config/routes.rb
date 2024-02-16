@@ -39,7 +39,7 @@ Rails.application.routes.draw do
 
   get '/assignments/:contract_id', to: 'attendant_details#attendant_details'
 
-  get '/equipment/:equipment_serial_number', to: 'authentication_details#authentication_details'
+  get '/equipment/:connection', to: 'authentication_details#authentication_details'
 
   post '/equipment/execute_command', to: 'equipment_command#execute_command'
 

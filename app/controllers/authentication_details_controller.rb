@@ -1,10 +1,10 @@
 class AuthenticationDetailsController < ApplicationController
   def authentication_details
-    equipment_serial = params[:equipment_serial_number]
+    id = params[:connection]
 
     results = AuthenticationContract
         .joins(:authentication_access_point, :authentication_address_list, :service_product)
-        .where(equipment_serial_number: equipment_serial)
+        .where(id: id)
         .select(
             'authentication_contracts.port_olt AS pon',
             'authentication_contracts.equipment_serial_number AS equipment',
@@ -14,14 +14,16 @@ class AuthenticationDetailsController < ApplicationController
             'authentication_contracts.wifi_password AS password',
             'authentication_contracts.olt_id AS olt_id',
             'authentication_address_lists.title AS status',
-            'service_products.title AS product'
+            'service_products.title AS product',
+            'authentication_contracts.id AS id',
+            'authentication_access_points.id AS equipment_id'
         )
         .map(&:attributes)
 
     if results.any?
       render json: results
     else
-      render json: { error: "Nenhuma informação encontrada para o número de série do equipamento #{equipment_serial}." }, status: :not_found
+      render json: { error: "Nenhuma informação encontrada para a conexão #{id}." }, status: :not_found
     end
   end
 end

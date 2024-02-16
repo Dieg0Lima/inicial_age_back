@@ -2,13 +2,16 @@ require 'jwt'
 
 class AuthenticationController < ApplicationController
   def login
+    username = params[:username]
+    password = params[:password]
+
     ldap_service = LdapService.new
 
-    if ldap_service.authenticate(params[:username], params[:password])
-      token = generate_jwt_token(params[:username])
+    if ldap_service.authenticate(username, password)
+      token = generate_jwt_token([username])
       render json: { token: token }, status: :ok
     else
-      render json: { error: 'Credenciais inválidas' }, status: :unauthorized
+      render json: { error: 'Credenciais inválidas', username: username }, status: :unauthorized
     end
   end
 

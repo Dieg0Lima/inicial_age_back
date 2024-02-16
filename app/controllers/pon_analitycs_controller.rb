@@ -30,12 +30,12 @@ class PonAnalitycsController < ApplicationController
       workbook = package.workbook
 
       workbook.add_worksheet(name: "PON Details") do |sheet|
-        sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Contrato", "Status"]
+        sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Distance", "Contrato", "Status"]
         pon_details.each do |detail|
           desc1 = detail[:desc1]
           desc1 = desc1.gsub(/\D/, '') unless desc1.nil?
           contract_details = fetch_client_details_by_contract(detail[:desc1])
-          sheet.add_row [olt_name, detail[:slot], detail[:pon], detail[:serial], detail[:admin_status], detail[:oper_status], desc1, contract_details[:contract_status]]
+          sheet.add_row [olt_name, detail[:slot], detail[:pon], detail[:serial], detail[:admin_status], detail[:oper_status], detail[:ont_olt_distance], desc1, contract_details[:contract_status]]
         end
       end
 

@@ -15,6 +15,8 @@ gem 'pg'
 
 gem 'kaminari'
 
+gem 'timeout'
+
 gem 'net-ssh'
 
 gem 'net-telnet'
