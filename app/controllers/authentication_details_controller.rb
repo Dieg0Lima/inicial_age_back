@@ -3,7 +3,7 @@ class AuthenticationDetailsController < ApplicationController
     id = params[:connection]
 
     results = AuthenticationContract
-        .joins(:authentication_access_point, :authentication_address_list, :service_product)
+        .left_joins(:authentication_access_point)
         .where(id: id)
         .select(
             'authentication_contracts.port_olt AS pon',
@@ -13,8 +13,6 @@ class AuthenticationDetailsController < ApplicationController
             'authentication_contracts.wifi_name AS SSID',
             'authentication_contracts.wifi_password AS password',
             'authentication_contracts.olt_id AS olt_id',
-            'authentication_address_lists.title AS status',
-            'service_products.title AS product',
             'authentication_contracts.id AS id',
             'authentication_access_points.id AS equipment_id'
         )

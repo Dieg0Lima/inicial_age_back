@@ -10,12 +10,22 @@ default: &default
   timeout: 5000
 
 development:
-  adapter: postgresql
-  encoding: unicode
-  database: dbemp00489
-  username: cliente_s
-  password: fD22ev293gh3dB3n
-  host: 206.204.248.86
+  primary:
+    <<: *default
+    adapter: postgresql
+    encoding: unicode
+    database: dbemp00489
+    username: cliente_s
+    password: fD22ev293gh3dB3n
+    host: 206.204.248.86
+  secondary:
+    <<: *default
+    adapter: mysql2
+    encoding: utf8mb4
+    database: ageclientdb
+    username: diegoclima
+    password: 5RmmuiMZ
+    host: 10.25.3.171
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

@@ -17,6 +17,10 @@ class EquipmentCommandController < ApplicationController
       potency_onu
     when 'distance_onu'
       distance_onu
+    when 'reboot_onu'
+      reboot_onu
+    when 'management_onu'
+      management_onu
     else
       render json: { error: "Comando não reconhecido: #{command}" }, status: :bad_request
     end
@@ -120,7 +124,7 @@ class EquipmentCommandController < ApplicationController
 
   def unprovision_onu
     ip = fetch_ip_from_olt_id(params[:id])
-    return unless ip
+    return render json: { error: true, message: "Equipamento não encontrado." }, status: :not_found unless ip
 
     slot = params[:slot]
     pon = params[:pon]
@@ -133,7 +137,43 @@ class EquipmentCommandController < ApplicationController
 
     post_response = post_olt_command(ip, command)
     handle_post_response(post_response) do |body|
-      render json: { success: true, message: "ONU desprovisionado com sucesso." }
+      if command_execution_success?(body)
+        render json: { success: true, message: "ONU desprovisionado com sucesso." }
+      else
+        render json: { error: true, message: "Falha ao desprovisionar ONU." }, status: :unprocessable_entity
+      end
+    end
+  end
+
+  def reboot_onu
+      ip = fetch_ip_from_olt_id(params[:id])
+      return render json: { error: true, message: "Equipamento não encontrado." }, status: :not_found unless ip
+
+      slot = params[:slot]
+      pon = params[:pon]
+      port = params[:port]
+
+      command = <<-COMMAND
+        admin equipment ont interface 1/1/#{slot}/#{pon}/#{port} reboot with-active-image
+      COMMAND
+
+      post_response = post_olt_command(ip, command)
+      handle_post_response(post_response) do |body|
+        if command_execution_success?(body)
+          render json: { success: true, message: "ONU reiniciada com sucesso." }
+        else
+          render json: { error: true, message: "Falha ao reiniciar ONU." }, status: :unprocessable_entity
+        end
+      end
+  end
+
+  def management_onu
+    ip = fetch_management_ip(params[:sernum])
+
+    if ip
+      render json: { success: true, message: "IP de gerência encontrado.", ip: ip }
+    else
+      render json: { error: true, message: "Equipamento não encontrado." }, status: :not_found
     end
   end
 
@@ -185,9 +225,39 @@ class EquipmentCommandController < ApplicationController
           render json: { success: false, message: "Não foi possível extrair o ont_distantce corretamente." }
         end
       end
+  end
+
+
+  end
+
+  Dotenv.load
+
+  def fetch_management_ip(sernum)
+    mikrotik_ips = ENV['MIKROTIK_IPS'].split(',')
+    ssh_username = ENV['SSH_USERNAME']
+    ssh_password = ENV['SSH_PASSWORD']
+    command = "/ip dhcp-server lease print where agent-circuit-id=#{sernum}"
+
+    queue = Queue.new
+    threads = []
+
+    mikrotik_ips.each do |ip|
+      threads << Thread.new do
+        begin
+          Net::SSH.start(ip, ssh_username, password: ssh_password) do |ssh|
+            output = ssh.exec!(command)
+            ip_match = output.match(/\d+ D (\d+\.\d+\.\d+\.\d+)/)
+            queue.push(ip_match[1]) if ip_match
+          end
+        rescue StandardError => e
+          puts "Erro ao conectar ou executar o comando no equipamento #{ip}: #{e.message}"
+        end
+      end
     end
 
+    threads.each(&:join)
 
+    queue.empty? ? nil : queue.pop
   end
 
   def fetch_ip_from_olt_id(olt_id)
@@ -212,15 +282,28 @@ class EquipmentCommandController < ApplicationController
     end
   end
 
-  def fetch_vlan_id_from_configuration(access_point_id, slot, port)
-    access_point = AuthenticationAccessPoint.find(access_point_id)
+  def fetch_vlan_id_from_configuration(id, slot, port)
+    access_point = AuthenticationAccessPoint.find(id)
+    return nil unless access_point
+
     configuration = access_point.configuration
 
-    slot_config = configuration.dig(slot.to_s, port.to_s)
-    return nil unless slot_config
+    slot_key = slot.to_s
+    port_key = port.to_s
 
-    slot_config["vlangerencia"]
+    return nil unless configuration.key?(slot_key)
+
+    slot_config = configuration[slot_key]
+
+    return nil unless slot_config.key?(port_key)
+
+    port_config = slot_config[port_key]
+
+    vlan_id = port_config["vlangerencia"]
+
+    vlan_id.nil? ? nil : vlan_id
   end
+
 
   def configure_onu(ip, params)
     slot, pon, port, contract, sernum, vlan_id = params.values_at(:slot, :pon, :port, :contract, :sernum, :vlan_id)
@@ -240,4 +323,8 @@ class EquipmentCommandController < ApplicationController
 
   def render_error(message, status = :internal_server_error)
     render json: { error: message }, status: status
+  end
+
+  def command_execution_success?(response_body)
+    !response_body.include?("invalid token") && !response_body.include?("instance does not exist")
   end

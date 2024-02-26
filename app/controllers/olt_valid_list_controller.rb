@@ -4,7 +4,7 @@ class OltValidListController < ApplicationController
       valid_olt_by_id = AuthenticationAccessPoint
                         .where(id: params[:id])
                         .where("title LIKE ?", "BSA%")
-                        .where.not(title: ["BSA.SAMB.OLT.01-TESTE", "BSA.ASUL.OLT.02 - TESTE ZTE", "BSA.ASUL.RTC.01 - PPPoE (Temporário)"])
+                        .where.not(id: [2, 9, 7, 77, 68, 69, 32])
                         .select('id, title AS olt_name')
                         .first
 
@@ -17,7 +17,7 @@ class OltValidListController < ApplicationController
       valid_olts = AuthenticationAccessPoint
                      .select('id, title AS olt_name')
                      .where("title LIKE ?", "BSA%")
-                     .where.not(title: ["BSA.SAMB.OLT.01-TESTE", "BSA.ASUL.OLT.02 - TESTE ZTE", "BSA.ASUL.RTC.01 - PPPoE (Temporário)"])
+                     .where.not(id: [2, 9, 7, 77, 68, 69, 67, 32])
                      .order("title")
 
       if valid_olts.exists?

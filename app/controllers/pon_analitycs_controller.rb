@@ -1,14 +1,18 @@
 require 'caxlsx'
+require 'thread'
 
 class PonAnalitycsController < ApplicationController
   include HTTParty
   base_uri 'http://192.168.69.80:3000'
+  before_action :set_semaphore
 
   def execute_command
     command = params[:command]
     case command
     when 'analitycs_olt'
       analitycs_olt
+    when 'analytics_olt'
+      analytics_olt
     else
       render json: { error: "Comando não reconhecido: #{command}" }, status: :bad_request
     end
@@ -16,38 +20,140 @@ class PonAnalitycsController < ApplicationController
 
   private
 
-  def analitycs_olt
-    ip = fetch_ip_from_olt_id(params[:id])
-    return unless ip
-
-    olt_name = AuthenticationAccessPoint.fetch_olt_name_by_id(params[:id])
-
-    post_response = post_olt_command(ip, "show equipment ont status pon")
-    handle_post_response(post_response) do |body|
-      pon_details = extract_pon_details(body)
-
-      package = Axlsx::Package.new
-      workbook = package.workbook
-
-      workbook.add_worksheet(name: "PON Details") do |sheet|
-        sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Distance", "Contrato", "Status"]
-        pon_details.each do |detail|
-          desc1 = detail[:desc1]
-          desc1 = desc1.gsub(/\D/, '') unless desc1.nil?
-          contract_details = fetch_client_details_by_contract(detail[:desc1])
-          sheet.add_row [olt_name, detail[:slot], detail[:pon], detail[:serial], detail[:admin_status], detail[:oper_status], detail[:ont_olt_distance], desc1, contract_details[:contract_status]]
-        end
-      end
-
-      excel_file_path = Rails.root.join('tmp', "PON_Details_#{Time.now.to_i}.xlsx")
-      package.serialize(excel_file_path)
-
-      send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx", disposition: "attachment"
+    def set_semaphore
+      @semaphore = Mutex.new
     end
+
+  def analitycs_olt
+    valid_olts = fetch_valid_olts
+
+    excel_file_path = Rails.root.join('tmp', "PON_Details_#{Time.now.to_i}.xlsx")
+    package = Axlsx::Package.new
+    workbook = package.workbook
+    sheet = workbook.add_worksheet(name: "PON Details")
+    sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Distance", "Contrato", "Status"]
+
+    valid_olts.each do |olt|
+      olt_name = olt[:olt_name]
+
+      begin
+        ip = fetch_ip_from_olt_id(olt[:id])
+        if ip.nil?
+          raise StandardError.new("IP não encontrado para OLT #{olt_name}")
+        end
+
+        (1..16).each do |slot|
+          (1..16).each do |pon|
+            command = "show equipment ont status pon 1/1/#{slot}/#{pon}"
+            post_response = post_olt_command(ip, command)
+
+            if post_response.body.include?("board is not planned")
+              break
+            end
+
+            next unless post_response.success?
+
+            pon_details = extract_pon_details(post_response.body)
+            pon_details.each do |detail|
+              desc1 = detail[:desc1].gsub(/\D/, '') unless detail[:desc1].nil?
+              contract_details = fetch_client_details_by_contract(detail[:desc1])
+              sheet.add_row [
+                olt_name,
+                "#{slot}/#{pon}",
+                detail[:ont],
+                detail[:serial],
+                detail[:admin_status],
+                detail[:oper_status],
+                detail[:ont_olt_distance],
+                desc1,
+                contract_details.fetch(:contract_status, "N/A")
+              ]
+            end
+          end
+        end
+      rescue StandardError => e
+        Rails.logger.error "Erro ao processar OLT #{olt_name} (IP: #{ip}): #{e.message}"
+        sheet.add_row ["Erro ao processar OLT: #{olt_name}", "Verifique os logs para mais detalhes"]
+      end
+    end
+
+    package.serialize(excel_file_path)
+    send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx", disposition: "attachment"
   end
 
+  def analytics_olt
+      valid_olts = fetch_valid_olts
 
-  def fetch_client_details_by_contract(contract_id)
+      excel_file_path = Rails.root.join('tmp', "PON_Details_#{Time.now.to_i}.xlsx")
+      package = Axlsx::Package.new
+      workbook = package.workbook
+      sheet = workbook.add_worksheet(name: "PON Details")
+      sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Distance", "Contrato", "Status"]
+
+      threads = []
+      valid_olts.each_slice(1) do |olts_slice|
+        olts_slice.each do |olt|
+          threads << Thread.new { process_olt(olt, sheet) }
+        end
+        threads.each(&:join)
+        threads.clear
+      end
+
+      @semaphore.synchronize do
+        package.serialize(excel_file_path)
+      end
+      send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx", disposition: "attachment"
+    end
+
+    def process_olt(olt, sheet)
+      olt_name = olt[:olt_name]
+      begin
+        ip = fetch_ip_from_olt_id(olt[:id])
+        if ip.nil?
+          raise StandardError.new("IP não encontrado para OLT #{olt_name}")
+        end
+
+        (1..16).each do |slot|
+          (1..16).each do |pon|
+            command = "show equipment ont status pon 1/1/#{slot}/#{pon}"
+            post_response = post_olt_command(ip, command)
+
+            if post_response.body.include?("board is not planned")
+              break
+            end
+
+            next unless post_response.success?
+
+            pon_details = extract_pon_details(post_response.body)
+            pon_details.each do |detail|
+              desc1 = detail[:desc1].gsub(/\D/, '') unless detail[:desc1].nil?
+              contract_details = fetch_client_details_by_contract(detail[:desc1])
+
+              @semaphore.synchronize do
+                sheet.add_row [
+                  olt_name,
+                  "#{slot}/#{pon}",
+                  detail[:ont],
+                  detail[:serial],
+                  detail[:admin_status],
+                  detail[:oper_status],
+                  detail[:ont_olt_distance],
+                  desc1,
+                  contract_details.fetch(:contract_status, "N/A")
+                ]
+              end
+            end
+          end
+        end
+      rescue StandardError => e
+        Rails.logger.error "Erro ao processar OLT #{olt_name}: #{e.message}"
+        @semaphore.synchronize do
+          sheet.add_row ["Erro ao processar OLT: #{olt_name}", "Verifique os logs para mais detalhes"]
+        end
+      end
+    end
+
+    def fetch_client_details_by_contract(contract_id)
     query = Contract
               .where(id: contract_id)
               .select(
@@ -66,8 +172,15 @@ class PonAnalitycsController < ApplicationController
     end
   end
 
-
-
+    def fetch_valid_olts
+      AuthenticationAccessPoint
+        .where("title LIKE ?", "BSA%")
+        .where.not(id: [2, 9, 7, 75, 77, 68, 69, 32, 67, 8, 75])
+        .select(:id, :title)
+        .map do |olt|
+          { id: olt.id, olt_name: olt.title }
+        end
+    end
 
   def extract_pon_details(body)
     pon_details_regex =
@@ -78,8 +191,8 @@ class PonAnalitycsController < ApplicationController
       (up|down|invalid)\s+         # Oper Status
       (-?\d+\.\d+|invalid)\s+      # OLT-RX-SIG Level (dbm), considerando 'invalid' e números com possível sinal negativo
       (-?\d+\.\d+|invalid)\s+      # ONT-OLT Distance (km), mesmo que acima
-      ([\d*]+|-)\s+                   # Desc1, considerando números ou '-' ou '*'
-      (-)\s*                       # Desc2, considerando '-' ou espaço
+      (\d{1,}|-)\s+                # Desc1, alterado para capturar 6 dígitos ou mais, ou '-'
+      (-)\s*                        # Desc2, considerando '-' ou espaço
       (\w+|undefined)/x            # Hostname, pode ser 'undefined' ou uma palavra
 
     matches = body.scan(pon_details_regex)
