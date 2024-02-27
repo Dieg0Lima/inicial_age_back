@@ -18,8 +18,3 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
-
-every 1.day, at: '23:59' do
-  runner "PonAnalitycsController.new.analitycs_olt"
-end
