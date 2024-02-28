@@ -143,8 +143,7 @@ class PonAnalitycsController < ApplicationController
                   detail[:oper_status],
                   detail[:ont_olt_distance],
                   desc1,
-                  contract_details.fetch(:contract_status, "N/A"),
-                  contract_details.fetch(:service_tag, "N/A")
+                  contract_details.fetch(:contract_status, "N/A")
                 ]
               end
             end
@@ -173,7 +172,6 @@ class PonAnalitycsController < ApplicationController
       {
         contract_id: query.contract_id,
         contract_status: query.contract_status
-        service_tag: query.service_tag
       }
     else
       { error: "Nenhum detalhe do contrato encontrado para o contrato #{contract_id}." }

@@ -1,2 +1,0 @@
-class AuthenticationManegement < SecondaryBase
-end

@@ -2,7 +2,7 @@
 lock "~> 3.18.0"
 
 set :application, "inicial_age_back"
-set :repo_url, "git@github.com:Dieg0Lima/inicial_age_back.git"
+set :repo_url, 'git@github.com:Dieg0Lima/inicial_age_back.git'
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
