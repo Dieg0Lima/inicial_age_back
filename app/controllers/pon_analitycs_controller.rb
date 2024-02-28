@@ -31,7 +31,7 @@ class PonAnalitycsController < ApplicationController
     package = Axlsx::Package.new
     workbook = package.workbook
     sheet = workbook.add_worksheet(name: "PON Details")
-    sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Distance", "Contrato", "Status"]
+    sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "Distance", "Contrato", "Status"]
 
     valid_olts.each do |olt|
       olt_name = olt[:olt_name]
@@ -59,8 +59,8 @@ class PonAnalitycsController < ApplicationController
               contract_details = fetch_client_details_by_contract(detail[:desc1])
               sheet.add_row [
                 olt_name,
-                "#{slot}/#{pon}",
-                detail[:ont],
+                "#{slot}",
+                "#{pon}",
                 detail[:serial],
                 detail[:admin_status],
                 detail[:oper_status],
@@ -88,7 +88,7 @@ class PonAnalitycsController < ApplicationController
       package = Axlsx::Package.new
       workbook = package.workbook
       sheet = workbook.add_worksheet(name: "PON Details")
-      sheet.add_row ["OLT Name", "PON", "ONT", "Serial", "Admin Status", "Oper Status", "Distance", "Contrato", "Status"]
+      sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "Distance", "Contrato", "Status"]
 
       threads = []
       valid_olts.each_slice(1) do |olts_slice|
@@ -116,6 +116,10 @@ class PonAnalitycsController < ApplicationController
         (1..16).each do |slot|
           (1..16).each do |pon|
             command = "show equipment ont status pon 1/1/#{slot}/#{pon}"
+            command = <<-COMMAND
+                  environment inhibit-alarms
+                  show equipment ont status pon 1/1/#{slot}/#{pon}
+                COMMAND
             post_response = post_olt_command(ip, command)
 
             if post_response.body.include?("board is not planned")
@@ -132,14 +136,15 @@ class PonAnalitycsController < ApplicationController
               @semaphore.synchronize do
                 sheet.add_row [
                   olt_name,
-                  "#{slot}/#{pon}",
-                  detail[:ont],
+                  "#{slot}",
+                  "#{pon}",
                   detail[:serial],
                   detail[:admin_status],
                   detail[:oper_status],
                   detail[:ont_olt_distance],
                   desc1,
-                  contract_details.fetch(:contract_status, "N/A")
+                  contract_details.fetch(:contract_status, "N/A"),
+                  contract_details.fetch(:service_tag, "N/A")
                 ]
               end
             end
@@ -156,9 +161,11 @@ class PonAnalitycsController < ApplicationController
     def fetch_client_details_by_contract(contract_id)
     query = Contract
               .where(id: contract_id)
+              .inner(:contract_service_tag)
               .select(
                 'contracts.id AS contract_id',
-                'contracts.v_status AS contract_status'
+                'contracts.v_status AS contract_status',
+                'contract_service_tag AS service_tag'
               )
               .first
 
@@ -166,6 +173,7 @@ class PonAnalitycsController < ApplicationController
       {
         contract_id: query.contract_id,
         contract_status: query.contract_status
+        service_tag: query.service_tag
       }
     else
       { error: "Nenhum detalhe do contrato encontrado para o contrato #{contract_id}." }
@@ -191,8 +199,8 @@ class PonAnalitycsController < ApplicationController
       (up|down|invalid)\s+         # Oper Status
       (-?\d+\.\d+|invalid)\s+      # OLT-RX-SIG Level (dbm), considerando 'invalid' e números com possível sinal negativo
       (-?\d+\.\d+|invalid)\s+      # ONT-OLT Distance (km), mesmo que acima
-      (\d{1,}|-)\s+                # Desc1, alterado para capturar 6 dígitos ou mais, ou '-'
-      (-)\s*                        # Desc2, considerando '-' ou espaço
+      (\d+|-)\s+                   # Desc1, ajustado para capturar qualquer quantidade de dígitos ou '-'
+      (-)\s*                       # Desc2, considerando '-' ou espaço
       (\w+|undefined)/x            # Hostname, pode ser 'undefined' ou uma palavra
 
     matches = body.scan(pon_details_regex)
