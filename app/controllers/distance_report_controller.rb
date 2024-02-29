@@ -1,2 +1,0 @@
-class DistanceReportController < ApplicationController
-end

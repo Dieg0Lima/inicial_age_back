@@ -1,3 +1,4 @@
+module Api
 class EquipmentCommandController < ApplicationController
   include HTTParty
   base_uri 'http://192.168.69.80:3000'
@@ -25,6 +26,105 @@ class EquipmentCommandController < ApplicationController
       render json: { error: "Comando não reconhecido: #{command}" }, status: :bad_request
     end
   end
+
+  def fetch_ip_from_olt_id(olt_id)
+      response = self.class.get("/api/equipamento/#{olt_id}")
+      if response.success?
+        JSON.parse(response.body)['ip']
+      else
+        render json: { error: "Erro ao obter o IP do equipamento." }, status: :bad_request
+        nil
+      end
+  end
+
+  def post_olt_command(ip, command)
+      self.class.post("/api/olt_command/", body: { ip: ip, command: command })
+    end
+
+    def handle_post_response(response)
+      if response.success?
+        yield(response.body)
+      else
+        render json: { error: "Erro ao executar o comando na OLT." }, status: :bad_request
+      end
+    end
+
+    def fetch_vlan_id_from_configuration(id, slot, port)
+      access_point = AuthenticationAccessPoint.find(id)
+      return nil unless access_point
+
+      configuration = access_point.configuration
+
+      slot_key = slot.to_s
+      port_key = port.to_s
+
+      return nil unless configuration.key?(slot_key)
+
+      slot_config = configuration[slot_key]
+
+      return nil unless slot_config.key?(port_key)
+
+      port_config = slot_config[port_key]
+
+      vlan_id = port_config["vlangerencia"]
+
+      vlan_id.nil? ? nil : vlan_id
+    end
+
+
+    def configure_onu(ip, params)
+      slot, pon, port, contract, sernum, vlan_id = params.values_at(:slot, :pon, :port, :contract, :sernum, :vlan_id)
+      command = <<-COMMAND
+    configure equipment ont interface 1/1/#{slot}/#{pon}/#{port} desc1 "#{contract}" desc2 "-" sernum ALCL:#{sernum} subslocid WILDCARD sw-ver-pland auto sw-dnload-version disabled
+    configure equipment ont interface 1/1/#{slot}/#{pon}/#{port} admin-state up optics-hist enable pland-cfgfile1 auto pland-cfgfile2 auto dnload-cfgfile1 auto dnload-cfgfile2 auto
+    configure equipment ont slot 1/1/#{slot}/#{pon}/#{port}/14 planned-card-type veip plndnumdataports 1 plndnumvoiceports 0
+    configure interface port uni:1/1/#{slot}/#{pon}/#{port}/14/1 admin-up
+    configure qos interface 1/1/#{slot}/#{pon}/#{port}/14/1 upstream-queue 0 bandwidth-profile name:HSI_1G_UP
+    configure bridge port 1/1/#{slot}/#{pon}/#{port}/14/1 max-unicast-mac 4 max-committed-mac 1
+    configure bridge port 1/1/#{slot}/#{pon}/#{port}/14/1 vlan-id 41 tag single-tagged l2fwder-vlan #{vlan_id} vlan-scope local
+    configure bridge port 1/1/#{slot}/#{pon}/#{port}/14/1 vlan-id #{vlan_id} tag single-tagged
+      COMMAND
+      post_response = post_olt_command(ip, command)
+      post_response.success?
+    end
+
+    def render_error(message, status = :internal_server_error)
+      render json: { error: message }, status: status
+    end
+
+    def command_execution_success?(response_body)
+      !response_body.include?("invalid token") && !response_body.include?("instance does not exist")
+    end
+
+    Dotenv.load
+
+      def fetch_management_ip(sernum)
+        mikrotik_ips = ENV['MIKROTIK_IPS'].split(',')
+        ssh_username = ENV['SSH_USERNAME']
+        ssh_password = ENV['SSH_PASSWORD']
+        command = "/ip dhcp-server lease print where agent-circuit-id=#{sernum}"
+
+        queue = Queue.new
+        threads = []
+
+        mikrotik_ips.each do |ip|
+          threads << Thread.new do
+            begin
+              Net::SSH.start(ip, ssh_username, password: ssh_password) do |ssh|
+                output = ssh.exec!(command)
+                ip_match = output.match(/\d+ D (\d+\.\d+\.\d+\.\d+)/)
+                queue.push(ip_match[1]) if ip_match
+              end
+            rescue StandardError => e
+              puts "Erro ao conectar ou executar o comando no equipamento #{ip}: #{e.message}"
+            end
+          end
+        end
+
+        threads.each(&:join)
+
+        queue.empty? ? nil : queue.pop
+      end
 
   private
 
@@ -230,101 +330,4 @@ class EquipmentCommandController < ApplicationController
 
   end
 
-  Dotenv.load
-
-  def fetch_management_ip(sernum)
-    mikrotik_ips = ENV['MIKROTIK_IPS'].split(',')
-    ssh_username = ENV['SSH_USERNAME']
-    ssh_password = ENV['SSH_PASSWORD']
-    command = "/ip dhcp-server lease print where agent-circuit-id=#{sernum}"
-
-    queue = Queue.new
-    threads = []
-
-    mikrotik_ips.each do |ip|
-      threads << Thread.new do
-        begin
-          Net::SSH.start(ip, ssh_username, password: ssh_password) do |ssh|
-            output = ssh.exec!(command)
-            ip_match = output.match(/\d+ D (\d+\.\d+\.\d+\.\d+)/)
-            queue.push(ip_match[1]) if ip_match
-          end
-        rescue StandardError => e
-          puts "Erro ao conectar ou executar o comando no equipamento #{ip}: #{e.message}"
-        end
-      end
-    end
-
-    threads.each(&:join)
-
-    queue.empty? ? nil : queue.pop
-  end
-
-  def fetch_ip_from_olt_id(olt_id)
-    response = self.class.get("/equipamento/#{olt_id}")
-    if response.success?
-      JSON.parse(response.body)['ip']
-    else
-      render json: { error: "Erro ao obter o IP do equipamento." }, status: :bad_request
-      nil
-    end
-  end
-
-  def post_olt_command(ip, command)
-    self.class.post("/olt_command/", body: { ip: ip, command: command })
-  end
-
-  def handle_post_response(response)
-    if response.success?
-      yield(response.body)
-    else
-      render json: { error: "Erro ao executar o comando na OLT." }, status: :bad_request
-    end
-  end
-
-  def fetch_vlan_id_from_configuration(id, slot, port)
-    access_point = AuthenticationAccessPoint.find(id)
-    return nil unless access_point
-
-    configuration = access_point.configuration
-
-    slot_key = slot.to_s
-    port_key = port.to_s
-
-    return nil unless configuration.key?(slot_key)
-
-    slot_config = configuration[slot_key]
-
-    return nil unless slot_config.key?(port_key)
-
-    port_config = slot_config[port_key]
-
-    vlan_id = port_config["vlangerencia"]
-
-    vlan_id.nil? ? nil : vlan_id
-  end
-
-
-  def configure_onu(ip, params)
-    slot, pon, port, contract, sernum, vlan_id = params.values_at(:slot, :pon, :port, :contract, :sernum, :vlan_id)
-    command = <<-COMMAND
-  configure equipment ont interface 1/1/#{slot}/#{pon}/#{port} desc1 "#{contract}" desc2 "-" sernum ALCL:#{sernum} subslocid WILDCARD sw-ver-pland auto sw-dnload-version disabled
-  configure equipment ont interface 1/1/#{slot}/#{pon}/#{port} admin-state up optics-hist enable pland-cfgfile1 auto pland-cfgfile2 auto dnload-cfgfile1 auto dnload-cfgfile2 auto
-  configure equipment ont slot 1/1/#{slot}/#{pon}/#{port}/14 planned-card-type veip plndnumdataports 1 plndnumvoiceports 0
-  configure interface port uni:1/1/#{slot}/#{pon}/#{port}/14/1 admin-up
-  configure qos interface 1/1/#{slot}/#{pon}/#{port}/14/1 upstream-queue 0 bandwidth-profile name:HSI_1G_UP
-  configure bridge port 1/1/#{slot}/#{pon}/#{port}/14/1 max-unicast-mac 4 max-committed-mac 1
-  configure bridge port 1/1/#{slot}/#{pon}/#{port}/14/1 vlan-id 41 tag single-tagged l2fwder-vlan #{vlan_id} vlan-scope local
-  configure bridge port 1/1/#{slot}/#{pon}/#{port}/14/1 vlan-id #{vlan_id} tag single-tagged
-    COMMAND
-    post_response = post_olt_command(ip, command)
-    post_response.success?
-  end
-
-  def render_error(message, status = :internal_server_error)
-    render json: { error: message }, status: status
-  end
-
-  def command_execution_success?(response_body)
-    !response_body.include?("invalid token") && !response_body.include?("instance does not exist")
-  end
+end

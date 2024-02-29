@@ -1,3 +1,5 @@
+
+module Api
 class FinancialDetailsController < ApplicationController
   def financial_info
     contract_id = params[:contract_id]
@@ -38,4 +40,5 @@ class FinancialDetailsController < ApplicationController
     def format_currency(amount)
       ActionController::Base.helpers.number_to_currency(amount, unit: "R$", separator: ",", delimiter: ".", format: "%u %n")
     end
+end
 end

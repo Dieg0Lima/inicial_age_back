@@ -1,3 +1,4 @@
+module Api
 class OltValidListController < ApplicationController
   def valid_olts
     if params[:id].present?
@@ -27,4 +28,5 @@ class OltValidListController < ApplicationController
       end
     end
   end
+end
 end

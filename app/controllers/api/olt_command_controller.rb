@@ -1,3 +1,4 @@
+module Api
 require 'net/telnet'
 require 'json'
 require 'csv'
@@ -30,4 +31,5 @@ class OltCommandController < ApplicationController
       render json: { success: false, error: e.message }, status: :unprocessable_entity
     end
   end
+end
 end

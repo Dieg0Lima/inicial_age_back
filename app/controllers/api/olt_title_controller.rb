@@ -1,3 +1,4 @@
+module Api
 class OltTitleController < ApplicationController
   def find_id_by_serial
     equipment_serial = params[:equipment_serial_number]
@@ -14,4 +15,5 @@ class OltTitleController < ApplicationController
       render json: { error: "Nenhum título de OLT encontrado para o número de série do equipamento #{equipment_serial}." }, status: :not_found
     end
   end
+end
 end

@@ -1,3 +1,5 @@
+
+module Api
 class MessagesController < ApplicationController
   require 'net/http'
   require 'uri'
@@ -28,4 +30,5 @@ class MessagesController < ApplicationController
       render json: { status: "error", message: "Erro ao enviar a mensagem: #{e.message}" }, status: :internal_server_error
     end
   end
+end
 end

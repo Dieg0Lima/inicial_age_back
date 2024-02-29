@@ -1,3 +1,6 @@
+
+
+module Api
 require 'net/telnet'
 require 'json'
 require 'csv'
@@ -41,4 +44,5 @@ class OltController < ApplicationController
       end
     end
   end
+end
 end

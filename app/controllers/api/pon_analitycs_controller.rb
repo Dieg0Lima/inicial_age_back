@@ -1,3 +1,6 @@
+
+
+module Api
 require 'caxlsx'
 require 'thread'
 
@@ -242,4 +245,5 @@ class PonAnalitycsController < ApplicationController
       render json: { error: "Erro ao executar o comando na OLT." }, status: :bad_request
     end
   end
+end
 end
