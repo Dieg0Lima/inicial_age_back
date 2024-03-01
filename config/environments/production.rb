@@ -19,6 +19,11 @@ Rails.application.configure do
   Rails.application.config.hosts << "ageatende"
   Rails.application.config.hosts << "localhost:3000"
 
+  config.action_controller.forgery_protection_origin_check = false
+  Rails.application.config.action_dispatch.trusted_proxies = %w(127.0.0.1 ::1)
+
+  config.hosts << "ageatende"
+
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
   # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
