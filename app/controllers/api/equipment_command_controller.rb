@@ -1,7 +1,7 @@
 module Api
 class EquipmentCommandController < ApplicationController
   include HTTParty
-  base_uri 'http://localhost:3000'
+  base_uri 'https://ageatende'
 
   def execute_command
     command = params[:command]
