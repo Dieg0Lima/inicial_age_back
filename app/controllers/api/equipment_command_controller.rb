@@ -38,7 +38,7 @@ class EquipmentCommandController < ApplicationController
   end
 
   def post_olt_command(ip, command)
-      self.class.post("/api/olt_command/", body: { ip: ip, command: command })
+      self.class.post("http://localhost:3000/api/olt_command/", body: { ip: ip, command: command })
     end
 
     def handle_post_response(response)
