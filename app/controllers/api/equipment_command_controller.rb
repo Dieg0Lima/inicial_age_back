@@ -28,7 +28,7 @@ class EquipmentCommandController < ApplicationController
   end
 
   def fetch_ip_from_olt_id(olt_id)
-      response = self.class.get("/api/equipamento/#{olt_id}")
+      response = self.class.get("http://localhost:3000/api/equipamento/#{olt_id}")
       if response.success?
         JSON.parse(response.body)['ip']
       else
