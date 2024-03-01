@@ -279,7 +279,10 @@ class EquipmentCommandController < ApplicationController
 
   def potency_onu
     ip = fetch_ip_from_olt_id(params[:equipment_id])
-    return render json: { success: false, message: "IP não encontrado." } unless ip
+    unless ip
+      Rails.logger.error "IP não encontrado para equipment_id=#{params[:equipment_id]}"
+      return render json: { success: false, message: "IP não encontrado para o ID do equipamento fornecido." }, status: :not_found
+    end
 
     slot = params[:slot]
     pon = params[:pon]
@@ -297,10 +300,15 @@ class EquipmentCommandController < ApplicationController
         rx_signal_level = match_data[1]
         render json: { success: true, rx_signal_level: rx_signal_level }
       else
-        render json: { success: false, message: "Não foi possível extrair o rx_signal_level corretamente." }
+        Rails.logger.error "Falha ao extrair rx_signal_level da resposta: #{body}"
+        render json: { success: false, message: "Não foi possível extrair o rx_signal_level corretamente da resposta." }, status: :unprocessable_entity
       end
     end
+  rescue => e
+    Rails.logger.error "Erro ao executar potency_onu: #{e.message}"
+    render json: { success: false, message: "Erro interno ao executar potency_onu." }, status: :internal_server_error
   end
+
 
   def distance_onu
       ip = fetch_ip_from_olt_id(params[:equipment_id])
