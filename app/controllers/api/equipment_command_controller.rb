@@ -28,7 +28,7 @@ class EquipmentCommandController < ApplicationController
   end
 
   def fetch_ip_from_olt_id(olt_id)
-      response = self.class.get("http://localhost:3000/api/equipamento/#{olt_id}")
+      response = self.class.get("/api/equipamento/#{olt_id}")
       if response.success?
         JSON.parse(response.body)['ip']
       else
@@ -38,7 +38,7 @@ class EquipmentCommandController < ApplicationController
   end
 
   def post_olt_command(ip, command)
-      self.class.post("http://localhost:3000/api/olt_command/", body: { ip: ip, command: command })
+      self.class.post("/api/olt_command/", body: { ip: ip, command: command })
     end
 
     def handle_post_response(response)
@@ -279,10 +279,7 @@ class EquipmentCommandController < ApplicationController
 
   def potency_onu
     ip = fetch_ip_from_olt_id(params[:equipment_id])
-    unless ip
-      Rails.logger.error "IP não encontrado para equipment_id=#{params[:equipment_id]}"
-      return render json: { success: false, message: "IP não encontrado para o ID do equipamento fornecido." }, status: :not_found
-    end
+    return render json: { success: false, message: "IP não encontrado." } unless ip
 
     slot = params[:slot]
     pon = params[:pon]
@@ -300,15 +297,10 @@ class EquipmentCommandController < ApplicationController
         rx_signal_level = match_data[1]
         render json: { success: true, rx_signal_level: rx_signal_level }
       else
-        Rails.logger.error "Falha ao extrair rx_signal_level da resposta: #{body}"
-        render json: { success: false, message: "Não foi possível extrair o rx_signal_level corretamente da resposta." }, status: :unprocessable_entity
+        render json: { success: false, message: "Não foi possível extrair o rx_signal_level corretamente." }
       end
     end
-  rescue => e
-    Rails.logger.error "Erro ao executar potency_onu: #{e.message}"
-    render json: { success: false, message: "Erro interno ao executar potency_onu." }, status: :internal_server_error
   end
-
 
   def distance_onu
       ip = fetch_ip_from_olt_id(params[:equipment_id])
