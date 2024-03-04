@@ -1,5 +1,3 @@
-
-
 module Api
 require 'net/telnet'
 require 'json'

@@ -28,26 +28,25 @@ class EquipmentCommandController < ApplicationController
   end
 
   def fetch_ip_from_olt_id(olt_id)
-      response = self.class.get("/api/equipamento/#{olt_id}")
-      if response.success?
-        JSON.parse(response.body)['ip']
-      else
-        render json: { error: "Erro ao obter o IP do equipamento." }, status: :bad_request
-        nil
-      end
+    response = self.class.get("/api/equipamento/#{olt_id}")
+    if response.success?
+      JSON.parse(response.body)['ip']
+    else
+      nil
+    end
   end
 
   def post_olt_command(ip, command)
-      self.class.post("/api/olt_command/", body: { ip: ip, command: command })
-    end
+    self.class.post("/api/olt_command/", body: { ip: ip, command: command })
+  end
 
-    def handle_post_response(response)
-      if response.success?
-        yield(response.body)
-      else
-        render json: { error: "Erro ao executar o comando na OLT." }, status: :bad_request
-      end
+  def handle_post_response(response)
+    if response.success?
+      yield(response.body)
+    else
+      { error: "Erro ao executar o comando na OLT." }
     end
+  end
 
     def fetch_vlan_id_from_configuration(id, slot, port)
       access_point = AuthenticationAccessPoint.find(id)
