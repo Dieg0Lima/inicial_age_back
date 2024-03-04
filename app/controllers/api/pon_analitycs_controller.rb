@@ -27,34 +27,32 @@ class PonAnalitycsController < ApplicationController
       @semaphore = Mutex.new
     end
 
-    def analitycs_olt(olt_id)
-      olt = fetch_olt_by_id(olt_id)
-    
+    def analitycs_olt
+      olt_id = params[:olt_id]
+      
       excel_file_path = Rails.root.join('tmp', "PON_Details_#{Time.now.to_i}.xlsx")
       package = Axlsx::Package.new
       workbook = package.workbook
       sheet = workbook.add_worksheet(name: "PON Details")
       sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "Distance", "Contrato", "Status"]
-    
-      olt_name = olt[:olt_name]
-    
+      
       begin
-        ip = fetch_ip_from_olt_id(olt_id)
+        ip = fetch_ip_from_olt_id(olt_id)        
         if ip.nil?
-          raise StandardError.new("IP não encontrado para OLT #{olt_name}")
+          raise StandardError.new("IP não encontrado para OLT com ID: #{olt_id}")
         end
-    
+      
         (1..16).each do |slot|
           (1..16).each do |pon|
             command = "show equipment ont status pon 1/1/#{slot}/#{pon}"
             post_response = post_olt_command(ip, command)
-    
+      
             if post_response.body.include?("board is not planned")
               break
             end
-    
+      
             next unless post_response.success?
-    
+      
             pon_details = extract_pon_details(post_response.body)
             pon_details.each do |detail|
               desc1 = detail[:desc1].gsub(/\D/, '') unless detail[:desc1].nil?
@@ -74,15 +72,14 @@ class PonAnalitycsController < ApplicationController
           end
         end
       rescue StandardError => e
-        Rails.logger.error "Erro ao processar OLT #{olt_name} (IP: #{ip}): #{e.message}"
-        sheet.add_row ["Erro ao processar OLT: #{olt_name}", "Verifique os logs para mais detalhes"]
+        Rails.logger.error "Erro ao processar OLT com ID: #{olt_id} (IP: #{ip}): #{e.message}"
+        sheet.add_row ["Erro ao processar OLT com ID: #{olt_id}", "Verifique os logs para mais detalhes"]
       end
     
       package.serialize(excel_file_path)
       
-      # Gere um link de download e envie para o navegador
       send_data File.read(excel_file_path), type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx"
-    end     
+    end      
 
   def analytics_olt
       valid_olts = fetch_valid_olts
