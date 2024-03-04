@@ -6,7 +6,7 @@ require 'thread'
 
 class PonAnalitycsController < ApplicationController
   include HTTParty
-  base_uri 'http://192.168.69.80:3000'
+  base_uri 'http://localhost:3000' 
   before_action :set_semaphore
 
   def execute_command
