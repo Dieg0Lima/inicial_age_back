@@ -27,35 +27,34 @@ class PonAnalitycsController < ApplicationController
       @semaphore = Mutex.new
     end
 
-  def analitycs_olt
-    valid_olts = fetch_valid_olts
-
-    excel_file_path = Rails.root.join('tmp', "PON_Details_#{Time.now.to_i}.xlsx")
-    package = Axlsx::Package.new
-    workbook = package.workbook
-    sheet = workbook.add_worksheet(name: "PON Details")
-    sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "Distance", "Contrato", "Status"]
-
-    valid_olts.each do |olt|
+    def analitycs_olt(olt_id)
+      olt = fetch_olt_by_id(olt_id)
+    
+      excel_file_path = Rails.root.join('tmp', "PON_Details_#{Time.now.to_i}.xlsx")
+      package = Axlsx::Package.new
+      workbook = package.workbook
+      sheet = workbook.add_worksheet(name: "PON Details")
+      sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "Distance", "Contrato", "Status"]
+    
       olt_name = olt[:olt_name]
-
+    
       begin
-        ip = fetch_ip_from_olt_id(olt[:id])
+        ip = fetch_ip_from_olt_id(olt_id)
         if ip.nil?
           raise StandardError.new("IP não encontrado para OLT #{olt_name}")
         end
-
+    
         (1..16).each do |slot|
           (1..16).each do |pon|
             command = "show equipment ont status pon 1/1/#{slot}/#{pon}"
             post_response = post_olt_command(ip, command)
-
+    
             if post_response.body.include?("board is not planned")
               break
             end
-
+    
             next unless post_response.success?
-
+    
             pon_details = extract_pon_details(post_response.body)
             pon_details.each do |detail|
               desc1 = detail[:desc1].gsub(/\D/, '') unless detail[:desc1].nil?
@@ -78,11 +77,12 @@ class PonAnalitycsController < ApplicationController
         Rails.logger.error "Erro ao processar OLT #{olt_name} (IP: #{ip}): #{e.message}"
         sheet.add_row ["Erro ao processar OLT: #{olt_name}", "Verifique os logs para mais detalhes"]
       end
-    end
-
-    package.serialize(excel_file_path)
-    send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx", disposition: "attachment"
-  end
+    
+      package.serialize(excel_file_path)
+      
+      # Gere um link de download e envie para o navegador
+      send_data File.read(excel_file_path), type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx"
+    end     
 
   def analytics_olt
       valid_olts = fetch_valid_olts
@@ -191,38 +191,38 @@ class PonAnalitycsController < ApplicationController
         end
     end
 
-  def extract_pon_details(body)
-    pon_details_regex =
-      /(\d+\/\d+\/\d+\/\d+)\s+    # PON
-      (\d+\/\d+\/\d+\/\d+\/\d+)\s+  # ONT
-      (ALCL:[A-F0-9]+)\s+          # Serial Number
-      (up|down)\s+                 # Admin Status
-      (up|down|invalid)\s+         # Oper Status
-      (-?\d+\.\d+|invalid)\s+      # OLT-RX-SIG Level (dbm), considerando 'invalid' e números com possível sinal negativo
-      (-?\d+\.\d+|invalid)\s+      # ONT-OLT Distance (km), mesmo que acima
-      (\d+|-)\s+                   # Desc1, ajustado para capturar qualquer quantidade de dígitos ou '-'
-      (-)\s*                       # Desc2, considerando '-' ou espaço
-      (\w+|undefined)/x            # Hostname, pode ser 'undefined' ou uma palavra
-
-    matches = body.scan(pon_details_regex)
-
-    pon_details = matches.reject { |match| match.include?("alarm") }
-
-    pon_details.map do |match|
-      {
-        slot: match[0],
-        pon: match[1],
-        serial: match[2],
-        admin_status: match[3],
-        oper_status: match[4],
-        olt_rx_sig_level: match[5],
-        ont_olt_distance: match[6],
-        desc1: match[7],
-        desc2: match[8],
-        hostname: match[9]
-      }
-    end
-  end
+    def extract_pon_details(body)
+      pon_details_regex =
+        /(\d+\/\d+\/\d+\/\d+)\s+    # PON
+        (\d+\/\d+\/\d+\/\d+\/\d+)\s+  # ONT
+        (ALCL:[A-F0-9]+)\s+          # Serial Number
+        (up|down)\s+                 # Admin Status
+        (up|down|invalid)\s+         # Oper Status
+        (-?\d+\.\d+|invalid)\s+      # OLT-RX-SIG Level (dbm), considerando 'invalid' e números com possível sinal negativo
+        (-?\d+\.\d+|invalid)\s+      # ONT-OLT Distance (km), mesmo que acima
+        (\S+)\s+                     # Desc1, ajustado para capturar qualquer sequência de caracteres que não sejam espaços
+        (-)\s*                       # Desc2, considerando '-' ou espaço
+        (\w+|undefined)/x            # Hostname, pode ser 'undefined' ou uma palavra
+    
+      matches = body.scan(pon_details_regex)
+    
+      pon_details = matches.reject { |match| match.include?("alarm") }
+    
+      pon_details.map do |match|
+        {
+          slot: match[0],
+          pon: match[1],
+          serial: match[2],
+          admin_status: match[3],
+          oper_status: match[4],
+          olt_rx_sig_level: match[5],
+          ont_olt_distance: match[6],
+          desc1: match[7],
+          desc2: match[8],
+          hostname: match[9]
+        }
+      end
+    end    
 
   def fetch_ip_from_olt_id(olt_id)
     response = self.class.get("/equipamento/#{olt_id}")
