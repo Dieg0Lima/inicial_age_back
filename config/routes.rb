@@ -36,7 +36,11 @@ Rails.application.routes.draw do
       get '/get_id', to: 'connection_integration_voalle#get_id'
       get '/pon_analitycs', to: 'pon_analitycs#execute_command'
       # Adicione mais rotas aqui conforme necessário
-    end
+  end
+
+  namespace :signin do
+    post 'login', to: 'login#create'
+  end  
 
 end
 

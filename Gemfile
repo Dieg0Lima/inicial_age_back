@@ -36,6 +36,8 @@ gem 'csv'
 
 gem 'net-ldap'
 
+gem 'rspec-mocks'
+
 gem 'jwt'
 
 group :development, :test, :production do

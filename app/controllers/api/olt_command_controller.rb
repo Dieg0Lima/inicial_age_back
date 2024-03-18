@@ -21,6 +21,11 @@ class OltCommandController < ApplicationController
       puts "Telnet connection established."
 
       result = telnet.cmd(command_to_execute)
+
+      # Limpeza dos dados recebidos
+      result.gsub!('*', '') # Remove asteriscos
+      result.squeeze!(" ") # Opcional: condensa múltiplos espaços em um único espaço
+
       puts result
 
       telnet.close
@@ -32,4 +37,5 @@ class OltCommandController < ApplicationController
     end
   end
 end
+
 end
