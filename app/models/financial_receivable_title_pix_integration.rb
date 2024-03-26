@@ -1,2 +1,0 @@
-class FinancialReceivableTitlePixIntegration < ApplicationRecord
-end

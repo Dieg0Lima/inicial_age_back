@@ -1,6 +1,3 @@
-class AuthenticationContract < ApplicationRecord
-  belongs_to :authentication_access_point
-  belongs_to :authentication_address_list
-  belongs_to :service_product
+class AuthenticationContract < VoalleDataBase
   belongs_to :contract
 end

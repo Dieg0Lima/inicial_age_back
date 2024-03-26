@@ -1,2 +1,0 @@
-class ContractItem < ApplicationRecord
-end

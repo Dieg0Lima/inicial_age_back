@@ -1,2 +1,0 @@
-class CommunicationRuler < ApplicationRecord
-end

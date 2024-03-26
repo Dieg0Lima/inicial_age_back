@@ -1,2 +1,0 @@
-class CreditScoreApprovalRequest < ApplicationRecord
-end

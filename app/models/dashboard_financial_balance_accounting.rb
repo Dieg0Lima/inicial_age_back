@@ -1,2 +1,0 @@
-class DashboardFinancialBalanceAccounting < ApplicationRecord
-end

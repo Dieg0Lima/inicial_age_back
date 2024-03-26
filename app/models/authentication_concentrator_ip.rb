@@ -1,2 +1,0 @@
-class AuthenticationConcentratorIp < ApplicationRecord
-end

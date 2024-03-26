@@ -1,2 +1,0 @@
-class InvoiceNoteContract < ApplicationRecord
-end

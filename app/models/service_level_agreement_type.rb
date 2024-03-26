@@ -1,2 +1,0 @@
-class ServiceLevelAgreementType < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class SapIntegration < ApplicationRecord
-end

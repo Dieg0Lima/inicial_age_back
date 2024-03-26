@@ -1,2 +1,0 @@
-class FinancialCollectionType < ApplicationRecord
-end

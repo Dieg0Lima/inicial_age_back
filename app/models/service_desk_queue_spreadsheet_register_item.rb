@@ -1,2 +1,0 @@
-class ServiceDeskQueueSpreadsheetRegisterItem < ApplicationRecord
-end

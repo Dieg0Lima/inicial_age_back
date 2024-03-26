@@ -1,2 +1,0 @@
-class ProjectBacker < ApplicationRecord
-end

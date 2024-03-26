@@ -1,2 +1,0 @@
-class FinancialDebtIntegrationRequest < ApplicationRecord
-end

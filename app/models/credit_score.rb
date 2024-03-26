@@ -1,2 +1,0 @@
-class CreditScore < ApplicationRecord
-end

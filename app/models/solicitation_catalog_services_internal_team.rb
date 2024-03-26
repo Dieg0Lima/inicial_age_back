@@ -1,2 +1,0 @@
-class SolicitationCatalogServicesInternalTeam < ApplicationRecord
-end

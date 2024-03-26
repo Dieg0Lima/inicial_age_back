@@ -1,2 +1,0 @@
-class ReportIncident < ApplicationRecord
-end

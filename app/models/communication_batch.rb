@@ -1,2 +1,0 @@
-class CommunicationBatch < ApplicationRecord
-end

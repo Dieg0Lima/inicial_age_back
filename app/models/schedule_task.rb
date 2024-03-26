@@ -1,2 +1,0 @@
-class ScheduleTask < ApplicationRecord
-end

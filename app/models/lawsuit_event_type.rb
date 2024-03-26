@@ -1,2 +1,0 @@
-class LawsuitEventType < ApplicationRecord
-end

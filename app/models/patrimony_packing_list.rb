@@ -1,2 +1,0 @@
-class PatrimonyPackingList < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class CrmCampaignUtilityType < ApplicationRecord
-end

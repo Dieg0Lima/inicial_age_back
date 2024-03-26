@@ -1,2 +1,0 @@
-class PestsServiceProduct < ApplicationRecord
-end

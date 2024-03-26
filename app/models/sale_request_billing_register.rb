@@ -1,2 +1,0 @@
-class SaleRequestBillingRegister < ApplicationRecord
-end

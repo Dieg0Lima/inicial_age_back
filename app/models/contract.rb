@@ -1,11 +1,5 @@
-class Contract < ApplicationRecord
+class Contract < VoalleDataBase
+  belongs_to :person, foreign_key: "client_id", class_name: "Person"
   has_many :authentication_contracts
-  belongs_to :people_address
-  belongs_to :people
-  has_many :contract_service_tags
-  has_many :financial_receivable_titles
-  belongs_to :client, class_name: 'People', foreign_key: 'client_id'
-  has_many :assignment_incidents
-  has_many :authentication_contract
+  has_many :people_addresses
 end
-

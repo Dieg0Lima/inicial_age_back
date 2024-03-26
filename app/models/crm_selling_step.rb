@@ -1,2 +1,0 @@
-class CrmSellingStep < ApplicationRecord
-end

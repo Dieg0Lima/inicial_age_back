@@ -1,2 +1,0 @@
-class CreditScoreRule < ApplicationRecord
-end

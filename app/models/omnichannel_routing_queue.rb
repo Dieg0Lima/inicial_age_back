@@ -1,2 +1,0 @@
-class OmnichannelRoutingQueue < ApplicationRecord
-end

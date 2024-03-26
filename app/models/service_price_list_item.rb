@@ -1,2 +1,0 @@
-class ServicePriceListItem < ApplicationRecord
-end

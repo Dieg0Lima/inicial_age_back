@@ -1,2 +1,0 @@
-class SapOndemandIntegration < ApplicationRecord
-end

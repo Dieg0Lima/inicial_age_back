@@ -1,2 +1,0 @@
-class FinancersNature < ApplicationRecord
-end

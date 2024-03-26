@@ -1,2 +1,0 @@
-class FinancialDebtIntegrationParameter < ApplicationRecord
-end

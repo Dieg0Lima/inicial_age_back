@@ -1,2 +1,0 @@
-class OmnichannelAgentStatus < ApplicationRecord
-end

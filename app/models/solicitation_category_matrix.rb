@@ -1,2 +1,0 @@
-class SolicitationCategoryMatrix < ApplicationRecord
-end

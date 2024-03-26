@@ -1,2 +1,0 @@
-class FinancialIntegrationsFee < ApplicationRecord
-end

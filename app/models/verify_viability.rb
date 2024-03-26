@@ -1,2 +1,0 @@
-class VerifyViability < ApplicationRecord
-end

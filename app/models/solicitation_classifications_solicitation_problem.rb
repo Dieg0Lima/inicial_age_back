@@ -1,2 +1,0 @@
-class SolicitationClassificationsSolicitationProblem < ApplicationRecord
-end

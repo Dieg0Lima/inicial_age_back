@@ -1,2 +1,0 @@
-class ProjectModelUpload < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class OmnichannelUserEvent < ApplicationRecord
-end

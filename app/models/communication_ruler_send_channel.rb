@@ -1,2 +1,0 @@
-class CommunicationRulerSendChannel < ApplicationRecord
-end

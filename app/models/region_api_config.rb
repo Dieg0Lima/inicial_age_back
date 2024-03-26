@@ -1,2 +1,0 @@
-class RegionApiConfig < ApplicationRecord
-end

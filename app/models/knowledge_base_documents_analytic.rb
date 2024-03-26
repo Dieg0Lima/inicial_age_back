@@ -1,2 +1,0 @@
-class KnowledgeBaseDocumentsAnalytic < ApplicationRecord
-end

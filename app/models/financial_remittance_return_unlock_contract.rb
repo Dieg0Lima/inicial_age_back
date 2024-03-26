@@ -1,2 +1,0 @@
-class FinancialRemittanceReturnUnlockContract < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class PhoneDomain < ApplicationRecord
-end

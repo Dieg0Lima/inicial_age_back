@@ -1,2 +1,0 @@
-class IncidentStatus < ApplicationRecord
-end

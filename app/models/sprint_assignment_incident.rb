@@ -1,2 +1,0 @@
-class SprintAssignmentIncident < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class SumDashboardOperationalFinancial < ApplicationRecord
-end

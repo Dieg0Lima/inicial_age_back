@@ -1,2 +1,0 @@
-class PatrimoniesServiceTag < ApplicationRecord
-end

@@ -40,7 +40,15 @@ Rails.application.routes.draw do
 
   namespace :signin do
     post 'login', to: 'login#create'
-  end  
+  end
+
+  namespace :authentication do
+    post 'validate_token', to: 'validate#authenticate_request'
+  end
+
+  namespace :attendant do
+    post 'search', to: 'search_client#search'
+  end
 
 end
 

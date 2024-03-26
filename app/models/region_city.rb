@@ -1,2 +1,0 @@
-class RegionCity < ApplicationRecord
-end

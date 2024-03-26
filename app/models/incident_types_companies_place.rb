@@ -1,2 +1,0 @@
-class IncidentTypesCompaniesPlace < ApplicationRecord
-end

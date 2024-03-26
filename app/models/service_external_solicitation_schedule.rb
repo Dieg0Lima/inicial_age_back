@@ -1,2 +1,0 @@
-class ServiceExternalSolicitationSchedule < ApplicationRecord
-end

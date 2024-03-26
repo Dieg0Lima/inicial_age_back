@@ -1,2 +1,0 @@
-class KnowledgeBaseDocumentPerson < ApplicationRecord
-end

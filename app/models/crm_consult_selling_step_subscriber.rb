@@ -1,2 +1,0 @@
-class CrmConsultSellingStepSubscriber < ApplicationRecord
-end

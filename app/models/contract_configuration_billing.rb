@@ -1,2 +1,0 @@
-class ContractConfigurationBilling < ApplicationRecord
-end

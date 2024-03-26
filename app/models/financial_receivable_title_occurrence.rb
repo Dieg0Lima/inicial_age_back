@@ -1,2 +1,0 @@
-class FinancialReceivableTitleOccurrence < ApplicationRecord
-end

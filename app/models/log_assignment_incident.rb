@@ -1,2 +1,0 @@
-class LogAssignmentIncident < ApplicationRecord
-end

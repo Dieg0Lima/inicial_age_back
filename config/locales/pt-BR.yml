@@ -1,0 +1,3 @@
+pt-BR:
+  errors:
+    invalid_credentials: "Credenciais inválidas. Por favor, verifique seu nome de usuário e senha."

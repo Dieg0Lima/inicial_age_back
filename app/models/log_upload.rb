@@ -1,2 +1,0 @@
-class LogUpload < ApplicationRecord
-end

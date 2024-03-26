@@ -1,2 +1,0 @@
-class NewsUpload < ApplicationRecord
-end

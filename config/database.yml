@@ -6,30 +6,36 @@
 #
 default: &default
   adapter: postgresql
+  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
+  username: age_atende_user
+  password: <%= ENV['AGE_ATENDE_DATABASE_PASSWORD'] %>
+  host: localhost
+
+voalle_db:
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  host: 206.204.248.86
+  username: <%= ENV['AGE_VOALLE_DATABASE_USER'] %>
+  password: <%= ENV['AGE_VOALLE_DATABASE_PASSWORD'] %>
+  database: dbemp00489
+
 
 development:
-    <<: *default
-    adapter: postgresql
-    encoding: unicode
-    database: dbemp00489
-    username: cliente_s
-    password: fD22ev293gh3dB3n
-    host: 206.204.248.86
+  <<: *default
+  database: age_atende_back_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: storage/test.postgresql
+  database: age_atende_back_test
 
 production:
-    <<: *default
-    adapter: postgresql
-    encoding: unicode
-    database: dbemp00489
-    username: cliente_s
-    password: fD22ev293gh3dB3n
-    host: 206.204.248.86
+  <<: *default
+  database: age_atende_back_production
+  username: age_atende_production_user
+  password: <%= ENV['AGE_ATENDE_DATABASE_PRODUCTION_PASSWORD'] %>
+  host: production_database_host
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>

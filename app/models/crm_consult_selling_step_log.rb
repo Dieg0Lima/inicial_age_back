@@ -1,2 +1,0 @@
-class CrmConsultSellingStepLog < ApplicationRecord
-end

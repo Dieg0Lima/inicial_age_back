@@ -1,2 +1,0 @@
-class RegionMainResourcesAdministrator < ApplicationRecord
-end

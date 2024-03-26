@@ -1,2 +1,0 @@
-class ProjectPortfolio < ApplicationRecord
-end

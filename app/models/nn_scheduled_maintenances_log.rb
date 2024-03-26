@@ -1,2 +1,0 @@
-class NnScheduledMaintenancesLog < ApplicationRecord
-end

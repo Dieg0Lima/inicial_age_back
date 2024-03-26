@@ -1,2 +1,0 @@
-class MassiveIncidentAuthenticationContract < ApplicationRecord
-end

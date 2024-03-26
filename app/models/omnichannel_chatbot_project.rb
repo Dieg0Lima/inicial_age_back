@@ -1,2 +1,0 @@
-class OmnichannelChatbotProject < ApplicationRecord
-end

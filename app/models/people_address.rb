@@ -1,3 +1,4 @@
-class PeopleAddress < ApplicationRecord
-    self.table_name = 'people_addresses'
+class PeopleAddress < VoalleDataBase
+    belongs_to :person, foreign_key: "person_id", class_name: "Person"
+    belongs_to :contract
 end

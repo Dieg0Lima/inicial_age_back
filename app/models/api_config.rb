@@ -1,2 +1,0 @@
-class ApiConfig < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class DocumentsTemplate < ApplicationRecord
-end

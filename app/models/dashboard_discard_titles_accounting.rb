@@ -1,2 +1,0 @@
-class DashboardDiscardTitlesAccounting < ApplicationRecord
-end

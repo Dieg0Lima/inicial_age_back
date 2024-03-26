@@ -1,2 +1,0 @@
-class DashboardParametersTrust < ApplicationRecord
-end

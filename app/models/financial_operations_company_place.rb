@@ -1,2 +1,0 @@
-class FinancialOperationsCompanyPlace < ApplicationRecord
-end

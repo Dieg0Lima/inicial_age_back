@@ -1,2 +1,0 @@
-class AssignmentProfilePersonTab < ApplicationRecord
-end

@@ -17,9 +17,12 @@ module InicialBackend
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
     config.autoload_paths << Rails.root.join('app/services')
+    config.autoload_paths += %W(#{config.root}/app/models/age_atende_db)
 
     config.active_record.schema_format = :sql
     config.active_record.maintain_test_schema = false
+
+    config.i18n.default_locale = :'pt-BR'
 
     # Configuration for the application, engines, and railties goes here.
     #

@@ -1,2 +1,0 @@
-class NnMassiveIncident < ApplicationRecord
-end

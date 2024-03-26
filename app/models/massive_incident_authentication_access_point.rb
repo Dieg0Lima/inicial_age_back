@@ -1,2 +1,0 @@
-class MassiveIncidentAuthenticationAccessPoint < ApplicationRecord
-end

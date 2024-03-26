@@ -1,2 +1,0 @@
-class RegionMainResourcesCatalogService < ApplicationRecord
-end

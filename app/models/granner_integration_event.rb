@@ -1,2 +1,0 @@
-class GrannerIntegrationEvent < ApplicationRecord
-end

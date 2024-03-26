@@ -1,2 +1,0 @@
-class LawsuitExpedientNotesEvent < ApplicationRecord
-end

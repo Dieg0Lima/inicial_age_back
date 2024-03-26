@@ -1,2 +1,0 @@
-class PushModel < ApplicationRecord
-end

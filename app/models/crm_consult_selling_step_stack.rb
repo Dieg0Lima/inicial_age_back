@@ -1,2 +1,0 @@
-class CrmConsultSellingStepStack < ApplicationRecord
-end

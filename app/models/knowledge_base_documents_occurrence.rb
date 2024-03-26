@@ -1,2 +1,0 @@
-class KnowledgeBaseDocumentsOccurrence < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class CrmOpportunityBudgetItem < ApplicationRecord
-end
