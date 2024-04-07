@@ -30,6 +30,10 @@ gem 'nokogiri'
 
 gem 'caxlsx'
 
+gem 'axlsx'
+
+gem 'axlsx_rails'
+
 gem 'httparty'
 
 gem 'csv'

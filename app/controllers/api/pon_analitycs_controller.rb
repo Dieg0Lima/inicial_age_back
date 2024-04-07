@@ -1,10 +1,11 @@
 module Api
   require "caxlsx"
   require "thread"
+  require "open3"
 
   class PonAnalitycsController < ApplicationController
     include HTTParty
-    base_uri "http://localhost:3000/"
+    base_uri "http://192.168.69.80:3000/"
     before_action :set_semaphore
 
     def execute_command
@@ -27,166 +28,96 @@ module Api
       @semaphore = Mutex.new
     end
 
-    def analitycs_olt
-      olt_id = params[:olt_id]
+    require "open3"
 
-      excel_file_path = Rails.root.join("tmp", "PON_Details_#{Time.now.to_i}.xlsx")
-      package = Axlsx::Package.new
-      workbook = package.workbook
-      sheet = workbook.add_worksheet(name: "PON Details")
-      sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "Distance", "Contrato", "Status"]
-
-      begin
-        olt_info = fetch_olt(olt_id)
-        if olt_info[:error]
-          raise StandardError.new(olt_info[:error])
-        end
-        olt_name = olt_info[:olt_name]
-
-        ip = fetch_ip_from_olt_id(olt_id)
-        if ip.nil?
-          raise StandardError.new("IP não encontrado para OLT com ID: #{olt_id}")
-        end
-
-        (1..8).each do |slot|
-          (1..16).each do |pon|
-            command = <<-COMMAND
-                  environment inhibit-alarms
-                  show equipment ont status pon 1/1/#{slot}/#{pon}
-                COMMAND
-            post_response = post_olt_command(ip, command)
-
-            if post_response.body.include?("board is not planned")
-              break
-            end
-
-            next unless post_response.success?
-
-            pon_details = extract_pon_details(post_response.body)
-            pon_details.each do |detail|
-              desc1 = detail[:desc1].gsub(/\D/, "") unless detail[:desc1].nil?
-              contract_details = fetch_client_details_by_contract(detail[:desc1])
-              sheet.add_row [
-                olt_name,
-                "#{slot}",
-                "#{pon}",
-                detail[:serial],
-                detail[:admin_status],
-                detail[:oper_status],
-                detail[:ont_olt_distance],
-                desc1,
-                contract_details.fetch(:contract_status, "N/A"),
-              ]
-            end
-          end
-        end
-      rescue StandardError => e
-        Rails.logger.error "Erro ao processar OLT com ID: #{olt_id} (IP: #{ip}): #{e.message}"
-        sheet.add_row ["Erro ao processar OLT com ID: #{olt_id}", "Verifique os logs para mais detalhes"]
-      end
-
-      package.serialize(excel_file_path)
-
-      send_data File.read(excel_file_path), type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx"
-    end
-
-    def analytics_olt
-      valid_olts = fetch_valid_olts
-
-      excel_file_path = Rails.root.join("tmp", "PON_Details_#{Time.now.to_i}.xlsx")
-      package = Axlsx::Package.new
-      workbook = package.workbook
-      sheet = workbook.add_worksheet(name: "PON Details")
-      sheet.add_row ["OLT_Name", "SLOT", "PON", "Serial", "Admin_Status", "Oper_Status", "OLT-RX-SIG Level", "Distance", "Contrato", "Status"]
-
-      threads = []
-      valid_olts.each_slice(4) do |olts_slice|
-        olts_slice.each do |olt|
-          threads << Thread.new { process_olt(olt, sheet) }
-        end
-        threads.each(&:join)
-        threads.clear
-      end
-
-      @semaphore.synchronize do
-        package.serialize(excel_file_path)
-      end
-      send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx", disposition: "attachment"
-    end
+    require "concurrent"
 
     def analytics_optics
+      Rails.logger.debug "Starting analytics_optics method."
       valid_olts = fetch_valid_olts
+      Rails.logger.debug "Valid OLTS fetched: #{valid_olts.size}"
 
       excel_file_path = Rails.root.join("tmp", "OLT_OPTICS_#{Time.now.to_i}.xlsx")
+      Rails.logger.debug "Excel file path: #{excel_file_path}"
+
       package = Axlsx::Package.new
       workbook = package.workbook
       sheet = workbook.add_worksheet(name: "OLT Optics")
-      sheet.add_row ["OLT_Name", "SLOT", "PON", "PORT", "ONU_TX_SIG_Level", "ONU_RX_SIG_Level", "OLT_RX_SIG_Level", "ONU_Temperature", "ONU_Voltage", "Laser_Bias_Current"]
+      sheet.add_row ["OLT_Name", "ONT_Index", "RX_Signal_Level", "TX_Signal_Level", "Temperature", "ONU_Voltage", "Laser_Bias_Current", "OLT_RX_Signal_Level", "Serial Number", "Admin Status", "Oper Status", "ONT-OLT Distance", "Description 1", "Description 2", "Hostname"]
 
-      threads = []
-      @semaphore = Mutex.new
-      valid_olts.each_slice(1) do |olts_slice|
-        olts_slice.each do |olt|
-          threads << Thread.new { process_ont_optics(olt, sheet) }
-        end
-        threads.each(&:join)
-        threads.clear
+      valid_olts.each do |olt|
+        process_ont_optics(olt, sheet)
       end
 
-      @semaphore.synchronize do
-        package.serialize(excel_file_path)
-      end
-      send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "PON_Details.xlsx", disposition: "attachment"
+      package.serialize(excel_file_path)
+      Rails.logger.debug "Excel file serialized."
+
+      send_file excel_file_path, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename: "OLT_OPTICS_#{Time.now.to_i}.xlsx", disposition: "attachment"
+      Rails.logger.debug "Excel file sent to client."
     end
 
-    def process_ont_optics(olt, sheet)
-      olt_name = olt[:olt_name]
+    def process_ont_optics(olt, workbook)
+      username = ENV["OLT_USERNAME"]
+      password = ENV["OLT_PASSWORD"]
       ip = fetch_ip_from_olt_id(olt[:id])
-      raise StandardError, "IP não encontrado para OLT #{olt_name}" if ip.nil?
 
-      slot_range = (olt[:id] == 5 || olt[:id] == 4 || olt[:id] == 3 || olt[:id] == 1) ? (1..16) : (1..8)
+      Rails.logger.debug "IP for #{olt[:olt_name]}: #{ip}"
+      return if ip.nil?
 
-      threads = []
-      slot_range.each do |slot|
-        threads << Thread.new do
-          (1..16).each do |pon|
-            command = "show equipment ont optics 1/1/#{slot}/#{pon}"
-            post_response = post_olt_command(ip, command)
+      script_path = Rails.root.join("scripts", "olt_command_executor.py").to_s
 
-            break if post_response.body.include?("board is not planned")
-            next unless post_response.success?
+      begin
+        command = "python3 #{script_path} #{ip.shellescape} #{username.shellescape} #{password.shellescape}"
+        stdout, stderr, status = Open3.capture3(command)
 
-            pon_details = extract_ont_optics(post_response.body)
-
-            @semaphore.synchronize do
-              pon_details.each do |detail|
-                sheet.add_row [
-                                olt_name,
-                                slot.to_s,
-                                pon.to_s,
-                                port.to_s,
-                                detail[:tx_signal_level],
-                                detail[:rx_signal_level],
-                                detail[:olt_rx_sig_level],
-                                detail[:ont_temperature],
-                                detail[:ont_voltage],
-                                detail[:laser_bias_curr],
-                              ]
-              end
-            end
-          end
+        unless status.success?
+          Rails.logger.error "Failed to execute command for OLT #{olt[:olt_name]}: #{stderr}"
+          return
         end
+
+        merged_data = JSON.parse(stdout)
+
+        merged_data.each do |data|
+          workbook.add_row [
+            olt[:olt_name],             # OLT Name
+            data["ont_idx"],            # ONT Index
+            data["rx_signal_level"],    # RX Signal Level
+            data["tx_signal_level"],    # TX Signal Level
+            data["temperature"],        # Temperature
+            data["ont_voltage"],        # ONU Voltage
+            data["bias_current"],       # Laser Bias Current
+            data["olt_rx_sig_level"],   # OLT RX Signal Level
+            data["sernum"],             # Serial Number
+            data["admin_status"],       # Admin Status
+            data["oper_status"],        # Oper Status
+            data["ont_olt_distance"],   # ONT-OLT Distance
+            data["desc1"],              # Description 1
+            data["desc2"],              # Description 2
+            data["hostname"],           # hostname
+          ]
+        end
+      rescue JSON::ParserError => e
+        Rails.logger.error "Failed to parse JSON from Python script: #{e.message}"
+      rescue => e
+        Rails.logger.error "An unexpected error occurred: #{e.message}"
       end
-      threads.each(&:join)
-    rescue StandardError => e
-      Rails.logger.error "Erro ao processar OLT #{olt_name}: #{e.message}"
-      @semaphore.synchronize do
-        sheet.add_row ["Erro ao processar OLT: #{olt_name}", "Verifique os logs para mais detalhes"]
+    end
+
+    def extract_optics_data(output)
+      output.scan(/(?<ont_idx>\S+)\s+(?<rx_signal_level>\S+)\s+(?<tx_signal_level>\S+)\s+(?<temperature>\S+)\s+(?<ont_voltage>\S+)\s+(?<bias_current>\S+)\s+(?<olt_rx_sig_level>\S+)/).map do |match|
+        {
+          "ont-idx" => match[0],
+          "rx-signal-level" => match[1],
+          "tx-signal-level" => match[2],
+          "temperature" => match[3],
+          "ont-voltage" => match[4],
+          "bias-current" => match[5],
+          "olt-rx-sig-level" => match[6],
+        }
       end
     end
 
     def process_olt(olt, sheet)
-      olt_name = olt[:olt_name]
       begin
         ip = fetch_ip_from_olt_id(olt[:id])
         if ip.nil?
@@ -199,7 +130,7 @@ module Api
                   environment inhibit-alarms
                   show equipment ont status pon 1/1/#{slot}/#{pon}
                 COMMAND
-            post_response = post_olt_command(ip, command)
+            post_response = execute_olt_command(ip, command)
 
             if post_response.body.include?("board is not planned")
               break
@@ -214,17 +145,17 @@ module Api
 
               @semaphore.synchronize do
                 sheet.add_row [
-                  olt_name,
-                  "#{slot}",
-                  "#{pon}",
-                  detail[:serial],
-                  detail[:admin_status],
-                  detail[:oper_status],
-                  detail[:olt_rx_sig_level],
-                  detail[:ont_olt_distance],
-                  desc1,
-                  contract_details.fetch(:contract_status, "N/A"),
-                ]
+                                olt_name,
+                                "#{slot}",
+                                "#{pon}",
+                                detail[:serial],
+                                detail[:admin_status],
+                                detail[:oper_status],
+                                detail[:olt_rx_sig_level],
+                                detail[:ont_olt_distance],
+                                desc1,
+                                contract_details.fetch(:contract_status, "N/A"),
+                              ]
               end
             end
           end
@@ -272,7 +203,7 @@ module Api
     def fetch_valid_olts
       AuthenticationAccessPoint
         .where("title LIKE ?", "BSA%")
-        .where.not(id: [2, 9, 7, 75, 77, 68, 69, 32, 67, 8, 75])
+        .where(id: 23)
         .select(:id, :title)
         .map do |olt|
         { id: olt.id, olt_name: olt.title }
@@ -342,11 +273,10 @@ module Api
         JSON.parse(response.body)["ip"]
       else
         Rails.logger.error "Erro ao obter o IP do equipamento com ID: #{olt_id}"
-        nil
       end
     end
 
-    def post_olt_command(ip, command)
+    def execute_olt_command(ip, command)
       self.class.post("/api/olt_command/", body: { ip: ip, command: command })
     end
 
@@ -355,6 +285,15 @@ module Api
         yield(response.body)
       else
         render json: { error: "Erro ao executar o comando na OLT." }, status: :bad_request
+      end
+    end
+
+    def determine_slot_range(olt_id)
+      case olt_id
+      when 5, 4, 3, 1
+        (1..16)
+      else
+        (1..8)
       end
     end
   end

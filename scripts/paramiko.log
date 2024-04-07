@@ -1,0 +1,35 @@
+DEB [20240401-09:13:56.401] thr=1   paramiko.transport: starting thread (client mode): 0xfde27e20
+DEB [20240401-09:13:56.401] thr=1   paramiko.transport: Local version/idstring: SSH-2.0-paramiko_2.9.3
+DEB [20240401-09:13:56.619] thr=1   paramiko.transport: Remote version/idstring: SSH-2.0-IPSSH-1.12.0
+INF [20240401-09:13:56.619] thr=1   paramiko.transport: Connected (version 2.0, client IPSSH-1.12.0)
+DEB [20240401-09:13:56.620] thr=1   paramiko.transport: === Key exchange possibilities ===
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: kex algos: ecdh-sha2-nistp256, diffie-hellman-group14-sha1, diffie-hellman-group1-sha1
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: server key: ssh-rsa
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: client encrypt: aes128-ctr, aes192-ctr, aes256-ctr, aes128-cbc, aes192-cbc, aes256-cbc, 3des-cbc, cast128-cbc, blowfish-cbc, arcfour, des-cbc
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: server encrypt: aes128-ctr, aes192-ctr, aes256-ctr, aes128-cbc, aes192-cbc, aes256-cbc, 3des-cbc, cast128-cbc, blowfish-cbc, arcfour, des-cbc
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: client mac: hmac-sha2-256, hmac-sha2-512, hmac-sha1-96, hmac-sha1, hmac-md5-96, hmac-md5
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: server mac: hmac-sha2-256, hmac-sha2-512, hmac-sha1-96, hmac-sha1, hmac-md5-96, hmac-md5
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: client compress: none
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: server compress: none
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: client lang: <none>
+DEB [20240401-09:13:56.621] thr=1   paramiko.transport: server lang: <none>
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: kex follows: False
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: === Key exchange agreements ===
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: Kex: ecdh-sha2-nistp256
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: HostKey: ssh-rsa
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: Cipher: aes128-ctr
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: MAC: hmac-sha2-256
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: Compression: none
+DEB [20240401-09:13:56.622] thr=1   paramiko.transport: === End of kex handshake ===
+DEB [20240401-09:13:56.766] thr=1   paramiko.transport: kex engine KexNistp256 specified hash_algo <built-in function openssl_sha256>
+DEB [20240401-09:13:56.768] thr=1   paramiko.transport: Switch to new keys ...
+DEB [20240401-09:13:56.768] thr=2   paramiko.transport: Adding ssh-rsa host key for 10.5.14.8: b'1c434ce6f9c34f7106d986df326bf709'
+DEB [20240401-09:13:56.772] thr=1   paramiko.transport: userauth is OK
+INF [20240401-09:13:56.786] thr=1   paramiko.transport: Auth banner: b'  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\r\n  $   ##    ##  #######  ##    ## ####    ###     $  \r\n  $   ###   ## ##     ## ##   ##   ##    ## ##    $  \r\n  $   ####  ## ##     ## ##  ##    ##   ##   ##   $  \r\n  $   ## ## ## ##     ## #####     ##  ##     ##  $  \r\n  $   ##  #### ##     ## ##  ##    ##  #########  $  \r\n  $   ##   ### ##     ## ##   ##   ##  ##     ##  $  \r\n  $   ##    ##  #######  ##    ## #### ##     ##  $  \r\n  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ \r\n  \n\r***********************\r\n*ATENCAO: ACESSO SOMENTE PARA PESSOAS AUTORIZADAS. DESCONECTE-SE!  *\n\r*ATTENTION: ACCESS ONLY AUTHORIZED PERSONS. DISCONNECT IMMEDIATELY!\n\r************************\n\r  #  PROVIDED BY: AGE TELECOM  #\n\r  #  OLT NOKIA - 7360 FX-4 #\n\r  #  NAME: BSA.SIA1.OLT.02  # \n\r\n\n'
+INF [20240401-09:13:56.833] thr=1   paramiko.transport: Authentication (password) successful!
+DEB [20240401-09:13:56.833] thr=2   paramiko.transport: [chan 0] Max packet in: 32768 bytes
+DEB [20240401-09:13:56.837] thr=1   paramiko.transport: [chan 0] Max packet out: 4096 bytes
+DEB [20240401-09:13:56.838] thr=1   paramiko.transport: Secsh channel 0 opened.
+DEB [20240401-09:13:56.842] thr=1   paramiko.transport: [chan 0] Sesch channel 0 request ok
+DEB [20240401-09:13:56.848] thr=1   paramiko.transport: [chan 0] EOF sent (0)
+DEB [20240401-09:13:56.848] thr=1   paramiko.transport: Dropping user packet because connection is dead.
