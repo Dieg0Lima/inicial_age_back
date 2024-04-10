@@ -6,7 +6,6 @@ module ConnectionDetails
 
       if authentication_contract
         authentication_access_point = authentication_contract.authentication_access_point
-        equipment_port_number = authentication_contract.equipment_port.to_i
         contract_data = {
           authentication_id: authentication_contract.id,
           wifi_name: authentication_contract.wifi_name,
@@ -14,7 +13,7 @@ module ConnectionDetails
           access_point: authentication_access_point ? authentication_access_point.title : "N/A",
           port_olt: authentication_contract.port_olt,
           slot_olt: authentication_contract.slot_olt,
-          equipment_port: equipment_port_number,
+          olt_id: authentication_contract.olt_id,
           equipment_serial_number: authentication_contract.equipment_serial_number,
         }
         contract_data

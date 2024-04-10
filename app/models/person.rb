@@ -4,4 +4,5 @@ class Person < VoalleDataBase
   has_many :people_addresses, foreign_key: 'person_id', class_name: 'PeopleAddress'
   has_many :assignment_incident
   has_many :assignment
+  has_many :report
 end

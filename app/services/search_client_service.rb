@@ -4,10 +4,6 @@ class SearchClientService
   end
 
   def search
-    last_addresses_subquery = PeopleAddress.select("DISTINCT ON (people_addresses.person_id) people_addresses.*")
-                                           .order("people_addresses.person_id, people_addresses.id DESC")
-                                           .to_sql
-
     select_columns = %w[
       authentication_contracts.id
       authentication_contracts.contract_id
@@ -21,31 +17,33 @@ class SearchClientService
       people.email
       people.cell_phone_1
       people.cell_phone_2
-      last_people_addresses.neighborhood
-      last_people_addresses.street
-      last_people_addresses.postal_code
+      latest_address.neighborhood
+      latest_address.street
+      latest_address.postal_code
     ].join(", ")
+
+    last_addresses_subquery = PeopleAddress.select("DISTINCT ON (person_id) *")
+                                           .order("person_id, id DESC")
+                                           .to_sql
 
     if numeric?(@value)
       results = AuthenticationContract.joins(contract: :person)
-                                      .joins("JOIN (#{last_addresses_subquery}) as last_people_addresses ON people.id = last_people_addresses.person_id")
+                                      .joins("INNER JOIN (#{last_addresses_subquery}) latest_address ON latest_address.person_id = people.id")
                                       .select(select_columns)
                                       .where("authentication_contracts.contract_id = ?", @value.to_i)
-
       return results if results.exists?
     end
 
-    name_results = AuthenticationContract.joins(contract: { person: :people_addresses })
-                                           .joins("JOIN (#{last_addresses_subquery}) as last_people_addresses ON people.id = last_people_addresses.person_id")
-                                           .select(select_columns)
-                                           .where("people.name ILIKE ?", "%#{@value}%")
-
+    name_results = AuthenticationContract.joins(contract: :person)
+                                         .joins("INNER JOIN (#{last_addresses_subquery}) latest_address ON latest_address.person_id = people.id")
+                                         .select(select_columns)
+                                         .where("people.name ILIKE ?", "%#{@value}%")
     return name_results if name_results.exists?
 
     conditions = build_conditions(AuthenticationContract.column_names - %w[id created_at updated_at])
 
     AuthenticationContract.joins(contract: :person)
-                          .joins("JOIN (#{last_addresses_subquery}) as last_people_addresses ON people.id = last_people_addresses.person_id")
+                          .joins("INNER JOIN (#{last_addresses_subquery}) latest_address ON latest_address.person_id = people.id")
                           .select(select_columns)
                           .where(conditions.reduce(:or))
   end
@@ -59,7 +57,6 @@ class SearchClientService
   def build_conditions(columns)
     columns.map do |column|
       column_type = AuthenticationContract.columns_hash[column].type
-
       case column_type
       when :string, :text
         AuthenticationContract.arel_table[column].matches("%#{@value}%")
