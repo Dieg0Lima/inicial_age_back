@@ -39,7 +39,13 @@ module Api
           return
         end
 
-        render json: { client: client, contract: contract, connection: connection, financial: financial, assignment: assignment }
+        render json: {
+          client: client.as_json,
+          contract: contract.as_json,
+          connection: connection.as_json,
+          financial: financial.as_json,
+          assignment: assignment.as_json,
+        }
       end
     end
   end

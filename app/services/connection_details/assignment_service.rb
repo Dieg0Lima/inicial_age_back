@@ -35,7 +35,7 @@ module ConnectionDetails
         responsible_name: assignment.responsible&.name,
         description: format_description(assignment.description),
         incidents: incidents.map { |incident| format_incident_data(incident, assignment) },
-        reports: assignment.report.map { |report| format_report_data(report)},
+        reports: assignment.report.map { |report| format_report_data(report) },
 
       }
     end
@@ -54,7 +54,7 @@ module ConnectionDetails
         report_id: report.id,
         report_person: report.person&.name,
         report_title: report.title,
-        report_description: report.description,
+        report_description: remove_html(report.description),
         report_beginning_date: report.beginning_date,
         report_final_date: report.final_date,
         report_private: report.private,
@@ -62,8 +62,15 @@ module ConnectionDetails
       }
     end
 
+    def remove_html(description)
+      ActionController::Base.helpers.strip_tags(description)
+    end
+
+    require "sanitize"
+
     def format_description(description)
-      description.gsub(/\r\n/, "<br>").html_safe
+      sanitized_description = Sanitize.fragment(description)
+      sanitized_description.gsub(/\r\n/, "<br>").html_safe
     end
   end
 end

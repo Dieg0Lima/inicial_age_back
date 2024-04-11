@@ -102,7 +102,7 @@ if __name__ == "__main__":
     all_data_by_ip = {}  
 
     for host in hosts:
-        commands = ["show equipment ont optics", "show equipment ont status pon"]
+        commands = ["environment inhibit-alarms, show equipment ont optics", "show equipment ont status pon"]
         success, outputs, error = execute_ssh_commands(host, username, password, commands)
 
         if success:

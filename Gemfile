@@ -44,6 +44,8 @@ gem 'rspec-mocks'
 
 gem 'jwt'
 
+gem 'sanitize'
+
 group :development, :test, :production do
   gem 'dotenv-rails'
 end
