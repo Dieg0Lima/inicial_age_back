@@ -34,17 +34,18 @@ module ConnectionDetails
         requestor_name: assignment.requestor&.name,
         responsible_name: assignment.responsible&.name,
         description: format_description(assignment.description),
-        incidents: incidents.map { |incident| format_incident_data(incident) },
+        incidents: incidents.map { |incident| format_incident_data(incident, assignment) },
         reports: assignment.report.map { |report| format_report_data(report)},
 
       }
     end
 
-    def format_incident_data(incident)
+    def format_incident_data(incident, assignment)
       {
         incident_id: incident.id,
         incident_protocol: incident.protocol,
         incident_type: incident.incident_type&.title,
+        incident_description: assignment.description,
       }
     end
 
@@ -54,6 +55,10 @@ module ConnectionDetails
         report_person: report.person&.name,
         report_title: report.title,
         report_description: report.description,
+        report_beginning_date: report.beginning_date,
+        report_final_date: report.final_date,
+        report_private: report.private,
+        report_team: report.team&.title,
       }
     end
 

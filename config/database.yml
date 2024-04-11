@@ -23,7 +23,6 @@ voalle_db:
   password: <%= ENV['AGE_VOALLE_DATABASE_PASSWORD'] %>
   database: dbemp00489
 
-
 development:
   <<: *default
   database: age_atende_back_development
