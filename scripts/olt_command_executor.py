@@ -102,12 +102,12 @@ if __name__ == "__main__":
     all_data_by_ip = {}  
 
     for host in hosts:
-        commands = ["environment inhibit-alarms, show equipment ont optics", "show equipment ont status pon"]
+        commands = ["environment inhibit-alarms", "show equipment ont optics", "show equipment ont status pon"]
         success, outputs, error = execute_ssh_commands(host, username, password, commands)
 
         if success:
-            optics_data = parse_optics_data(outputs[0])
-            pon_data = parse_pon_data(outputs[1])
+            optics_data = parse_optics_data(outputs[1])
+            pon_data = parse_pon_data(outputs[2])
             merged_data = merge_data(optics_data, pon_data)
             all_data_by_ip[host] = merged_data 
         else:
