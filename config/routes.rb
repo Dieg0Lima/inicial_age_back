@@ -53,4 +53,15 @@ Rails.application.routes.draw do
       get "olt_analytics/download_xlsx", to: "olt_analytics#download_xlsx"
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      resources :provision, only: [] do
+        collection do
+          get :list_valid_olts
+        end
+      end
+    end
+  end
+  
 end

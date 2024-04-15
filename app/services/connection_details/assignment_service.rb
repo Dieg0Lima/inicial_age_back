@@ -45,7 +45,7 @@ module ConnectionDetails
         incident_id: incident.id,
         incident_protocol: incident.protocol,
         incident_type: incident.incident_type&.title,
-        incident_description: assignment.description,
+        incident_description: remove_html(assignment.description),
       }
     end
 
