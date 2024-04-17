@@ -59,7 +59,8 @@ Rails.application.routes.draw do
       resources :provision, only: [] do
         collection do
           get :list_valid_olts
-          post :provision
+          post :provision_onu
+          get :fetch_olt_with_ip
         end
       end
     end

@@ -56,12 +56,12 @@ def configure_onu_commands(slot, pon, port, contract, sernum, vlan_id):
 
 if __name__ == "__main__":
     if len(sys.argv) < 5:
-        sys.stderr.write("Usage: python script.py <username> <password> <host> <slot> <pon> <port> <contract> <sernum> <vlan_id>\n")
+        sys.stderr.write("Usage: python script.py <host> <username> <password> <slot> <pon> <port> <contract> <sernum> <vlan_id>\n")
         sys.exit(1)
 
-    username = sys.argv[1]
-    password = sys.argv[2]
-    host = sys.argv[3]
+    host = sys.argv[1]
+    username = sys.argv[2]
+    password = sys.argv[3]
     slot = sys.argv[4]
     pon = sys.argv[5]
     port = sys.argv[6]
