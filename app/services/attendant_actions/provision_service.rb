@@ -32,10 +32,10 @@ module AttendantActions
           update_connection_response = update_connection(token_response[:token], connection_id, vlan_id, slot, pon, port, equipment_serial_with_prefix, olt_id)
           return update_connection_response
         else
-          return { error: "Failed to obtain authentication token." }
+          return { error: "Falha ao obter autenticação." }
         end
       else
-        return { error: "Failed to configure ONT: #{configure_response[:error]}" }
+        return { error: "Falha ao configurar a ONT: #{configure_response[:error]}" }
       end
     end
 

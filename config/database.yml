@@ -23,6 +23,15 @@ voalle_db:
   password: <%= ENV['AGE_VOALLE_DATABASE_PASSWORD'] %>
   database: dbemp00489
 
+sinapse_db:
+  adapter: firebird
+  encoding: utf8
+  port: 3050
+  host: 187.33.31.182
+  database: E:\BD\AGE\SINAPSE.FDB
+  username: <%= ENV['AGE_SINAPSE_DATABASE_USER'] %>
+  password: <%= ENV['AGE_SINAPSE_DATABASE_PASSWORD'] %>
+
 development:
   <<: *default
   database: age_atende_back_development
