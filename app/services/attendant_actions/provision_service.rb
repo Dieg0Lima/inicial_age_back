@@ -84,19 +84,38 @@ module AttendantActions
     end
     
     def parse_ont_status(response)
-      data = JSON.parse(response)
-      
-      pon_info = data['pon_table']  
-      
-      if pon_info.nil? || pon_info.empty?
+      parsed_data = []
+    
+      lines = response.split("\n")
+    
+      lines.each do |line|
+        if line =~ /^\d+\/\d+\/\d+\/\d+/
+          data = line.match(/(\d+\/\d+\/\d+\/\d+) (\d+\/\d+\/\d+\/\d+\/\d+) (\w+):(\w+) (\w+) (\w+) ([-\.\d]+) ([-\.\d]+) (\d+) - (\w+)/)
+          next unless data
+    
+          parsed_data << {
+            gpon_index: data[1],
+            ont_index: data[2],
+            sernum: data[3],
+            admin_status: data[5],
+            oper_status: data[6],
+            rx_level: data[7].to_f,
+            distance: data[8].to_f,
+            desc1: data[9],
+            hostname: data[10]
+          }
+        end
+      end
+    
+      if parsed_data.empty?
         return { error: "No PON info available", success: false }
       else
-        process_pon_info(pon_info) 
-        return { success: true }
+        return { success: true, data: parsed_data }
       end
-    rescue JSON::ParserError => e
+    rescue => e
       return { error: "Error parsing response: #{e.message}", success: false }
-    end    
+    end
+        
     
     def find_available_ports(occupied_ports)
       all_ports = (1..128).to_a  
