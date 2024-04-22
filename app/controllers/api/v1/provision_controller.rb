@@ -2,6 +2,7 @@ module Api
   module V1
     class ProvisionController < ApplicationController
       before_action :set_provision_service
+      include Authenticatable
 
       def list_valid_olts
         valid_olts = @provision_service.valid_olt_list
@@ -17,8 +18,9 @@ module Api
         contract = params[:contract]
         sernum = params[:sernum]
         connection_id = params[:connection_id]
-
-        result = @provision_service.provision_onu(olt_id, contract, sernum, connection_id)
+        user_id = @current_user[:id]
+        cto = params[:cto]
+        result = @provision_service.provision_onu(olt_id, contract, sernum, connection_id, user_id, cto)
 
         if result[:success]
           render json: { message: "ONU Provisioned Successfully" }, status: :ok

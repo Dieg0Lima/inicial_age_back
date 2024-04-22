@@ -11,43 +11,43 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
 
-gem 'pg'
+gem "pg"
 
-gem 'kaminari'
+gem "kaminari"
 
-gem 'timeout'
+gem "timeout"
 
-gem 'whenever', require: false
+gem "whenever", require: false
 
-gem 'net-ssh'
+gem "net-ssh"
 
-gem 'ed25519', '>= 1.2', '< 2.0'
-gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+gem "ed25519", ">= 1.2", "< 2.0"
+gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 
-gem 'net-telnet'
+gem "net-telnet"
 
-gem 'nokogiri'
+gem "nokogiri"
 
-gem 'caxlsx'
+gem "caxlsx"
 
-gem 'axlsx'
+gem "axlsx"
 
-gem 'axlsx_rails'
+gem "axlsx_rails"
 
-gem 'httparty'
+gem "httparty"
 
-gem 'csv'
+gem "csv"
 
-gem 'net-ldap'
+gem "net-ldap"
 
-gem 'rspec-mocks'
+gem "rspec-mocks"
 
-gem 'jwt'
+gem "jwt"
 
-gem 'sanitize'
+gem "sanitize"
 
 group :development, :test, :production do
-  gem 'dotenv-rails'
+  gem "dotenv-rails"
 end
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -65,7 +65,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'rack-cors'
+gem "rack-cors"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
@@ -77,7 +77,7 @@ gem 'rack-cors'
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data'
+gem "tzinfo-data"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -86,12 +86,10 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 group :development do
-
-  gem 'capistrano', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano3-puma', require: false
-  gem 'capistrano-rvm', require: false
-
+  gem "capistrano", require: false
+  gem "capistrano-rails", require: false
+  gem "capistrano3-puma", require: false
+  gem "capistrano-rvm", require: false
 end
 
 group :development, :test do
@@ -117,5 +115,5 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 5.0.0'
+  gem "rspec-rails", "~> 5.0.0"
 end

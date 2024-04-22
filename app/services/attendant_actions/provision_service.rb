@@ -6,7 +6,7 @@ module AttendantActions
       AuthenticationAccessPoint.bsa_olts.map(&:olt_title_with_value)
     end
 
-    def provision_onu(olt_id, contract, sernum, connection_id)
+    def provision_onu(olt_id, contract, sernum, connection_id, user_id, cto)
       missing_params = [olt_id, contract, sernum, connection_id].select(&:nil?)
       unless missing_params.empty?
         return { error: "Missing parameters: #{missing_params.join(", ")}" }
@@ -19,18 +19,18 @@ module AttendantActions
       return position_check unless position_check[:success]
     
       gpon_index = position_check[:details][:gpon_index]
-      _, _, slot, pon = gpon_index.split('/')
+      _, _, slot, pon = gpon_index.split("/")
     
       full_gpon_index = "1/1/#{slot}/#{pon}"
       ont_status = check_ont_status(ip, full_gpon_index)
       return ont_status unless ont_status[:success]
     
-      if ont_status[:available_ports].empty?
-        return { error: "Nenhuma porta disponível encontrada." }
+      if ont_status[:available_ports].nil? || ont_status[:available_ports].empty?
+        return { error: "No available ports found." }
       end
       port = ont_status[:available_ports].first
-    
-      vlan_id = fetch_vlan_id_from_configuration(olt_id, slot, pon) 
+        
+      vlan_id = fetch_vlan_id_from_configuration(olt_id, slot, pon)
       return { error: "Nenhuma VLAN IPoE correspondente encontrada." } if vlan_id.nil?
     
       adjusted_sernum = sernum.sub(/^ALCL/, "")
@@ -43,8 +43,22 @@ module AttendantActions
       return token_response unless token_response[:success]
     
       update_connection_response = update_connection(token_response[:token], connection_id, vlan_id, slot, pon, port, equipment_serial_with_prefix, olt_id)
-      return update_connection_response
-    end
+      return update_connection_response unless update_connection_response[:success]
+    
+      ProvisionOnu.create(
+        connection_id: connection_id,
+        olt_id: olt_id,
+        contract: contract,
+        sernum: sernum,
+        slot: slot.to_i,
+        pon: pon.to_i,
+        port: port.to_i,
+        provisioned_by: user_id,
+        cto: cto
+      )
+    
+      { success: true, message: "ONU provisionada com sucesso." }
+    end    
 
     private
 
@@ -61,38 +75,47 @@ module AttendantActions
     def check_onu_position(ip, sernum)
       command = "show pon unprovision-onu"
       response = post_olt_command(ip, command)
-    
-      if response[:success] && !response[:result].empty?
+
+      if response[:success]
         details = parse_unprovisioned_onus(response[:result])
         onu_details = details.find { |detail| detail[:sernum].include?(sernum) }
-        return onu_details ? { success: true, details: onu_details } : { success: false, error: "ONU não encontrada na lista de não provisionados." }
-      elsif response[:success]
-        { success: false, error: "ONU não encontrada na OLT." }
+        if onu_details
+          return { success: true, details: onu_details }
+        else
+          return { success: false, error: "ONU não se encontra na listagem de desprovisionados." }
+        end
       else
-        { success: false, error: response[:error] }
+        return { success: false, error: response[:error] }
       end
     end
 
     def check_ont_status(ip, gpon_index)
       command = "show equipment ont status pon #{gpon_index}"
       response = post_olt_command(ip, command)
+
       if response[:success]
-        parse_ont_status(response[:result]) 
+        ont_ports = parse_ont_ports(response[:result])
+        if ont_ports[:success]
+          occupied_ports = ont_ports[:data]
+          available_ports = find_available_ports(occupied_ports)
+          { success: true, available_ports: available_ports }
+        else
+          { success: false, error: ont_ports[:error], available_ports: [] }
+        end
       else
-        { error: response[:error], success: false }
+        { success: false, error: response[:error], available_ports: [] }
       end
     end
-    
-    def parse_ont_status(response)
+
+    def parse_ont_ports(response)
       parsed_data = []
-    
+
       lines = response.split("\n")
-    
       lines.each do |line|
         if line =~ /^\d+\/\d+\/\d+\/\d+/
           data = line.match(/(\d+\/\d+\/\d+\/\d+) (\d+\/\d+\/\d+\/\d+\/\d+) (\w+):(\w+) (\w+) (\w+) ([-\.\d]+) ([-\.\d]+) (\d+) - (\w+)/)
           next unless data
-    
+
           parsed_data << {
             gpon_index: data[1],
             ont_index: data[2],
@@ -102,55 +125,52 @@ module AttendantActions
             rx_level: data[7].to_f,
             distance: data[8].to_f,
             desc1: data[9],
-            hostname: data[10]
+            hostname: data[10],
           }
         end
       end
-    
+
       if parsed_data.empty?
-        return { error: "No PON info available", success: false }
+        { error: "No PON info available", success: false }
       else
-        return { success: true, data: parsed_data }
+        { success: true, data: parsed_data }
       end
     rescue => e
-      return { error: "Error parsing response: #{e.message}", success: false }
+      { error: "Error parsing response: #{e.message}", success: false }
     end
-        
-    
+
     def find_available_ports(occupied_ports)
-      all_ports = (1..128).to_a  
-      available_ports = all_ports - occupied_ports
+      all_ports = (1..128).to_a
+      occupied_port_numbers = occupied_ports.map { |p| p[:ont_index].split("/").last.to_i }
+      available_ports = all_ports - occupied_port_numbers
+      available_ports
     end
-    
+
     def parse_unprovisioned_onus(raw_output)
       raw_output.lines.map do |line|
         next unless line.strip.match(/\d+\s+(\d+\/\d+\/\d+\/\d+)\s+(\w+)\s+/)
         {
           gpon_index: $1,
-          sernum: $2
+          sernum: $2,
         }
       end.compact
     end
-     
-    def fetch_vlan_id_from_configuration(olt_id, gpon_index)
+
+    def fetch_vlan_id_from_configuration(olt_id, slot, pon)
       access_point = AuthenticationAccessPoint.find_by(id: olt_id)
-      return nil unless access_point 
-    
+
+      return nil unless access_point
+
       begin
         configuration = JSON.parse(access_point.configuration) if access_point.configuration.is_a?(String)
       rescue JSON::ParserError
-        return nil 
+        return nil
       end
-    
-      _, _, slot, pon = gpon_index.split('/')
 
-      puts gpon_index.split('/')
-    
-      return nil unless configuration&.dig(slot, pon)
-    
-      configuration[slot][pon]["vlangerencia"]
+      vlan_config = configuration&.dig(slot.to_s, pon.to_s)
+
+      vlan_config ? vlan_config["vlangerencia"] : nil
     end
-    
 
     def configure_onu(ip, slot, pon, port, contract, adjusted_sernum, vlan_id)
       command = <<-COMMAND

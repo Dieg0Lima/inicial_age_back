@@ -1,0 +1,2 @@
+class ProvisionOnu < ApplicationRecord
+end
