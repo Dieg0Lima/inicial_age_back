@@ -1,11 +1,10 @@
 module Api
   module V1
     class ProvisionController < ApplicationController
+      before_action :set_provision_service
+
       def list_valid_olts
-        provision_service = AttendantActions::ProvisionService.new
-
-        valid_olts = provision_service.valid_olt_list
-
+        valid_olts = @provision_service.valid_olt_list
         if valid_olts.present?
           render json: valid_olts
         else
@@ -15,14 +14,11 @@ module Api
 
       def provision_onu
         olt_id = params[:olt_id]
-        slot = params[:slot]
-        pon = params[:pon]
-        port = params[:port]
         contract = params[:contract]
         sernum = params[:sernum]
         connection_id = params[:connection_id]
 
-        result = AttendantActions::ProvisionService.new.provision_onu(olt_id, slot, pon, port, contract, sernum, connection_id)
+        result = @provision_service.provision_onu(olt_id, contract, sernum, connection_id)
 
         if result[:success]
           render json: { message: "ONU Provisioned Successfully" }, status: :ok
@@ -32,15 +28,19 @@ module Api
       end
 
       def fetch_olt_with_ip
-        provision_service = AttendantActions::ProvisionService.new
-
-        fetch_ip = provision_service.fetch_olt_with_ip
-
-        if fetch_ip.present?
-          render json: fetch_ip
+        olt_id = params[:olt_id]
+        ip_info = @provision_service.fetch_olt_with_ip(olt_id)
+        if ip_info.present?
+          render json: ip_info
         else
-          render json: { error: "Não foi possível provisionar." }, status: :error
+          render json: { error: "Não foi possível obter o IP da OLT." }, status: :not_found
         end
+      end
+
+      private
+
+      def set_provision_service
+        @provision_service = AttendantActions::ProvisionService.new
       end
     end
   end

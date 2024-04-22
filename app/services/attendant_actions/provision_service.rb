@@ -6,37 +6,44 @@ module AttendantActions
       AuthenticationAccessPoint.bsa_olts.map(&:olt_title_with_value)
     end
 
-    def provision_onu(olt_id, slot, pon, port, contract, sernum, connection_id)
-      missing_params = [olt_id, slot, pon, port, contract, sernum, connection_id].select(&:nil?)
+    def provision_onu(olt_id, contract, sernum, connection_id)
+      missing_params = [olt_id, contract, sernum, connection_id].select(&:nil?)
       unless missing_params.empty?
         return { error: "Missing parameters: #{missing_params.join(", ")}" }
       end
-
+    
       ip = fetch_olt_with_ip(olt_id)
       return { error: "Erro ao obter IP da OLT." } unless ip
-
-      vlan_id = fetch_vlan_id_from_configuration(olt_id, slot, pon)
+    
+      position_check = check_onu_position(ip, sernum)
+      return position_check unless position_check[:success]
+    
+      gpon_index = position_check[:details][:gpon_index]
+      _, _, slot, pon = gpon_index.split('/')
+    
+      full_gpon_index = "1/1/#{slot}/#{pon}"
+      ont_status = check_ont_status(ip, full_gpon_index)
+      return ont_status unless ont_status[:success]
+    
+      if ont_status[:available_ports].empty?
+        return { error: "Nenhuma porta disponível encontrada." }
+      end
+      port = ont_status[:available_ports].first
+    
+      vlan_id = fetch_vlan_id_from_configuration(olt_id, slot, pon) 
       return { error: "Nenhuma VLAN IPoE correspondente encontrada." } if vlan_id.nil?
-
+    
       adjusted_sernum = sernum.sub(/^ALCL/, "")
       equipment_serial_with_prefix = "ALCL#{adjusted_sernum}"
-
+    
       configure_response = configure_onu(ip, slot, pon, port, contract, adjusted_sernum, vlan_id)
       return configure_response unless configure_response[:success]
-
-      if configure_response[:success]
-        token_response = obtain_authentication_token(equipment_serial_with_prefix)
-        return token_response unless token_response[:success]
-
-        if token_response[:success]
-          update_connection_response = update_connection(token_response[:token], connection_id, vlan_id, slot, pon, port, equipment_serial_with_prefix, olt_id)
-          return update_connection_response
-        else
-          return { error: "Falha ao obter autenticação." }
-        end
-      else
-        return { error: "Falha ao configurar a ONT: #{configure_response[:error]}" }
-      end
+    
+      token_response = obtain_authentication_token(equipment_serial_with_prefix)
+      return token_response unless token_response[:success]
+    
+      update_connection_response = update_connection(token_response[:token], connection_id, vlan_id, slot, pon, port, equipment_serial_with_prefix, olt_id)
+      return update_connection_response
     end
 
     private
@@ -51,21 +58,80 @@ module AttendantActions
       ip_address
     end
 
-    def fetch_vlan_id_from_configuration(olt_id, slot, pon)
-      access_point = AuthenticationAccessPoint.find(olt_id)
-      return nil unless access_point
-
-      configuration = access_point.configuration
-      configuration = JSON.parse(configuration) if configuration.is_a?(String)
-
-      slot_key = slot.to_s
-      port_key = pon.to_s
-
-      return nil unless configuration.key?(slot_key) && configuration[slot_key].key?(port_key)
-
-      vlan_id = configuration[slot_key][port_key]["vlangerencia"]
-      vlan_id
+    def check_onu_position(ip, sernum)
+      command = "show pon unprovision-onu"
+      response = post_olt_command(ip, command)
+    
+      if response[:success] && !response[:result].empty?
+        details = parse_unprovisioned_onus(response[:result])
+        onu_details = details.find { |detail| detail[:sernum].include?(sernum) }
+        return onu_details ? { success: true, details: onu_details } : { success: false, error: "ONU não encontrada na lista de não provisionados." }
+      elsif response[:success]
+        { success: false, error: "ONU não encontrada na OLT." }
+      else
+        { success: false, error: response[:error] }
+      end
     end
+
+    def check_ont_status(ip, gpon_index)
+      command = "show equipment ont status pon #{gpon_index}"
+      response = post_olt_command(ip, command)
+      if response[:success]
+        parse_ont_status(response[:result]) 
+      else
+        { error: response[:error], success: false }
+      end
+    end
+    
+    def parse_ont_status(response)
+      data = JSON.parse(response)
+      
+      pon_info = data['pon_table']  
+      
+      if pon_info.nil? || pon_info.empty?
+        return { error: "No PON info available", success: false }
+      else
+        process_pon_info(pon_info) 
+        return { success: true }
+      end
+    rescue JSON::ParserError => e
+      return { error: "Error parsing response: #{e.message}", success: false }
+    end    
+    
+    def find_available_ports(occupied_ports)
+      all_ports = (1..128).to_a  
+      available_ports = all_ports - occupied_ports
+    end
+    
+    def parse_unprovisioned_onus(raw_output)
+      raw_output.lines.map do |line|
+        next unless line.strip.match(/\d+\s+(\d+\/\d+\/\d+\/\d+)\s+(\w+)\s+/)
+        {
+          gpon_index: $1,
+          sernum: $2
+        }
+      end.compact
+    end
+     
+    def fetch_vlan_id_from_configuration(olt_id, gpon_index)
+      access_point = AuthenticationAccessPoint.find_by(id: olt_id)
+      return nil unless access_point 
+    
+      begin
+        configuration = JSON.parse(access_point.configuration) if access_point.configuration.is_a?(String)
+      rescue JSON::ParserError
+        return nil 
+      end
+    
+      _, _, slot, pon = gpon_index.split('/')
+
+      puts gpon_index.split('/')
+    
+      return nil unless configuration&.dig(slot, pon)
+    
+      configuration[slot][pon]["vlangerencia"]
+    end
+    
 
     def configure_onu(ip, slot, pon, port, contract, adjusted_sernum, vlan_id)
       command = <<-COMMAND
