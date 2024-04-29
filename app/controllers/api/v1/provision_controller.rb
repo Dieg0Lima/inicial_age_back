@@ -23,9 +23,9 @@ module Api
         result = @provision_service.provision_onu(olt_id, contract, sernum, connection_id, user_id, cto)
 
         if result[:success]
-          render json: { message: "ONU Provisioned Successfully" }, status: :ok
+          render json: { success: true, message: "ONU Provisioned Successfully" }, status: :ok
         else
-          render json: { error: result[:error] }, status: :unprocessable_entity
+          render json: { success: false, error: result[:error] }, status: :unprocessable_entity
         end
       end
 

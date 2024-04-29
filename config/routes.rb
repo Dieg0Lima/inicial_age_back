@@ -60,10 +60,28 @@ Rails.application.routes.draw do
         collection do
           get :list_valid_olts
           post :provision_onu
-          get :fetch_olt_with_ip
+        end
+      end
+      resources :deprovision, only: [] do
+        collection do
+          post :deprovision_onu
+        end
+      end
+      resources :reboot, only: [] do
+        collection do
+          post :reboot_onu
+        end
+      end
+      resources :management, only: [] do
+        collection do
+          post :management_onu
+        end
+      end
+      resources :potency, only: [] do
+        collection do
+          post :fetch_onu_power
         end
       end
     end
   end
-  
 end

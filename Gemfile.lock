@@ -352,6 +352,7 @@ DEPENDENCIES
   jwt
   kaminari
   net-ldap
+  net-sftp
   net-ssh
   net-telnet
   nokogiri

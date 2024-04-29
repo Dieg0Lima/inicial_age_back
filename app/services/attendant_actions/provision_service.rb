@@ -11,54 +11,44 @@ module AttendantActions
       unless missing_params.empty?
         return { error: "Missing parameters: #{missing_params.join(", ")}" }
       end
-    
+
       ip = fetch_olt_with_ip(olt_id)
       return { error: "Erro ao obter IP da OLT." } unless ip
-    
+
       position_check = check_onu_position(ip, sernum)
       return position_check unless position_check[:success]
-    
+
       gpon_index = position_check[:details][:gpon_index]
       _, _, slot, pon = gpon_index.split("/")
-    
+
       full_gpon_index = "1/1/#{slot}/#{pon}"
       ont_status = check_ont_status(ip, full_gpon_index)
       return ont_status unless ont_status[:success]
-    
+
       if ont_status[:available_ports].nil? || ont_status[:available_ports].empty?
         return { error: "No available ports found." }
       end
       port = ont_status[:available_ports].first
-        
+
       vlan_id = fetch_vlan_id_from_configuration(olt_id, slot, pon)
       return { error: "Nenhuma VLAN IPoE correspondente encontrada." } if vlan_id.nil?
-    
+
       adjusted_sernum = sernum.sub(/^ALCL/, "")
       equipment_serial_with_prefix = "ALCL#{adjusted_sernum}"
-    
+
       configure_response = configure_onu(ip, slot, pon, port, contract, adjusted_sernum, vlan_id)
       return configure_response unless configure_response[:success]
-    
+
       token_response = obtain_authentication_token(equipment_serial_with_prefix)
       return token_response unless token_response[:success]
-    
+
       update_connection_response = update_connection(token_response[:token], connection_id, vlan_id, slot, pon, port, equipment_serial_with_prefix, olt_id)
       return update_connection_response unless update_connection_response[:success]
-    
-      ProvisionOnu.create(
-        connection_id: connection_id,
-        olt_id: olt_id,
-        contract: contract,
-        sernum: sernum,
-        slot: slot.to_i,
-        pon: pon.to_i,
-        port: port.to_i,
-        provisioned_by: user_id,
-        cto: cto
-      )
-    
+
+      create_or_update_onu(connection_id, olt_id, contract, sernum, slot, pon, port, user_id, cto)
+
       { success: true, message: "ONU provisionada com sucesso." }
-    end    
+    end
 
     private
 
@@ -260,6 +250,19 @@ module AttendantActions
           headers: update_connection_response.headers.to_h,
         }
       end
+    end
+
+    def create_or_update_onu(connection_id, olt_id, contract, sernum, slot, pon, port, user_id, cto)
+      onu = ProvisionOnu.find_or_initialize_by(connection_id: connection_id, sernum: sernum)
+      onu.update(
+        olt_id: olt_id,
+        contract: contract,
+        slot: slot.to_i,
+        pon: pon.to_i,
+        port: port.to_i,
+        provisioned_by: user_id,
+        cto: cto,
+      )
     end
   end
 end

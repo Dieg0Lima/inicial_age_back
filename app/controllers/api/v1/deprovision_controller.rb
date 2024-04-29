@@ -13,14 +13,14 @@ module Api
         port = params[:port]
         user_id = @current_user[:id]
 
-        gpon_index = "1/1/#{slot}/#{pon}/#{port}"
+        gpon_index = "1/1/#{slot}/#{pon}"
 
         result = @deprovision_service.deprovision_onu(olt_id, gpon_index, sernum, user_id)
 
         if result[:success]
-          render json: { message: "ONU Deprovisioned Successfully" }, status: :ok
+          render json: { success: true, message: "ONU Desprovisionada com Sucesso" }, status: :ok
         else
-          render json: { error: result[:error] }, status: :unprocessable_entity
+          render json: { success: false, error: result[:error] }, status: :unprocessable_entity
         end
       end
 

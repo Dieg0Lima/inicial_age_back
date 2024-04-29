@@ -1,0 +1,4 @@
+Data;Telefone;Data de Recebimento no Servico;Desligamento Apos;Por;Data Fim na Plataforma;Data Fim no Servico;Ponto de Verificacao;Data de Recebimento no Ponto;Mídia;
+25/04/2024 16:16:55;João Pedro;25/04/2024 16:16:55;24;B;25/04/2024 16:17:19;25/04/2024 16:17:19;107 - 07147667123;25/04/2024 16:17:19;Chat;
+25/04/2024 16:19:51;Rafa Ribeiro;25/04/2024 16:19:51;15;B;25/04/2024 16:20:06;25/04/2024 16:20:06;104 - 04085676199;25/04/2024 16:20:05;Chat;
+25/04/2024 16:30:50;Rafa Ribeiro;25/04/2024 16:30:50;21;B;25/04/2024 16:31:11;25/04/2024 16:31:11;104 - 04085676199;25/04/2024 16:31:10;Chat;

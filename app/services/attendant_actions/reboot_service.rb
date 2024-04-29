@@ -1,18 +1,19 @@
 module AttendantActions
-  class DeprovisionService
-    def deprovision_onu(olt_id, gpon_index, sernum, user_id)
+  class RebootService
+    def reboot_onu(olt_id, slot, pon, port, sernum, user_id)
       ip = fetch_olt_with_ip(olt_id)
       return { success: false, error: "Erro ao obter IP da OLT." } unless ip
-    
+
+      gpon_index = "1/1/#{slot}/#{pon}"
+
       check_response = check_ont_status(ip, gpon_index, sernum)
-    
+
       if check_response[:success]
-        full_ont_index = check_response[:ont_index] 
-        deprovision_response = remove_onu(ip, full_ont_index)
-        if deprovision_response[:success]
-          { success: true }
+        reboot_response = restart_onu(ip, gpon_index, port)
+        if reboot_response[:success]
+          { success: true, message: "ONU Rebooted Successfully" }
         else
-          { success: false, error: deprovision_response[:error] }
+          { success: false, error: reboot_response[:error] }
         end
       else
         { success: false, error: check_response[:error] }
@@ -22,33 +23,33 @@ module AttendantActions
     private
 
     def fetch_olt_with_ip(olt_id)
-      ip_address = AuthenticationIp
+      AuthenticationIp
         .joins(:authentication_access_points)
         .where(authentication_access_points: { id: olt_id })
         .pluck(:ip)
         .first
-
-      ip_address
     end
 
     def check_ont_status(ip, gpon_index, expected_serial)
       command = "show equipment ont status pon #{gpon_index}"
       response = post_olt_command(ip, command)
-    
+
       if response[:success]
         ont_ports = parse_ont_ports(response[:result])
         if ont_ports[:success]
-          normalized_expected_serial = expected_serial.gsub(/[^a-zA-Z0-9]/, '').upcase
+          normalized_expected_serial = expected_serial.gsub(/[^a-zA-Z0-9]/, "").upcase
+
           matched_onu = ont_ports[:data].find do |onu|
-            onu_serial = onu[:sernum].gsub(/[^a-zA-Z0-9]/, '').upcase
-            onu_serial == normalized_expected_serial
+            onu_serial = onu[:sernum].gsub(/[^a-zA-Z0-9]/, "").upcase
+
+            onu[:ont_index].start_with?(gpon_index) && onu_serial == normalized_expected_serial
           end
-    
+
           if matched_onu
-            full_ont_index = matched_onu[:ont_index]
-            { success: true, message: "ONU found and serial matches", ont_index: full_ont_index }
+            { success: true, message: "ONU found at the specified position and serial matches", ont_index: matched_onu[:ont_index] }
           else
-            { success: false, error: "No matching ONU found or serial mismatch", ont_index: nil }
+            Rails.logger.info "No matching ONU found. Data: #{ont_ports[:data].map { |onu| onu[:ont_index] + " " + onu[:sernum] }}"
+            { success: false, error: "No matching ONU found at the specified position or serial mismatch", ont_index: nil }
           end
         else
           { success: false, error: ont_ports[:error], ont_index: nil }
@@ -57,7 +58,7 @@ module AttendantActions
         { success: false, error: response[:error], ont_index: nil }
       end
     end
-    
+
     def parse_ont_ports(response)
       parsed_data = []
       lines = response.split("\n")
@@ -94,20 +95,20 @@ module AttendantActions
       { error: "Error parsing response: #{e.message}", success: false }
     end
 
-    def remove_onu(ip, full_ont_index)
+    def restart_onu(ip, gpon_index, port)
+      full_ont_index = "#{gpon_index}/#{port}"
       command = <<-COMMAND
-        configure equipment ont interface #{full_ont_index} admin-state down
-        configure equipment ont no interface #{full_ont_index}
-      COMMAND
-    
+          admin equipment ont interface #{full_ont_index} reboot with-active-image
+        COMMAND
+
       response = post_olt_command(ip, command)
       if response[:success]
-        { success: true, message: "ONU deprovisioned successfully" }
+        { success: true, message: "ONU Rebooted Successfully" }
       else
-        { success: false, error: "Failed to deprovision ONU: #{response[:error]}" }
+        { success: false, error: "Failed to reboot ONU: #{response[:error]}" }
       end
     end
-    
+
     def post_olt_command(ip, command)
       olt_command_service = OltServices::OltCommandService.new
       response = olt_command_service.execute_command(ip, command)

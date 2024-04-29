@@ -10,6 +10,7 @@ module ConnectionDetails
           authentication_id: authentication_contract.id,
           wifi_name: authentication_contract.wifi_name,
           wifi_password: authentication_contract.wifi_password,
+          access_point_id: authentication_access_point.id,
           access_point: authentication_access_point ? authentication_access_point.title : "N/A",
           port_olt: authentication_contract.port_olt,
           slot_olt: authentication_contract.slot_olt,

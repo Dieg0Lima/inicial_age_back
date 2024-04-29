@@ -3,7 +3,7 @@ module ConnectionDetails
     def fetch_assignment_data(authentication_contract_id)
       authentication_contract = AuthenticationContract.includes(contract: { contract_service_tags: { assignment_incidents: [:incident_type, :assignment => [:person, :team, :report]] } })
                                                       .find_by(id: authentication_contract_id)
-
+    
       if authentication_contract && authentication_contract.contract
         contract_service_tags = authentication_contract.contract.contract_service_tags
         if contract_service_tags.any?
@@ -13,8 +13,10 @@ module ConnectionDetails
               format_assignment_data(assignment, incidents)
             end
           end
-
-          assignments_data.presence || { error: "No assignments found for provided ID." }
+    
+          sorted_assignments = assignments_data.sort_by { |data| data[:beginning_date] }.reverse
+    
+          sorted_assignments.presence || { error: "No assignments found for provided ID." }
         else
           { error: "No contract service tags found for provided ID." }
         end
@@ -22,6 +24,7 @@ module ConnectionDetails
         { error: "No contract found for provided ID." }
       end
     end
+    
 
     private
 
