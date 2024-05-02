@@ -2,11 +2,11 @@
     "results": [
         {
             "sernum": "ALCLFC4C6174",
-            "ip": "10.62.17.44"
+            "ip": "10.70.196.130"
         },
         {
             "sernum": "ALCLB2891675",
-            "ip": "10.70.131.72"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5221BF",
@@ -14,19 +14,19 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.243.222"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5225E6",
-            "ip": "10.62.6.125"
+            "ip": "10.70.254.168"
         },
         {
             "sernum": "ALCLFC4C4E60",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.121.161"
         },
         {
             "sernum": "ALCLB2892250",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.121.202"
         },
         {
             "sernum": "ALCLB3D99656",
@@ -34,11 +34,11 @@
         },
         {
             "sernum": "ALCLB28948D1",
-            "ip": "10.62.86.71"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC538EC3",
-            "ip": "10.70.196.49"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407B495",
@@ -46,15 +46,15 @@
         },
         {
             "sernum": "ALCLFC158853",
-            "ip": "10.70.248.22"
+            "ip": "10.61.5.208"
         },
         {
             "sernum": "ALCLFC59746B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.241.227"
         },
         {
             "sernum": "ALCLB3FE5754",
-            "ip": "10.70.245.104"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D89FD4",
@@ -66,7 +66,7 @@
         },
         {
             "sernum": "ALCLFC4C6F41",
-            "ip": "10.62.11.174"
+            "ip": "10.70.199.148"
         },
         {
             "sernum": "#N/DISP",
@@ -74,31 +74,31 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.14.14"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F65DE",
-            "ip": "10.70.198.206"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC53AFEF",
-            "ip": "10.62.64.30"
+            "ip": "10.70.215.143"
         },
         {
             "sernum": "ALCLB2891E86",
-            "ip": "10.70.142.37"
+            "ip": "10.61.2.219"
         },
         {
             "sernum": "ALCLB407D41C",
-            "ip": "10.62.40.80"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4AFDE9",
-            "ip": "10.70.251.171"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B0AB3",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.113.123"
         },
         {
             "sernum": "ALCLFC53C7FB",
@@ -106,7 +106,7 @@
         },
         {
             "sernum": "ALCLB28946D6",
-            "ip": "10.62.56.224"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB28939D2",
@@ -118,27 +118,27 @@
         },
         {
             "sernum": "ALCLFC4C729A",
-            "ip": "10.70.131.136"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CA760",
-            "ip": "10.62.63.94"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C48E4",
-            "ip": "10.70.181.186"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CEFE5",
-            "ip": "10.62.218.185"
+            "ip": "10.64.36.139"
         },
         {
             "sernum": "ALCLFC4CC84C",
-            "ip": "10.70.164.194"
+            "ip": "10.70.115.14"
         },
         {
             "sernum": "ALCLB40D5CFC",
-            "ip": "10.62.72.254"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B3345",
@@ -146,11 +146,11 @@
         },
         {
             "sernum": "ALCLFC202532",
-            "ip": "10.62.137.223"
+            "ip": "10.70.119.164"
         },
         {
             "sernum": "ALCLFC0AB48C",
-            "ip": "10.70.188.210"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0AA91F",
@@ -158,11 +158,11 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.112.244"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC16D7E6",
-            "ip": "10.62.73.169"
+            "ip": "10.62.168.47"
         },
         {
             "sernum": "ALCLFC4C90D6",
@@ -170,7 +170,7 @@
         },
         {
             "sernum": "ALCLFC4CED0B",
-            "ip": "10.62.47.245"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
@@ -182,7 +182,7 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.220.81"
+            "ip": "10.70.186.148"
         },
         {
             "sernum": "ALCLFC4CFA97",
@@ -194,23 +194,23 @@
         },
         {
             "sernum": "ALCLFC539455",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.234.79"
         },
         {
             "sernum": "ALCLFC528B16",
-            "ip": "10.62.201.202"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC523A10",
-            "ip": "10.70.175.64"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC538FD8",
-            "ip": "10.62.47.152"
+            "ip": "10.70.144.171"
         },
         {
             "sernum": "ALCLFC522A75",
-            "ip": "10.70.246.165"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC10BACF",
@@ -218,11 +218,11 @@
         },
         {
             "sernum": "ALCLFC166795",
-            "ip": "10.70.245.183"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB28924C5",
-            "ip": "10.62.43.64"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2891898",
@@ -230,7 +230,7 @@
         },
         {
             "sernum": "ALCLFC5274BF",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.161.232"
         },
         {
             "sernum": "ALCLB288FD22",
@@ -242,11 +242,11 @@
         },
         {
             "sernum": "ALCLB2892E02",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.156.242"
         },
         {
             "sernum": "ALCLFC523DE9",
-            "ip": "10.62.139.115"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D3DD1",
@@ -258,7 +258,7 @@
         },
         {
             "sernum": "ALCLFC165C59",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.160.214"
         },
         {
             "sernum": "ALCLFC1FE5B3",
@@ -266,15 +266,15 @@
         },
         {
             "sernum": "ALCLFC3642D8",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.116.34"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.181.113"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB4079540",
-            "ip": "10.70.245.112"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC522C7F",
@@ -282,15 +282,15 @@
         },
         {
             "sernum": "ALCLFC202A7B",
-            "ip": "10.70.208.0"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407A087",
-            "ip": "10.62.40.58"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D6584",
-            "ip": "10.62.73.251"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D6435",
@@ -298,19 +298,19 @@
         },
         {
             "sernum": "ALCLFC4B9366",
-            "ip": "10.70.225.198"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D8A346",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.119.120"
         },
         {
             "sernum": "ALCLB3D89748",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.12.17"
         },
         {
             "sernum": "ALCLB28922BC",
-            "ip": "10.62.137.88"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC107593",
@@ -318,11 +318,11 @@
         },
         {
             "sernum": "ALCLFC15C3F5",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.114.173"
         },
         {
             "sernum": "ALCLB3FEC65D",
-            "ip": "10.70.108.161"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC246F05",
@@ -338,39 +338,39 @@
         },
         {
             "sernum": "ALCLFC539C76",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.251.162"
         },
         {
             "sernum": "ALCLFC0AA080",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.64.15"
         },
         {
             "sernum": "ALCLFC166976",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.249.84"
         },
         {
             "sernum": "ALCLFC538A6D",
-            "ip": "10.62.108.15"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC365A80",
-            "ip": "10.70.180.95"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19CD10",
-            "ip": "10.62.220.73"
+            "ip": "10.70.244.94"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.7.235"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.127.153"
+            "ip": "10.70.217.51"
         },
         {
             "sernum": "ALCLB3A9880B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.67.82"
         },
         {
             "sernum": "ALCLFC4B34FD",
@@ -378,15 +378,15 @@
         },
         {
             "sernum": "ALCLFC20070D",
-            "ip": "10.62.139.138"
+            "ip": "10.62.62.148"
         },
         {
             "sernum": "ALCLFC159917",
-            "ip": "10.70.229.19"
+            "ip": "10.70.254.146"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.234.81"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC1FFE9D",
@@ -394,27 +394,27 @@
         },
         {
             "sernum": "ALCLB3EED7A2",
-            "ip": "10.70.167.63"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0A98E2",
-            "ip": "10.62.53.57"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D804B9",
-            "ip": "10.70.239.203"
+            "ip": "10.62.70.5"
         },
         {
             "sernum": "ALCLB3D8AA39",
-            "ip": "10.62.116.57"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B2957",
-            "ip": "10.62.39.76"
+            "ip": "10.70.252.107"
         },
         {
             "sernum": "ALCLFC524232",
-            "ip": "10.70.182.154"
+            "ip": "10.62.70.200"
         },
         {
             "sernum": "ALCLB3FED411",
@@ -434,7 +434,7 @@
         },
         {
             "sernum": "ALCLFC19B7EF",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.254.237"
         },
         {
             "sernum": "ALCLFC5226C7",
@@ -442,7 +442,7 @@
         },
         {
             "sernum": "ALCLFC009608",
-            "ip": "10.70.238.217"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2890329",
@@ -450,11 +450,11 @@
         },
         {
             "sernum": "ALCLFC52781F",
-            "ip": "10.62.63.95"
+            "ip": "10.62.46.122"
         },
         {
             "sernum": "ALCLB3A99D49",
-            "ip": "10.70.114.219"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2891AE0",
@@ -462,23 +462,23 @@
         },
         {
             "sernum": "ALCLFC240477",
-            "ip": "10.70.228.221"
+            "ip": "10.62.10.195"
         },
         {
             "sernum": "ALCLFC208151",
-            "ip": "10.62.140.154"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893109",
-            "ip": "10.70.178.197"
+            "ip": "10.70.228.70"
         },
         {
             "sernum": "ALCLFC53AFE6",
-            "ip": "10.62.203.18"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C994C",
-            "ip": "10.70.243.187"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19BA0C",
@@ -486,35 +486,35 @@
         },
         {
             "sernum": "ALCLFC4B9974",
-            "ip": "10.62.36.100"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4D0982",
-            "ip": "10.62.197.56"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0AB974",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.239.236"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.208.18"
-        },
-        {
-            "sernum": "ALCLFC5276ED",
-            "ip": "10.62.151.6"
-        },
-        {
-            "sernum": "ALCLFC539257",
-            "ip": "10.70.234.58"
-        },
-        {
-            "sernum": "ALCLB3FEC3D7",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC5276ED",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC539257",
+            "ip": "10.70.125.14"
+        },
+        {
+            "sernum": "ALCLB3FEC3D7",
+            "ip": "10.62.64.19"
+        },
+        {
             "sernum": "ALCLFC4B8100",
-            "ip": "10.62.40.210"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC241688",
@@ -526,43 +526,43 @@
         },
         {
             "sernum": "ALCLFC4CD7D5",
-            "ip": "10.70.167.236"
+            "ip": "10.70.199.242"
         },
         {
             "sernum": "ALCLFC1B4E35",
-            "ip": "10.62.108.25"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C3850",
-            "ip": "10.70.241.221"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5254C9",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.2.186"
         },
         {
             "sernum": "ALCLFC4CBC64",
-            "ip": "10.61.247.95"
+            "ip": "10.70.194.25"
         },
         {
             "sernum": "ALCLFC521A2A",
-            "ip": "10.62.129.61"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CA98A",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.244.204"
         },
         {
             "sernum": "ALCLFC4C55EA",
-            "ip": "10.62.82.222"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.142.87"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B2FF9",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.250.195"
         },
         {
             "sernum": "ALCLFC366D7A",
@@ -574,7 +574,7 @@
         },
         {
             "sernum": "ALCLFC241F7F",
-            "ip": "10.70.186.179"
+            "ip": "10.70.245.114"
         },
         {
             "sernum": "ALCLFC15E847",
@@ -590,19 +590,19 @@
         },
         {
             "sernum": "ALCLB2893FE1",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.163.235"
         },
         {
             "sernum": "ALCLB3D898B7",
-            "ip": "10.70.249.136"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A9A2F7",
-            "ip": "10.62.120.199"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC2505E6",
-            "ip": "10.62.144.14"
+            "ip": "10.70.187.94"
         },
         {
             "sernum": "ALCLB40D5551",
@@ -618,19 +618,19 @@
         },
         {
             "sernum": "ALCLFC4D017D",
-            "ip": "10.62.108.87"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CF922",
-            "ip": "10.70.246.134"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.255.147"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19C00C",
-            "ip": "10.62.199.220"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB28947D7",
@@ -638,11 +638,11 @@
         },
         {
             "sernum": "ALCLB2893A89",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.251.20"
         },
         {
             "sernum": "ALCLFC4C9E8E",
-            "ip": "10.70.135.52"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C516B",
@@ -650,7 +650,7 @@
         },
         {
             "sernum": "ALCLFC4F50D9",
-            "ip": "10.70.196.130"
+            "ip": "10.70.255.191"
         },
         {
             "sernum": "ALCLFC4C46D4",
@@ -662,19 +662,19 @@
         },
         {
             "sernum": "ALCLFC4C9E22",
-            "ip": "10.62.220.55"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC526F65",
-            "ip": "10.70.254.168"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F3E8B",
-            "ip": "10.62.163.193"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC521EDC",
-            "ip": "10.70.121.202"
+            "ip": "10.70.251.192"
         },
         {
             "sernum": "ALCLFC4F314F",
@@ -686,19 +686,19 @@
         },
         {
             "sernum": "ALCLFC596834",
-            "ip": "10.62.164.1"
+            "ip": "10.70.234.166"
         },
         {
             "sernum": "ALCLFC362C23",
-            "ip": "10.61.5.208"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B55DE",
-            "ip": "10.62.23.11"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C653B",
-            "ip": "10.70.241.227"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4D0B3C",
@@ -706,7 +706,7 @@
         },
         {
             "sernum": "ALCLFC250DB5",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.251.16"
         },
         {
             "sernum": "ALCLFC165CC9",
@@ -714,11 +714,11 @@
         },
         {
             "sernum": "ALCLFC166E8F",
-            "ip": "10.70.199.148"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC159AFE",
-            "ip": "10.62.27.204"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D8942D",
@@ -730,27 +730,27 @@
         },
         {
             "sernum": "ALCLFC4CEC61",
-            "ip": "10.70.215.143"
-        },
-        {
-            "sernum": "ALCLFC591E75",
-            "ip": "10.62.110.48"
-        },
-        {
-            "sernum": "ALCLFC4F39FC",
-            "ip": "10.61.2.219"
-        },
-        {
-            "sernum": "ALCLFC158CFA",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC591E75",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC4F39FC",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC158CFA",
+            "ip": "10.70.109.152"
+        },
+        {
             "sernum": "ALCLB40D6267",
-            "ip": "10.70.113.123"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407C03C",
-            "ip": "10.62.41.118"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19C225",
@@ -758,7 +758,7 @@
         },
         {
             "sernum": "ALCLFC4C5304",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.244.153"
         },
         {
             "sernum": "ALCLFC53B4C5",
@@ -770,19 +770,19 @@
         },
         {
             "sernum": "ALCLB289271C",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.239.200"
         },
         {
             "sernum": "ALCLFC4C372A",
-            "ip": "10.70.115.14"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D2B94",
-            "ip": "10.70.119.164"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2892A00",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.213.220"
         },
         {
             "sernum": "ALCLFC52548E",
@@ -798,7 +798,7 @@
         },
         {
             "sernum": "ALCLFC4C3BB9",
-            "ip": "10.62.56.58"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC523E5D",
@@ -806,11 +806,11 @@
         },
         {
             "sernum": "ALCLFC5288AA",
-            "ip": "10.70.186.148"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC592B09",
-            "ip": "10.70.234.79"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F5F7F",
@@ -818,7 +818,7 @@
         },
         {
             "sernum": "ALCLFC4CCA7B",
-            "ip": "10.70.144.171"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC537EC3",
@@ -826,15 +826,15 @@
         },
         {
             "sernum": "ALCLFC4B587B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.0.191"
         },
         {
             "sernum": "ALCLFC4CAC52",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.204.135"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.161.232"
+            "ip": "10.70.234.94"
         },
         {
             "sernum": "ALCLFC53776E",
@@ -842,11 +842,11 @@
         },
         {
             "sernum": "ALCLFC4CE2EB",
-            "ip": "10.70.156.242"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC591EBF",
-            "ip": "10.62.101.72"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B93A9",
@@ -858,23 +858,23 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.116.34"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CE1B8",
-            "ip": "10.62.152.250"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F4C62",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.0.3"
         },
         {
             "sernum": "ALCLFC4B701B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.250.239"
         },
         {
             "sernum": "ALCLFC164EC4",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.31.67"
         },
         {
             "sernum": "ALCLFC167EB0",
@@ -882,11 +882,11 @@
         },
         {
             "sernum": "ALCLFC240955",
-            "ip": "10.70.119.120"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC242782",
-            "ip": "10.62.93.21"
+            "ip": "10.70.248.125"
         },
         {
             "sernum": "ALCLFC16745B",
@@ -894,7 +894,7 @@
         },
         {
             "sernum": "ALCLFC10B617",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.145.84"
         },
         {
             "sernum": "ALCLFC1B431E",
@@ -902,7 +902,7 @@
         },
         {
             "sernum": "ALCLFC4D0254",
-            "ip": "10.62.107.15"
+            "ip": "10.70.249.203"
         },
         {
             "sernum": "#N/DISP",
@@ -910,27 +910,27 @@
         },
         {
             "sernum": "ALCLB3A98B6B",
-            "ip": "10.70.251.162"
-        },
-        {
-            "sernum": "ALCLFC539203",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC539203",
+            "ip": "10.70.250.66"
+        },
+        {
             "sernum": "ALCLB289485C",
-            "ip": "10.70.249.84"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A9AA11",
-            "ip": "10.70.244.94"
+            "ip": "10.62.150.180"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.86.226"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CC35B",
-            "ip": "10.70.217.51"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D88B0B",
@@ -938,7 +938,7 @@
         },
         {
             "sernum": "ALCLB3EED7D0",
-            "ip": "10.70.254.146"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A4BF17",
@@ -954,11 +954,11 @@
         },
         {
             "sernum": "ALCLB3D80206",
-            "ip": "10.62.82.233"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC20C423",
-            "ip": "10.70.252.107"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC523977",
@@ -966,15 +966,15 @@
         },
         {
             "sernum": "ALCLFC4C7A6D",
-            "ip": "10.62.106.152"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3FE57FD",
-            "ip": "10.62.118.100"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.254.237"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D3126",
@@ -982,7 +982,7 @@
         },
         {
             "sernum": "ALCLB407BB18",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.168.26"
         },
         {
             "sernum": "ALCLB40D4F02",
@@ -990,19 +990,19 @@
         },
         {
             "sernum": "ALCLB40D4E50",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.239.16"
         },
         {
             "sernum": "ALCLB40D5A64",
-            "ip": "10.62.171.42"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D51C5",
-            "ip": "10.70.228.70"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CA1A0",
-            "ip": "10.62.147.101"
+            "ip": "10.70.230.230"
         },
         {
             "sernum": "ALCLB2893385",
@@ -1014,19 +1014,19 @@
         },
         {
             "sernum": "ALCLFC52847E",
-            "ip": "10.70.239.236"
+            "ip": "10.62.111.203"
         },
         {
             "sernum": "ALCLFC4CDE13",
-            "ip": "10.70.125.14"
+            "ip": "10.70.206.238"
         },
         {
             "sernum": "ALCLB2893EAD",
-            "ip": "10.62.25.113"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC539274",
-            "ip": "10.62.150.156"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893EE8",
@@ -1034,7 +1034,7 @@
         },
         {
             "sernum": "ALCLFC4CB94B",
-            "ip": "10.70.199.242"
+            "ip": "10.70.118.25"
         },
         {
             "sernum": "ALCLB2893972",
@@ -1046,35 +1046,35 @@
         },
         {
             "sernum": "ALCLFC4CA638",
-            "ip": "10.70.194.25"
+            "ip": "10.70.210.80"
         },
         {
             "sernum": "ALCLFC537DFD",
-            "ip": "10.70.244.204"
+            "ip": "10.62.86.197"
         },
         {
             "sernum": "ALCLFC4C5D0D",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.168.132"
         },
         {
             "sernum": "ALCLFC4CD528",
-            "ip": "10.70.250.195"
-        },
-        {
-            "sernum": "ALCLB289026C",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB289026C",
+            "ip": "10.70.118.27"
+        },
+        {
             "sernum": "ALCLFC4C9820",
-            "ip": "10.70.245.114"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC521C5A",
-            "ip": "10.62.114.134"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC527605",
-            "ip": "10.70.163.235"
+            "ip": "10.70.191.60"
         },
         {
             "sernum": "ALCLB2B9E7B1",
@@ -1082,11 +1082,11 @@
         },
         {
             "sernum": "ALCLFC5221F8",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.169.134"
         },
         {
             "sernum": "ALCLFC4CA8E6",
-            "ip": "10.70.187.94"
+            "ip": "10.70.112.125"
         },
         {
             "sernum": "ALCLFC4D02D4",
@@ -1110,11 +1110,11 @@
         },
         {
             "sernum": "ALCLB289483D",
-            "ip": "10.70.251.20"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC591FD1",
-            "ip": "10.70.255.191"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC537BAB",
@@ -1126,11 +1126,11 @@
         },
         {
             "sernum": "ALCLFC5921C0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.213.57"
         },
         {
             "sernum": "ALCLFC4AFA40",
-            "ip": "10.70.251.192"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F16B9",
@@ -1138,19 +1138,19 @@
         },
         {
             "sernum": "ALCLFC19B899",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.116.106"
         },
         {
             "sernum": "ALCLFC539D88",
-            "ip": "10.70.234.166"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC24FB30",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.197.245"
         },
         {
             "sernum": "ALCLFC25119B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.115.228"
         },
         {
             "sernum": "ALCLFC1B30E6",
@@ -1158,11 +1158,11 @@
         },
         {
             "sernum": "ALCLFC4F69F7",
-            "ip": "10.70.251.16"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC25041A",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.114.0"
         },
         {
             "sernum": "ALCLFC5375D1",
@@ -1174,7 +1174,7 @@
         },
         {
             "sernum": "ALCLFC4AE482",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.150.157"
         },
         {
             "sernum": "ALCLFC4B8AB9",
@@ -1182,19 +1182,19 @@
         },
         {
             "sernum": "ALCLFC3651E0",
-            "ip": "10.70.109.152"
+            "ip": "10.62.43.247"
         },
         {
             "sernum": "ALCLFC594FD7",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.240.91"
         },
         {
             "sernum": "ALCLFC1FCD06",
-            "ip": "10.70.244.153"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC165501",
-            "ip": "10.70.239.200"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407D118",
@@ -1206,7 +1206,7 @@
         },
         {
             "sernum": "ALCLFC16299F",
-            "ip": "10.70.213.220"
+            "ip": "10.62.2.241"
         },
         {
             "sernum": "ALCLFC362B91",
@@ -1214,7 +1214,7 @@
         },
         {
             "sernum": "ALCLFC5256F6",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.113.119"
         },
         {
             "sernum": "ALCLB3D7F31B",
@@ -1226,7 +1226,7 @@
         },
         {
             "sernum": "ALCLB3FED200",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.225.244"
         },
         {
             "sernum": "ALCLFC0A9FB1",
@@ -1238,7 +1238,7 @@
         },
         {
             "sernum": "ALCLB3A4BCD7",
-            "ip": "10.70.204.135"
+            "ip": "10.64.0.107"
         },
         {
             "sernum": "ALCLFC0AB681",
@@ -1246,7 +1246,7 @@
         },
         {
             "sernum": "ALCLB3FE6508",
-            "ip": "10.70.234.94"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3FE6A16",
@@ -1254,7 +1254,7 @@
         },
         {
             "sernum": "ALCLFC0A7AF0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.25.178"
         },
         {
             "sernum": "ALCLB3FEBEC5",
@@ -1262,7 +1262,7 @@
         },
         {
             "sernum": "ALCLFC4D0106",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.114.112"
         },
         {
             "sernum": "ALCLB40D385C",
@@ -1270,11 +1270,11 @@
         },
         {
             "sernum": "ALCLB3D7FC21",
-            "ip": "10.70.250.239"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A9A9DE",
-            "ip": "10.70.248.125"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC1B3D72",
@@ -1282,11 +1282,11 @@
         },
         {
             "sernum": "ALCLFC525C5D",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.139.17"
         },
         {
             "sernum": "ALCLFC4CE350",
-            "ip": "10.70.249.203"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC20EAD2",
@@ -1294,7 +1294,7 @@
         },
         {
             "sernum": "ALCLFC523F93",
-            "ip": "10.70.250.66"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC162F15",
@@ -1314,7 +1314,7 @@
         },
         {
             "sernum": "ALCLFC0AAB20",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.150.178"
         },
         {
             "sernum": "ALCLFC364532",
@@ -1330,7 +1330,7 @@
         },
         {
             "sernum": "ALCLFC0A97C6",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.113.202"
         },
         {
             "sernum": "ALCLFC53BDBB",
@@ -1338,7 +1338,7 @@
         },
         {
             "sernum": "ALCLFC024B64",
-            "ip": "10.70.168.26"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407BA21",
@@ -1346,27 +1346,27 @@
         },
         {
             "sernum": "ALCLB40D5A9F",
-            "ip": "10.62.16.67"
+            "ip": "10.70.195.9"
         },
         {
             "sernum": "ALCLB40D673F",
-            "ip": "10.70.239.16"
-        },
-        {
-            "sernum": "ALCLB407D4C5",
-            "ip": "10.62.88.89"
-        },
-        {
-            "sernum": "ALCLB40D67C0",
-            "ip": "10.70.230.230"
-        },
-        {
-            "sernum": "ALCLB40D63BC",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB407D4C5",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB40D67C0",
+            "ip": "10.64.1.146"
+        },
+        {
+            "sernum": "ALCLB40D63BC",
+            "ip": "10.62.150.136"
+        },
+        {
             "sernum": "ALCLB407D5E3",
-            "ip": "10.70.206.238"
+            "ip": "10.64.176.39"
         },
         {
             "sernum": "ALCLB407BAAC",
@@ -1374,7 +1374,7 @@
         },
         {
             "sernum": "ALCLFC4B284D",
-            "ip": "10.70.118.25"
+            "ip": "10.62.201.105"
         },
         {
             "sernum": "ALCLFC538B3E",
@@ -1382,15 +1382,15 @@
         },
         {
             "sernum": "ALCLFC527BE2",
-            "ip": "10.70.210.80"
+            "ip": "10.70.241.122"
         },
         {
             "sernum": "ALCLFC4C3758",
-            "ip": "10.62.44.140"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B8E1C",
-            "ip": "10.70.168.132"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC53AE2D",
@@ -1398,19 +1398,19 @@
         },
         {
             "sernum": "ALCLB2893CEE",
-            "ip": "10.70.118.27"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2894300",
-            "ip": "10.70.191.60"
+            "ip": "10.70.116.67"
         },
         {
             "sernum": "ALCLFC4C2DF7",
-            "ip": "10.62.24.1"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C3B7B",
-            "ip": "10.70.112.125"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F2B24",
@@ -1418,7 +1418,7 @@
         },
         {
             "sernum": "ALCLB2890E0C",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.253.93"
         },
         {
             "sernum": "ALCLFC4B6C30",
@@ -1426,7 +1426,7 @@
         },
         {
             "sernum": "ALCLB28901FA",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.239.232"
         },
         {
             "sernum": "ALCLFC4F65DD",
@@ -1434,39 +1434,39 @@
         },
         {
             "sernum": "ALCLFC53B339",
-            "ip": "10.70.213.57"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893DC4",
-            "ip": "10.62.76.228"
+            "ip": "10.61.5.188"
         },
         {
             "sernum": "ALCLFC4CA381",
-            "ip": "10.70.116.106"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB289205B",
-            "ip": "10.62.28.6"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC53C7FF",
-            "ip": "10.70.115.228"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893659",
-            "ip": "10.62.241.30"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC247E91",
-            "ip": "10.70.114.0"
+            "ip": "10.62.145.171"
         },
         {
             "sernum": "ALCLB2892FB4",
-            "ip": "10.62.15.22"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893D1B",
-            "ip": "10.70.150.157"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893DC0",
@@ -1478,23 +1478,23 @@
         },
         {
             "sernum": "ALCLFC4B871B",
-            "ip": "10.70.240.91"
+            "ip": "10.64.1.12"
         },
         {
             "sernum": "ALCLFC5783AB",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.17.148"
         },
         {
             "sernum": "ALCLFC4CC4C5",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.231.85"
         },
         {
             "sernum": "ALCLFC4C7882",
-            "ip": "10.70.113.119"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC53CD59",
-            "ip": "10.62.22.179"
+            "ip": "10.62.14.35"
         },
         {
             "sernum": "ALCLFC5929A3",
@@ -1502,7 +1502,7 @@
         },
         {
             "sernum": "ALCLFC4C3018",
-            "ip": "10.70.225.244"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2892F84",
@@ -1510,15 +1510,15 @@
         },
         {
             "sernum": "ALCLB40D1C1B",
-            "ip": "10.62.69.211"
-        },
-        {
-            "sernum": "ALCLFC4C90FD",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC4C90FD",
+            "ip": "10.70.241.93"
+        },
+        {
             "sernum": "ALCLFC4C7E88",
-            "ip": "10.62.70.244"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B8BE1",
@@ -1526,7 +1526,7 @@
         },
         {
             "sernum": "ALCLFC4CA146",
-            "ip": "10.70.114.112"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407C925",
@@ -1542,23 +1542,23 @@
         },
         {
             "sernum": "ALCLFC5259C7",
-            "ip": "10.70.139.17"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F6640",
-            "ip": "10.62.61.119"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC522BC0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.160.20"
         },
         {
             "sernum": "ALCLFC5229CB",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.42.55"
         },
         {
             "sernum": "ALCLFC524FF0",
-            "ip": "10.62.45.68"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC528747",
@@ -1566,11 +1566,11 @@
         },
         {
             "sernum": "ALCLFC525C1F",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.29.4"
         },
         {
             "sernum": "ALCLFC537A33",
-            "ip": "10.70.113.202"
+            "ip": "10.70.247.234"
         },
         {
             "sernum": "ALCLFC539248",
@@ -1578,11 +1578,11 @@
         },
         {
             "sernum": "ALCLFC52846F",
-            "ip": "10.70.195.9"
+            "ip": "10.62.13.197"
         },
         {
             "sernum": "ALCLFC522221",
-            "ip": "10.62.17.62"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5246DD",
@@ -1590,7 +1590,7 @@
         },
         {
             "sernum": "ALCLFC4C84D9",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.34.115"
         },
         {
             "sernum": "ALCLFC4C7B96",
@@ -1602,11 +1602,11 @@
         },
         {
             "sernum": "ALCLFC521AE4",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.108.20"
         },
         {
             "sernum": "ALCLFC4C611C",
-            "ip": "10.70.241.122"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
@@ -1618,15 +1618,15 @@
         },
         {
             "sernum": "ALCLFC4C99E0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.167.22"
         },
         {
             "sernum": "ALCLFC4CC349",
-            "ip": "10.70.116.67"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B62C2",
-            "ip": "10.70.253.93"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F50FB",
@@ -1634,7 +1634,7 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.239.232"
+            "ip": "10.64.1.255"
         },
         {
             "sernum": "#N/DISP",
@@ -1642,31 +1642,31 @@
         },
         {
             "sernum": "ALCLFC4F6750",
-            "ip": "10.61.5.188"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F5CF4",
-            "ip": "10.62.84.63"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CF7EB",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.115.172"
         },
         {
             "sernum": "ALCLFC526D4A",
-            "ip": "10.62.30.149"
-        },
-        {
-            "sernum": "ALCLFC53B9D1",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC53B9D1",
+            "ip": "10.70.198.38"
+        },
+        {
             "sernum": "ALCLFC59163C",
-            "ip": "10.62.90.62"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC59505A",
-            "ip": "10.62.89.139"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC538F64",
@@ -1674,23 +1674,23 @@
         },
         {
             "sernum": "ALCLFC53A381",
-            "ip": "10.70.231.85"
+            "ip": "10.62.11.164"
         },
         {
             "sernum": "ALCLFC4B199F",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.212.32"
         },
         {
             "sernum": "ALCLFC591E8A",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.149.165"
         },
         {
             "sernum": "ALCLFC4C5810",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.238.120"
         },
         {
             "sernum": "ALCLFC538A55",
-            "ip": "10.70.241.93"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B00BF",
@@ -1698,15 +1698,15 @@
         },
         {
             "sernum": "ALCLFC4B039D",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.62.160"
         },
         {
             "sernum": "ALCLB407D5E1",
-            "ip": "10.62.21.193"
+            "ip": "10.70.227.229"
         },
         {
             "sernum": "ALCLFC538C4E",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.164.41"
         },
         {
             "sernum": "ALCLFC200ADA",
@@ -1714,11 +1714,11 @@
         },
         {
             "sernum": "ALCLFC4D0CCD",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.108.37"
         },
         {
             "sernum": "ALCLFC59677E",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.232.166"
         },
         {
             "sernum": "#N/DISP",
@@ -1726,19 +1726,19 @@
         },
         {
             "sernum": "ALCLFC19C200",
-            "ip": "10.62.45.180"
+            "ip": "10.70.252.58"
         },
         {
             "sernum": "ALCLFC4B3137",
-            "ip": "10.70.247.234"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B56C0",
-            "ip": "10.62.12.112"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19C009",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.110.37"
         },
         {
             "sernum": "ALCLFC4AF598",
@@ -1750,7 +1750,7 @@
         },
         {
             "sernum": "ALCLFC200AF1",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.191.1"
         },
         {
             "sernum": "#N/DISP",
@@ -1762,11 +1762,11 @@
         },
         {
             "sernum": "ALCLFC3673C9",
-            "ip": "10.70.167.22"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CE453",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.251.47"
         },
         {
             "sernum": "ALCLFC364D4A",
@@ -1774,11 +1774,11 @@
         },
         {
             "sernum": "ALCLFC1FC01A",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.251.198"
         },
         {
             "sernum": "ALCLFC15EBAB",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.157.184"
         },
         {
             "sernum": "ALCLFC0ABA27",
@@ -1786,15 +1786,15 @@
         },
         {
             "sernum": "#N/DISP",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.16.19"
         },
         {
             "sernum": "ALCLFC163257",
-            "ip": "10.70.198.38"
+            "ip": "10.70.137.205"
         },
         {
             "sernum": "ALCLFC15C264",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.13.37"
         },
         {
             "sernum": "ALCLFC1691AB",
@@ -1802,15 +1802,15 @@
         },
         {
             "sernum": "ALCLFC25094A",
-            "ip": "10.62.15.84"
+            "ip": "10.62.33.159"
         },
         {
             "sernum": "ALCLFC15E72E",
-            "ip": "10.70.212.32"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC16045F",
-            "ip": "10.70.238.120"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC201FFD",
@@ -1822,7 +1822,7 @@
         },
         {
             "sernum": "ALCLB288F874",
-            "ip": "10.62.50.80"
+            "ip": "10.70.251.23"
         },
         {
             "sernum": "ALCLFC15923E",
@@ -1830,7 +1830,7 @@
         },
         {
             "sernum": "ALCLFC19B93E",
-            "ip": "10.70.227.229"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC1589FE",
@@ -1838,31 +1838,31 @@
         },
         {
             "sernum": "ALCLFC241D67",
+            "ip": "10.70.142.66"
+        },
+        {
+            "sernum": "#N/DISP",
             "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.232.166"
-        },
-        {
-            "sernum": "#N/DISP",
-            "ip": "10.62.1.211"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC1FDE6E",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.62.15"
         },
         {
             "sernum": "ALCLB3FE62D6",
-            "ip": "10.70.252.58"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.50.91"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A42DC4",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.107.239"
         },
         {
             "sernum": "ALCLB3FEC6D1",
@@ -1870,7 +1870,7 @@
         },
         {
             "sernum": "ALCLB3D7FDE9",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.255.21"
         },
         {
             "sernum": "ALCLFC19C644",
@@ -1878,27 +1878,27 @@
         },
         {
             "sernum": "ALCLB3FE77C7",
-            "ip": "10.70.191.1"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC525AB1",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.164.9"
         },
         {
             "sernum": "ALCLB3D80080",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.240.23"
         },
         {
             "sernum": "ALCLB3D89990",
-            "ip": "10.70.251.47"
-        },
-        {
-            "sernum": "ALCLB3D89AB9",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB3D89AB9",
+            "ip": "10.70.173.209"
+        },
+        {
             "sernum": "ALCLB3EED5A8",
-            "ip": "10.70.251.198"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0AA093",
@@ -1906,15 +1906,15 @@
         },
         {
             "sernum": "ALCLFC525AB0",
-            "ip": "10.70.157.184"
+            "ip": "10.62.246.62"
         },
         {
             "sernum": "ALCLB3D8A901",
-            "ip": "10.62.50.195"
+            "ip": "10.70.118.149"
         },
         {
             "sernum": "ALCLB3FE56FC",
-            "ip": "10.70.137.205"
+            "ip": "10.62.196.57"
         },
         {
             "sernum": "ALCLFC24FED0",
@@ -1922,7 +1922,7 @@
         },
         {
             "sernum": "ALCLB3D7F7D8",
-            "ip": "10.62.13.8"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0A73F4",
@@ -1930,7 +1930,7 @@
         },
         {
             "sernum": "ALCLFC108636",
-            "ip": "10.62.3.225"
+            "ip": "10.62.26.30"
         },
         {
             "sernum": "ALCLB3A99DCD",
@@ -1946,23 +1946,23 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.54.47"
+            "ip": "10.62.127.141"
         },
         {
             "sernum": "ALCLFC0AABA0",
-            "ip": "10.70.251.23"
-        },
-        {
-            "sernum": "ALCLB2893FBE",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB2893FBE",
+            "ip": "10.62.202.23"
+        },
+        {
             "sernum": "ALCLFC1067B4",
-            "ip": "10.62.3.227"
+            "ip": "10.70.161.77"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.142.66"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0A841E",
@@ -1970,11 +1970,11 @@
         },
         {
             "sernum": "ALCLFC0A76AF",
-            "ip": "10.62.32.84"
+            "ip": "10.62.140.136"
         },
         {
             "sernum": "ALCLB3D808E3",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.171.92"
         },
         {
             "sernum": "ALCLB3FE3AB7",
@@ -1990,19 +1990,19 @@
         },
         {
             "sernum": "ALCLFC247399",
-            "ip": "10.62.56.13"
+            "ip": "10.70.251.136"
         },
         {
             "sernum": "ALCLFC527583",
-            "ip": "10.70.255.21"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC10A48F",
-            "ip": "10.62.15.252"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.118.45"
+            "ip": "10.62.172.158"
         },
         {
             "sernum": "ALCLFC5374F4",
@@ -2010,19 +2010,19 @@
         },
         {
             "sernum": "ALCLFC5394D5",
-            "ip": "10.70.240.23"
-        },
-        {
-            "sernum": "ALCLB3FECE75",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB3FECE75",
+            "ip": "10.70.179.18"
+        },
+        {
             "sernum": "ALCLFC4CABC6",
-            "ip": "10.70.173.209"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC10AD8C",
-            "ip": "10.62.19.212"
+            "ip": "10.70.228.99"
         },
         {
             "sernum": "ALCLB3A981A9",
@@ -2030,15 +2030,15 @@
         },
         {
             "sernum": "0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.217.203"
         },
         {
             "sernum": "ALCLFC5265EA",
-            "ip": "10.62.4.185"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0AB0FE",
-            "ip": "10.70.118.149"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B15F3",
@@ -2050,7 +2050,7 @@
         },
         {
             "sernum": "ALCLFC4CAA92",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.38.27"
         },
         {
             "sernum": "ALCLFC19B89B",
@@ -2058,11 +2058,11 @@
         },
         {
             "sernum": "ALCLFC592A3C",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.14.223"
         },
         {
             "sernum": "ALCLB3FE6541",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.160.190"
         },
         {
             "sernum": "ALCLFC4C724A",
@@ -2074,7 +2074,7 @@
         },
         {
             "sernum": "ALCLFC0A84D6",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.82.121"
         },
         {
             "sernum": "ALCLFC4CF130",
@@ -2082,7 +2082,7 @@
         },
         {
             "sernum": "ALCLFC4F513D",
-            "ip": "10.70.161.77"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D8A00C",
@@ -2090,7 +2090,7 @@
         },
         {
             "sernum": "ALCLFC026927",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.161.187"
         },
         {
             "sernum": "ALCLFC241D3D",
@@ -2098,15 +2098,15 @@
         },
         {
             "sernum": "ALCLFC3650F4",
-            "ip": "10.70.171.92"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C4834",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.175.234"
         },
         {
             "sernum": "ALCLFC16552B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.150.148"
         },
         {
             "sernum": "ALCLFC19CF23",
@@ -2114,11 +2114,11 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.50.240"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407C972",
-            "ip": "10.70.251.136"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F3E7F",
@@ -2126,7 +2126,7 @@
         },
         {
             "sernum": "ALCLFC4CF2BF",
-            "ip": "10.62.9.76"
+            "ip": "10.70.110.203"
         },
         {
             "sernum": "ALCLFC4C5BC4",
@@ -2138,7 +2138,7 @@
         },
         {
             "sernum": "ALCLFC4C9A40",
-            "ip": "10.70.179.18"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC15B83E",
@@ -2146,19 +2146,19 @@
         },
         {
             "sernum": "ALCLFC4CFEC1",
-            "ip": "10.70.228.99"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407A72D",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.255.219"
         },
         {
             "sernum": "ALCLFC522776",
-            "ip": "10.70.217.203"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A9846B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.222.246"
         },
         {
             "sernum": "ALCLB407B02D",
@@ -2170,11 +2170,11 @@
         },
         {
             "sernum": "ALCLB407BFDF",
-            "ip": "10.62.48.35"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D1E11",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.249.186"
         },
         {
             "sernum": "ALCLB407B558",
@@ -2186,11 +2186,11 @@
         },
         {
             "sernum": "ALCLB407E3AB",
-            "ip": "10.70.160.190"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407CA67",
-            "ip": "10.62.116.238"
+            "ip": "10.70.210.62"
         },
         {
             "sernum": "ALCLB407E38F",
@@ -2202,11 +2202,11 @@
         },
         {
             "sernum": "ALCLB407BFDE",
-            "ip": "10.62.202.204"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D28D0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.136.160"
         },
         {
             "sernum": "ALCLFC4CE133",
@@ -2222,7 +2222,7 @@
         },
         {
             "sernum": "ALCLB40D3D52",
-            "ip": "10.62.70.182"
+            "ip": "10.70.114.3"
         },
         {
             "sernum": "ALCLB40D1CC1",
@@ -2230,19 +2230,19 @@
         },
         {
             "sernum": "ALCLB407B4CC",
-            "ip": "10.70.175.234"
+            "ip": "10.70.250.10"
         },
         {
             "sernum": "ALCLB407D45F",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.8.36"
         },
         {
             "sernum": "ALCLB407D33B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.185.234"
         },
         {
             "sernum": "ALCLFC15A203",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.39.5"
         },
         {
             "sernum": "ALCLB2890824",
@@ -2254,7 +2254,7 @@
         },
         {
             "sernum": "ALCLB407BA7A",
-            "ip": "10.70.110.203"
+            "ip": "10.70.243.50"
         },
         {
             "sernum": "ALCLFC4F4E58",
@@ -2266,23 +2266,23 @@
         },
         {
             "sernum": "ALCLB407D8CD",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.35.206"
         },
         {
             "sernum": "ALCLFC1FD36B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.186.161"
         },
         {
             "sernum": "ALCLB40D650F",
-            "ip": "10.70.255.219"
+            "ip": "10.70.248.27"
         },
         {
             "sernum": "ALCLB4079B0E",
-            "ip": "10.62.164.23"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2B9E39D",
-            "ip": "10.70.222.246"
+            "ip": "10.70.232.233"
         },
         {
             "sernum": "ALCLB407C8C8",
@@ -2298,11 +2298,11 @@
         },
         {
             "sernum": "ALCLB40D644D",
-            "ip": "10.70.249.186"
+            "ip": "10.70.221.68"
         },
         {
             "sernum": "ALCLB407CBFB",
-            "ip": "10.62.101.255"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB407D8D7",
@@ -2314,11 +2314,11 @@
         },
         {
             "sernum": "ALCLB407CFB0",
-            "ip": "10.70.210.62"
+            "ip": "10.62.199.128"
         },
         {
             "sernum": "ALCLB40D480C",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.233.221"
         },
         {
             "sernum": "ALCLB40D4066",
@@ -2330,15 +2330,15 @@
         },
         {
             "sernum": "ALCLB40D447F",
-            "ip": "10.70.136.160"
-        },
-        {
-            "sernum": "ALCLB407D8E3",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB407D8E3",
+            "ip": "10.62.136.182"
+        },
+        {
             "sernum": "ALCLB407D614",
-            "ip": "10.62.25.31"
+            "ip": "10.70.231.99"
         },
         {
             "sernum": "ALCLB40D3011",
@@ -2346,31 +2346,31 @@
         },
         {
             "sernum": "ALCLB40D57D8",
-            "error": "IP not found or error in command execution"
+            "ip": "10.61.1.238"
         },
         {
             "sernum": "ALCLFC19BD2C",
-            "ip": "10.70.114.3"
+            "ip": "10.62.43.133"
         },
         {
             "sernum": "ALCLB407CFE0",
-            "ip": "10.70.250.10"
+            "ip": "10.62.113.28"
         },
         {
             "sernum": "ALCLB407CC90",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.182.231"
         },
         {
             "sernum": "ALCLFC596DEE",
-            "ip": "10.62.11.196"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C7DE9",
-            "ip": "10.70.185.234"
+            "ip": "10.70.227.48"
         },
         {
             "sernum": "ALCLFC4C96F9",
-            "ip": "10.62.83.51"
+            "ip": "10.62.113.167"
         },
         {
             "sernum": "ALCLFC15BD70",
@@ -2378,11 +2378,11 @@
         },
         {
             "sernum": "ALCLB407D4B6",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.186.185"
         },
         {
             "sernum": "ALCLB40D5B80",
-            "ip": "10.70.243.50"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D5BC4",
@@ -2398,19 +2398,19 @@
         },
         {
             "sernum": "ALCLFC4C3B1A",
-            "ip": "10.70.186.161"
+            "ip": "10.70.225.96"
         },
         {
             "sernum": "ALCLB40D2954",
-            "ip": "10.62.174.96"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CAA50",
-            "ip": "10.70.248.27"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC539547",
-            "ip": "10.70.232.233"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C5DA2",
@@ -2422,23 +2422,23 @@
         },
         {
             "sernum": "ALCLB289284B",
-            "ip": "10.62.95.247"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB28923E3",
-            "ip": "10.62.122.97"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D2857",
-            "ip": "10.70.221.68"
+            "ip": "10.70.180.248"
         },
         {
             "sernum": "ALCLB4079A8C",
-            "ip": "10.62.62.76"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C7980",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.200.106"
         },
         {
             "sernum": "ALCLB28936B2",
@@ -2446,11 +2446,11 @@
         },
         {
             "sernum": "ALCLFC242DE0",
-            "ip": "10.70.233.221"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2894C85",
-            "ip": "10.62.205.78"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2892209",
@@ -2458,23 +2458,23 @@
         },
         {
             "sernum": "ALCLFC4C3356",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.167.49"
         },
         {
             "sernum": "ALCLB2893690",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.230.93"
         },
         {
             "sernum": "ALCLFC4C2AC9",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.8.40"
         },
         {
             "sernum": "ALCLFC4CAB3A",
-            "ip": "10.70.231.99"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C9864",
-            "ip": "10.61.1.238"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC53876A",
@@ -2482,19 +2482,19 @@
         },
         {
             "sernum": "ALCLFC539BDF",
-            "ip": "10.70.182.231"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB40D5BF9",
-            "ip": "10.62.96.223"
+            "ip": "10.70.232.90"
         },
         {
             "sernum": "ALCLFC538E4A",
-            "ip": "10.62.103.133"
+            "ip": "10.62.98.87"
         },
         {
             "sernum": "ALCLFC4F53CA",
-            "ip": "10.70.227.48"
+            "ip": "10.70.164.106"
         },
         {
             "sernum": "ALCLB2B9E7EB",
@@ -2506,7 +2506,7 @@
         },
         {
             "sernum": "ALCLFC524454",
-            "ip": "10.70.186.185"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC538C00",
@@ -2514,11 +2514,11 @@
         },
         {
             "sernum": "ALCLB289492F",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.163.237"
         },
         {
             "sernum": "ALCLFC4C44A5",
-            "ip": "10.62.139.81"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C72B7",
@@ -2526,11 +2526,11 @@
         },
         {
             "sernum": "ALCLFC4C79C5",
-            "ip": "10.70.225.96"
+            "ip": "10.70.181.211"
         },
         {
             "sernum": "ALCLB28924F2",
-            "ip": "10.62.144.37"
+            "ip": "10.62.36.157"
         },
         {
             "sernum": "ALCLB28912FB",
@@ -2538,11 +2538,11 @@
         },
         {
             "sernum": "ALCLFC4CA51C",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.224.245"
         },
         {
             "sernum": "ALCLFC4CBE6E",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.74.227"
         },
         {
             "sernum": "ALCLFC4C63A4",
@@ -2550,23 +2550,23 @@
         },
         {
             "sernum": "ALCLFC4CC4E4",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.206.165"
         },
         {
             "sernum": "ALCLFC5384E1",
-            "ip": "10.70.180.248"
-        },
-        {
-            "sernum": "ALCLFC4C36E6",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC4C36E6",
+            "ip": "10.70.104.96"
+        },
+        {
             "sernum": "ALCLB28924D8",
-            "ip": "10.70.200.106"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C773E",
-            "ip": "10.62.163.243"
+            "ip": "10.70.178.179"
         },
         {
             "sernum": "ALCLFC4B64B0",
@@ -2574,59 +2574,59 @@
         },
         {
             "sernum": "ALCLB28902E9",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.179.24"
         },
         {
             "sernum": "ALCLFC53B4C7",
-            "ip": "10.62.198.40"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC523310",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.224.29"
         },
         {
             "sernum": "ALCLFC4C5C66",
-            "ip": "10.70.230.93"
+            "ip": "10.62.152.215"
         },
         {
             "sernum": "ALCLFC522B2D",
-            "ip": "10.62.26.185"
+            "ip": "10.70.151.141"
         },
         {
             "sernum": "ALCLFC528668",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.75.249"
         },
         {
             "sernum": "ALCLFC523C15",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.226.116"
         },
         {
             "sernum": "ALCLFC523BE9",
-            "ip": "10.62.163.234"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C32B1",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.234.82"
         },
         {
             "sernum": "ALCLFC525B62",
-            "ip": "10.70.232.90"
-        },
-        {
-            "sernum": "ALCLFC5259C8",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC5259C8",
+            "ip": "10.70.230.98"
+        },
+        {
             "sernum": "ALCLFC4C32E9",
-            "ip": "10.70.164.106"
+            "ip": "10.62.96.125"
         },
         {
             "sernum": "ALCLFC4CA00A",
-            "ip": "10.62.96.141"
+            "ip": "10.70.197.79"
         },
         {
             "sernum": "ALCLFC4C4C8C",
-            "ip": "10.62.72.161"
+            "ip": "10.62.136.10"
         },
         {
             "sernum": "ALCLFC4CBB1E",
@@ -2634,7 +2634,7 @@
         },
         {
             "sernum": "ALCLFC538BF8",
-            "ip": "10.62.207.137"
+            "ip": "10.70.223.163"
         },
         {
             "sernum": "ALCLFC52801D",
@@ -2642,7 +2642,7 @@
         },
         {
             "sernum": "ALCLFC5A2B92",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.229.82"
         },
         {
             "sernum": "ALCLFC521D4B",
@@ -2650,27 +2650,27 @@
         },
         {
             "sernum": "ALCLFC592DFA",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.209.84"
         },
         {
             "sernum": "ALCLFC4C5D4F",
-            "ip": "10.70.181.211"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC526FE2",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.111.74"
         },
         {
             "sernum": "ALCLFC4CB0CB",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.227.34"
         },
         {
             "sernum": "ALCLFC4C5F7D",
-            "ip": "10.70.224.245"
+            "ip": "10.62.17.178"
         },
         {
             "sernum": "ALCLFC5276A8",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.157.114"
         },
         {
             "sernum": "ALCLFC4C5A62",
@@ -2678,11 +2678,11 @@
         },
         {
             "sernum": "ALCLFC5274F7",
-            "ip": "10.70.206.165"
+            "ip": "10.70.192.9"
         },
         {
             "sernum": "ALCLFC5228A8",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.142.202"
         },
         {
             "sernum": "ALCLFC4CF148",
@@ -2690,23 +2690,23 @@
         },
         {
             "sernum": "ALCLFC52222B",
-            "ip": "10.70.178.179"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CB28F",
-            "ip": "10.62.104.197"
+            "ip": "10.62.149.193"
         },
         {
             "sernum": "ALCLFC4C8F60",
-            "ip": "10.62.33.99"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC527538",
-            "ip": "10.70.179.24"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC523212",
-            "ip": "10.70.224.29"
+            "ip": "10.70.121.86"
         },
         {
             "sernum": "#N/DISP",
@@ -2714,27 +2714,27 @@
         },
         {
             "sernum": "ALCLFC522BD2",
-            "ip": "10.62.99.75"
-        },
-        {
-            "sernum": "ALCLFC4F1FB8",
-            "ip": "10.70.151.141"
-        },
-        {
-            "sernum": "ALCLFC4C3AE2",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC4F1FB8",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC4C3AE2",
+            "ip": "10.70.175.25"
+        },
+        {
             "sernum": "ALCLFC4C5B28",
-            "ip": "10.70.226.116"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC524037",
-            "ip": "10.70.234.82"
+            "ip": "10.70.231.21"
         },
         {
             "sernum": "ALCLFC523C59",
-            "ip": "10.62.163.248"
+            "ip": "10.70.179.231"
         },
         {
             "sernum": "ALCLFC4CB4FF",
@@ -2742,15 +2742,15 @@
         },
         {
             "sernum": "ALCLFC523490",
-            "ip": "10.70.230.98"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC527A2E",
-            "ip": "10.70.197.79"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4C95E8",
-            "ip": "10.62.107.230"
+            "ip": "10.70.118.224"
         },
         {
             "sernum": "ALCLFC5241F6",
@@ -2758,7 +2758,7 @@
         },
         {
             "sernum": "ALCLFC4F16A1",
-            "ip": "10.70.223.163"
+            "ip": "10.70.237.78"
         },
         {
             "sernum": "ALCLFC4CED1C",
@@ -2766,15 +2766,15 @@
         },
         {
             "sernum": "ALCLFC523097",
-            "ip": "10.70.229.82"
+            "ip": "10.70.211.186"
         },
         {
             "sernum": "ALCLFC4C6D2E",
-            "ip": "10.70.209.84"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5A3237",
-            "ip": "10.62.131.188"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5229AE",
@@ -2782,7 +2782,7 @@
         },
         {
             "sernum": "ALCLFC4C88BA",
-            "ip": "10.70.111.74"
+            "ip": "10.70.107.222"
         },
         {
             "sernum": "ALCLFC4CA65E",
@@ -2790,19 +2790,19 @@
         },
         {
             "sernum": "ALCLFC59556A",
-            "ip": "10.70.227.34"
+            "ip": "10.70.131.71"
         },
         {
             "sernum": "ALCLFC4C4175",
-            "ip": "10.62.145.129"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CF3C5",
-            "ip": "10.70.157.114"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC52437E",
-            "ip": "10.70.192.9"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC525A56",
@@ -2814,7 +2814,7 @@
         },
         {
             "sernum": "ALCLFC4B5E5D",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.117.220"
         },
         {
             "sernum": "ALCLFC526515",
@@ -2830,7 +2830,7 @@
         },
         {
             "sernum": "ALCLFC5229C7",
-            "ip": "10.70.121.86"
+            "ip": "10.70.228.98"
         },
         {
             "sernum": "ALCLFC4CF83A",
@@ -2842,7 +2842,7 @@
         },
         {
             "sernum": "ALCLFC528732",
-            "ip": "10.70.175.25"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CF2B3",
@@ -2850,15 +2850,15 @@
         },
         {
             "sernum": "ALCLFC526B57",
-            "ip": "10.70.231.21"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC537743",
-            "ip": "10.62.75.99"
+            "ip": "10.70.224.43"
         },
         {
             "sernum": "ALCLFC4C578B",
-            "ip": "10.70.179.231"
+            "ip": "10.62.56.249"
         },
         {
             "sernum": "ALCLFC4CE502",
@@ -2874,11 +2874,11 @@
         },
         {
             "sernum": "ALCLFC4CF858",
-            "ip": "10.70.118.224"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC52785A",
-            "ip": "10.62.116.71"
+            "ip": "10.70.206.0"
         },
         {
             "sernum": "ALCLFC539164",
@@ -2886,15 +2886,15 @@
         },
         {
             "sernum": "ALCLFC5277CA",
-            "ip": "10.70.237.78"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F5281",
-            "ip": "10.70.211.186"
+            "ip": "10.70.115.180"
         },
         {
             "sernum": "#N/DISP",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.15.41"
         },
         {
             "sernum": "ALCLFC4CF65C",
@@ -2910,11 +2910,11 @@
         },
         {
             "sernum": "ALCLFC592F84",
-            "ip": "10.70.107.222"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CCA6A",
-            "ip": "10.70.131.71"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CC9A4",
@@ -2922,7 +2922,7 @@
         },
         {
             "sernum": "ALCLFC4CE96F",
-            "ip": "10.62.40.177"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B884F",
@@ -2930,7 +2930,7 @@
         },
         {
             "sernum": "ALCLFC576178",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.88.76"
         },
         {
             "sernum": "ALCLFC593C91",
@@ -2938,7 +2938,7 @@
         },
         {
             "sernum": "ALCLFC595844",
-            "ip": "10.70.117.220"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC539200",
@@ -2946,7 +2946,7 @@
         },
         {
             "sernum": "ALCLFC4F5C01",
-            "ip": "10.62.197.200"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC538770",
@@ -2954,11 +2954,11 @@
         },
         {
             "sernum": "ALCLFC4C3F4A",
-            "ip": "10.70.228.98"
+            "ip": "10.62.71.178"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.90.212"
+            "ip": "10.70.197.104"
         },
         {
             "sernum": "ALCLFC522076",
@@ -2966,19 +2966,19 @@
         },
         {
             "sernum": "ALCLFC5271B7",
-            "ip": "10.62.166.42"
+            "ip": "10.62.58.148"
         },
         {
             "sernum": "ALCLFC4C7344",
-            "ip": "10.70.224.43"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B9153",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.118.191"
         },
         {
             "sernum": "ALCLFC539723",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.19.197"
         },
         {
             "sernum": "ALCLFC4CCD28",
@@ -2986,7 +2986,7 @@
         },
         {
             "sernum": "ALCLFC591310",
-            "ip": "10.70.206.0"
+            "ip": "10.70.118.185"
         },
         {
             "sernum": "ALCLFC57A39C",
@@ -2998,11 +2998,11 @@
         },
         {
             "sernum": "ALCLFC4F3AA4",
-            "ip": "10.70.115.180"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4CFF4C",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.116.17"
         },
         {
             "sernum": "ALCLFC4D09EA",
@@ -3010,11 +3010,11 @@
         },
         {
             "sernum": "ALCLFC4B5259",
-            "ip": "10.62.219.128"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.17.44"
         },
         {
             "sernum": "#N/DISP",
@@ -3026,11 +3026,11 @@
         },
         {
             "sernum": "ALCLFC4B1E78",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.6.125"
         },
         {
             "sernum": "ALCLFC538690",
-            "ip": "10.62.201.50"
+            "ip": "10.64.1.175"
         },
         {
             "sernum": "ALCLFC4B1D2B",
@@ -3042,7 +3042,7 @@
         },
         {
             "sernum": "ALCLFC36365A",
-            "ip": "10.70.197.104"
+            "ip": "10.70.114.218"
         },
         {
             "sernum": "ALCLFC4CF8E7",
@@ -3050,11 +3050,11 @@
         },
         {
             "sernum": "ALCLFC19C21A",
-            "ip": "10.70.118.191"
+            "ip": "10.62.86.71"
         },
         {
             "sernum": "ALCLFC4F3D0E",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.114.230"
         },
         {
             "sernum": "ALCLFC365CFA",
@@ -3062,11 +3062,11 @@
         },
         {
             "sernum": "ALCLFC19C817",
-            "ip": "10.70.118.185"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB2893EA7",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.240.183"
         },
         {
             "sernum": "ALCLFC36655B",
@@ -3074,15 +3074,15 @@
         },
         {
             "sernum": "ALCLFC364F22",
-            "ip": "10.62.201.134"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B1E15",
-            "ip": "10.70.116.17"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B2DFD",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.2.97"
         },
         {
             "sernum": "ALCLFC36348C",
@@ -3098,31 +3098,31 @@
         },
         {
             "sernum": "ALCLFC3628B5",
-            "ip": "10.70.114.218"
+            "ip": "10.62.11.174"
         },
         {
             "sernum": "ALCLFC365715",
-            "ip": "10.62.173.18"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC15925B",
-            "ip": "10.70.114.230"
+            "ip": "10.70.182.174"
         },
         {
             "sernum": "ALCLFC4CEDFA",
-            "ip": "10.62.124.51"
+            "ip": "10.62.14.14"
         },
         {
             "sernum": "ALCLFC4F43FA",
-            "ip": "10.70.240.183"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC36477A",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.240.155"
         },
         {
             "sernum": "ALCLFC4B6926",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.64.30"
         },
         {
             "sernum": "ALCLFC36318B",
@@ -3134,19 +3134,19 @@
         },
         {
             "sernum": "ALCLFC5959DF",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.40.80"
         },
         {
             "sernum": "ALCLFC2427D1",
-            "ip": "10.70.182.174"
-        },
-        {
-            "sernum": "ALCLFC4AF697",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC4AF697",
+            "ip": "10.70.117.84"
+        },
+        {
             "sernum": "ALCLFC244430",
-            "ip": "10.70.240.155"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19C275",
@@ -3158,15 +3158,15 @@
         },
         {
             "sernum": "ALCLFC19C7FE",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.56.224"
         },
         {
             "sernum": "ALCLFC4CF2E0",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.203.237"
         },
         {
             "sernum": "ALCLFC4B12C6",
-            "ip": "10.70.117.84"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F608D",
@@ -3174,31 +3174,31 @@
         },
         {
             "sernum": "ALCLFC4F4742",
-            "ip": "10.62.108.48"
-        },
-        {
-            "sernum": "ALCLFC4B6DC2",
-            "ip": "10.70.203.237"
-        },
-        {
-            "sernum": "ALCLFC5265A2",
-            "error": "IP not found or error in command execution"
-        },
-        {
-            "sernum": "ALCLFC4AF6CB",
             "ip": "10.70.118.222"
         },
         {
-            "sernum": "ALCLFC200A78",
-            "ip": "10.62.82.200"
+            "sernum": "ALCLFC4B6DC2",
+            "error": "IP not found or error in command execution"
         },
         {
-            "sernum": "ALCLFC5252E5",
+            "sernum": "ALCLFC5265A2",
+            "ip": "10.62.63.94"
+        },
+        {
+            "sernum": "ALCLFC4AF6CB",
             "ip": "10.70.117.37"
         },
         {
+            "sernum": "ALCLFC200A78",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC5252E5",
+            "ip": "10.62.218.185"
+        },
+        {
             "sernum": "ALCLFC52665C",
-            "ip": "10.62.111.205"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4B2185",
@@ -3206,19 +3206,19 @@
         },
         {
             "sernum": "ALCLFC36729F",
-            "ip": "10.62.90.247"
+            "ip": "10.62.72.254"
         },
         {
             "sernum": "ALCLFC5938EE",
-            "ip": "10.70.116.182"
+            "ip": "10.64.176.241"
         },
         {
             "sernum": "ALCLFC4AEC96",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.116.182"
         },
         {
             "sernum": "ALCLFC4B14EF",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.137.223"
         },
         {
             "sernum": "ALCLFC4F43A1",
@@ -3234,31 +3234,31 @@
         },
         {
             "sernum": "ALCLFC4D095C",
-            "ip": "10.61.1.80"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4AF16F",
-            "ip": "10.62.197.203"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5943AF",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.73.169"
         },
         {
             "sernum": "ALCLFC364CED",
-            "ip": "10.62.165.52"
+            "ip": "10.61.1.80"
         },
         {
             "sernum": "ALCLFC365BB4",
-            "ip": "10.70.241.2"
-        },
-        {
-            "sernum": "ALCLFC4B848A",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC4B848A",
+            "ip": "10.62.47.245"
+        },
+        {
             "sernum": "ALCLFC52670A",
-            "ip": "10.70.112.183"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC5930D7",
@@ -3266,11 +3266,11 @@
         },
         {
             "sernum": "ALCLFC1B2271",
-            "ip": "10.70.253.126"
+            "ip": "10.62.220.81"
         },
         {
             "sernum": "ALCLFC245BAC",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.241.2"
         },
         {
             "sernum": "ALCLFC4C61CC",
@@ -3278,19 +3278,19 @@
         },
         {
             "sernum": "ALCLFC2433F8",
-            "ip": "10.62.162.83"
-        },
-        {
-            "sernum": "ALCLFC200636",
-            "ip": "10.70.236.70"
-        },
-        {
-            "sernum": "ALCLFC241EF4",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC200636",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC241EF4",
+            "ip": "10.70.112.183"
+        },
+        {
             "sernum": "ALCLFC538B11",
-            "ip": "10.70.142.106"
+            "ip": "10.62.201.202"
         },
         {
             "sernum": "ALCLFC24654E",
@@ -3298,7 +3298,7 @@
         },
         {
             "sernum": "ALCLFC244775",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.253.126"
         },
         {
             "sernum": "ALCLFC201D13",
@@ -3306,7 +3306,7 @@
         },
         {
             "sernum": "ALCLFC162671",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.47.152"
         },
         {
             "sernum": "ALCLFC15B8DE",
@@ -3314,7 +3314,7 @@
         },
         {
             "sernum": "ALCLFC244394",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.236.70"
         },
         {
             "sernum": "ALCLFC19BFA6",
@@ -3322,19 +3322,19 @@
         },
         {
             "sernum": "ALCLFC1FEB13",
-            "ip": "10.70.155.88"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0A92F0",
-            "ip": "10.62.162.192"
+            "ip": "10.62.43.64"
         },
         {
             "sernum": "ALCLFC244B0F",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.1.106"
         },
         {
             "sernum": "ALCLFC24F4D7",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.142.106"
         },
         {
             "sernum": "ALCLFC15B1BB",
@@ -3342,19 +3342,19 @@
         },
         {
             "sernum": "ALCLFC250266",
-            "ip": "10.70.228.46"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC169DFA",
-            "ip": "10.62.108.192"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4D0B49",
-            "ip": "10.70.233.176"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19CBF7",
-            "ip": "10.70.170.151"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19BCD2",
@@ -3362,7 +3362,7 @@
         },
         {
             "sernum": "ALCLFC0AB74B",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.139.115"
         },
         {
             "sernum": "ALCLFC1590D8",
@@ -3370,7 +3370,7 @@
         },
         {
             "sernum": "ALCLFC19BF08",
-            "ip": "10.70.167.235"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19BA0A",
@@ -3378,7 +3378,7 @@
         },
         {
             "sernum": "ALCLFC1FD586",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.155.88"
         },
         {
             "sernum": "ALCLFC24983D",
@@ -3386,7 +3386,7 @@
         },
         {
             "sernum": "ALCLFC158313",
-            "ip": "10.70.233.111"
+            "ip": "10.62.90.100"
         },
         {
             "sernum": "ALCLFC158C85",
@@ -3398,11 +3398,11 @@
         },
         {
             "sernum": "ALCLB3D802B6",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.228.46"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.138.199"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
@@ -3410,31 +3410,31 @@
         },
         {
             "sernum": "ALCLFC523DC8",
-            "ip": "10.70.243.199"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC1581A7",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.233.176"
         },
         {
             "sernum": "ALCLFC20CB8A",
-            "error": "IP not found or error in command execution"
+            "ip": "10.64.0.230"
         },
         {
             "sernum": "ALCLFC19C6FA",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.40.58"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.106.9"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC20551E",
-            "ip": "10.70.116.220"
+            "ip": "10.70.170.151"
         },
         {
             "sernum": "ALCLFC24997E",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.73.251"
         },
         {
             "sernum": "ALCLFC2015F4",
@@ -3442,7 +3442,7 @@
         },
         {
             "sernum": "ALCLFC592797",
-            "ip": "10.70.169.210"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC16B5D1",
@@ -3454,11 +3454,11 @@
         },
         {
             "sernum": "ALCLFC16B9E9",
-            "ip": "10.70.251.104"
+            "ip": "10.70.167.235"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.205.185"
+            "ip": "10.62.137.88"
         },
         {
             "sernum": "ALCLFC4CD300",
@@ -3466,7 +3466,7 @@
         },
         {
             "sernum": "ALCLFC249D66",
-            "ip": "10.70.200.75"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC15EC12",
@@ -3474,11 +3474,11 @@
         },
         {
             "sernum": "ALCLFC19C1D2",
-            "ip": "10.70.175.225"
+            "ip": "10.70.233.111"
         },
         {
             "sernum": "ALCLFC16AA9C",
-            "ip": "10.62.205.191"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC19BB5F",
@@ -3490,7 +3490,7 @@
         },
         {
             "sernum": "ALCLFC1FF74F",
-            "ip": "10.70.254.46"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC1627A2",
@@ -3498,11 +3498,11 @@
         },
         {
             "sernum": "ALCLFC250A0D",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.138.199"
         },
         {
             "sernum": "ALCLFC241884",
-            "ip": "10.62.131.186"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC2048D2",
@@ -3510,15 +3510,15 @@
         },
         {
             "sernum": "ALCLFC2475F0",
-            "ip": "10.62.108.149"
-        },
-        {
-            "sernum": "ALCLFC15C70F",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC15C70F",
+            "ip": "10.70.243.199"
+        },
+        {
             "sernum": "ALCLFC24557A",
-            "ip": "10.70.252.188"
+            "ip": "10.62.108.15"
         },
         {
             "sernum": "#N/DISP",
@@ -3530,7 +3530,7 @@
         },
         {
             "sernum": "ALCLB2893FC4",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.220.73"
         },
         {
             "sernum": "ALCLB3D80B96",
@@ -3538,27 +3538,27 @@
         },
         {
             "sernum": "ALCLFC1FBE80",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.116.220"
         },
         {
             "sernum": "ALCLB3D7F443",
-            "ip": "10.70.179.103"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D89574",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.7.235"
         },
         {
             "sernum": "ALCLB3EED7F8",
-            "ip": "10.62.120.60"
+            "ip": "10.64.0.166"
         },
         {
             "sernum": "ALCLB3D80922",
-            "ip": "10.70.251.207"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC4F500F",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.169.210"
         },
         {
             "sernum": "ALCLB3D80B08",
@@ -3566,7 +3566,7 @@
         },
         {
             "sernum": "ALCLB3A99E4C",
-            "ip": "10.62.108.127"
+            "ip": "10.62.139.138"
         },
         {
             "sernum": "ALCLFC0A7861",
@@ -3574,27 +3574,27 @@
         },
         {
             "sernum": "ALCLB3D8A275",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.251.104"
         },
         {
             "sernum": "ALCLB3D7F536",
-            "ip": "10.62.96.147"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D80907",
-            "ip": "10.70.138.194"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB28923E0",
-            "ip": "10.70.234.12"
+            "ip": "10.70.205.185"
         },
         {
             "sernum": "ALCLB3D7F711",
-            "ip": "10.62.150.153"
+            "ip": "10.62.53.57"
         },
         {
             "sernum": "ALCLB3D80082",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.200.75"
         },
         {
             "sernum": "ALCLB3A43212",
@@ -3602,7 +3602,7 @@
         },
         {
             "sernum": "ALCLFC10A67F",
-            "ip": "10.70.113.40"
+            "ip": "10.62.116.57"
         },
         {
             "sernum": "ALCLFC5A389E",
@@ -3610,11 +3610,11 @@
         },
         {
             "sernum": "ALCLB3A4C2B1",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.175.225"
         },
         {
             "sernum": "ALCLB3FE4D20",
-            "ip": "10.62.203.212"
+            "ip": "10.62.39.76"
         },
         {
             "sernum": "#N/DISP",
@@ -3630,19 +3630,19 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.5.157"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC160059",
-            "ip": "10.70.249.75"
+            "ip": "10.70.254.46"
         },
         {
             "sernum": "ALCLB3A9937A",
-            "ip": "10.62.164.114"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.241.171"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3FE61A0",
@@ -3650,7 +3650,7 @@
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.223.6"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D80719",
@@ -3658,7 +3658,7 @@
         },
         {
             "sernum": "ALCLB3FE43A8",
-            "ip": "10.70.169.152"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D8090C",
@@ -3670,15 +3670,15 @@
         },
         {
             "sernum": "ALCLB3A982F7",
-            "ip": "10.70.199.189"
+            "ip": "10.70.252.188"
         },
         {
             "sernum": "ALCLB407AE85",
-            "ip": "10.70.238.110"
+            "ip": "10.62.63.95"
         },
         {
             "sernum": "ALCLFC19B80C",
-            "ip": "10.62.110.203"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC365672",
@@ -3686,7 +3686,7 @@
         },
         {
             "sernum": "ALCLFC15C70B",
-            "ip": "10.70.241.83"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3FE624A",
@@ -3698,7 +3698,7 @@
         },
         {
             "sernum": "ALCLB407CD86",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.140.154"
         },
         {
             "sernum": "ALCLB3D89C60",
@@ -3706,39 +3706,39 @@
         },
         {
             "sernum": "ALCLFC522217",
-            "ip": "10.70.187.75"
+            "ip": "10.70.179.103"
         },
         {
             "sernum": "ALCLFC19C3FC",
-            "ip": "10.62.141.145"
+            "ip": "10.62.203.18"
         },
         {
             "sernum": "ALCLFC4F1DCE",
-            "ip": "10.62.47.33"
+            "ip": "10.64.160.35"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.70.220.140"
-        },
-        {
-            "sernum": "ALCLB3A9AAE6",
-            "ip": "10.70.186.4"
-        },
-        {
-            "sernum": "ALCLB3FE649F",
-            "ip": "10.62.149.215"
-        },
-        {
-            "sernum": "ALCLB3D7FB5C",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLB3A9AAE6",
+            "ip": "10.62.36.100"
+        },
+        {
+            "sernum": "ALCLB3FE649F",
+            "ip": "10.64.160.3"
+        },
+        {
+            "sernum": "ALCLB3D7FB5C",
+            "ip": "10.70.251.207"
+        },
+        {
             "sernum": "ALCLFC0A5F31",
-            "ip": "10.70.254.249"
+            "ip": "10.62.197.56"
         },
         {
             "sernum": "ALCLFC522A4F",
-            "ip": "10.70.253.255"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC164F20",
@@ -3746,19 +3746,19 @@
         },
         {
             "sernum": "ALCLFC0ABC67",
-            "error": "IP not found or error in command execution"
+            "ip": "10.62.151.6"
         },
         {
             "sernum": "ALCLB28914A8",
-            "ip": "10.62.164.119"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D7F3BD",
-            "ip": "10.70.178.34"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D8A7EE",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.138.194"
         },
         {
             "sernum": "ALCLFC02B731",
@@ -3770,11 +3770,11 @@
         },
         {
             "sernum": "ALCLFC0AAD5A",
-            "ip": "10.70.246.106"
+            "ip": "10.62.40.210"
         },
         {
             "sernum": "ALCLB3D80A51",
-            "error": "IP not found or error in command execution"
+            "ip": "10.70.234.12"
         },
         {
             "sernum": "ALCLFC0A997F",
@@ -3782,43 +3782,43 @@
         },
         {
             "sernum": "ALCLFC0A6D1A",
-            "ip": "10.61.0.23"
-        },
-        {
-            "sernum": "ALCLFC0A7874",
-            "ip": "10.62.40.244"
-        },
-        {
-            "sernum": "ALCLB3FED68F",
-            "ip": "10.70.189.72"
-        },
-        {
-            "sernum": "ALCLFC0A95BE",
             "error": "IP not found or error in command execution"
         },
         {
+            "sernum": "ALCLFC0A7874",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB3FED68F",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC0A95BE",
+            "ip": "10.62.108.25"
+        },
+        {
             "sernum": "ALCLB3D7F7F5",
-            "ip": "10.62.149.80"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFBE125BA",
-            "ip": "10.62.73.80"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC10A601",
-            "ip": "10.70.245.212"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3A9818C",
-            "ip": "10.70.138.188"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "#N/DISP",
-            "ip": "10.62.40.180"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLFC0A5C9B",
-            "ip": "10.70.230.203"
+            "ip": "10.62.129.61"
         },
         {
             "sernum": "ALCLB3FE623C",
@@ -3826,15 +3826,15 @@
         },
         {
             "sernum": "ALCLB3A981C0",
-            "ip": "10.62.165.173"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3FE5F4B",
-            "ip": "10.70.251.220"
+            "ip": "10.62.82.222"
         },
         {
             "sernum": "ALCLB3D895A2",
-            "ip": "10.70.229.119"
+            "error": "IP not found or error in command execution"
         },
         {
             "sernum": "ALCLB3D7FE5B",
@@ -3842,7 +3842,59 @@
         },
         {
             "sernum": "ALCLB3A98A89",
-            "ip": "10.70.168.225"
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB3A9B482",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB3D80083",
+            "ip": "10.70.249.75"
+        },
+        {
+            "sernum": "ALCLFC0AB46E",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC4F1F9B",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB3A988DC",
+            "ip": "10.70.241.171"
+        },
+        {
+            "sernum": "ALCLB3D804EA",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC0A9384",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLFC4C3E48",
+            "ip": "10.70.223.6"
+        },
+        {
+            "sernum": "ALCLFC0A865C",
+            "ip": "10.70.169.152"
+        },
+        {
+            "sernum": "ALCLFC0AA32E",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB407ABB6",
+            "error": "IP not found or error in command execution"
+        },
+        {
+            "sernum": "ALCLB3FED668",
+            "ip": "10.62.120.199"
+        },
+        {
+            "sernum": "ALCLB3FE67F5",
+            "ip": "10.70.199.189"
         }
     ]
 }

@@ -29,7 +29,11 @@ gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 
 gem "net-telnet"
 
+gem 'rest-client'
+
 gem "nokogiri"
+
+gem 'aws-sdk-s3', '~> 1'
 
 gem "caxlsx"
 

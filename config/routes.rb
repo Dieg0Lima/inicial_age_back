@@ -82,6 +82,11 @@ Rails.application.routes.draw do
           post :fetch_onu_power
         end
       end
+      resources :validate, only: [] do
+        collection do
+          get :validate_cto
+        end
+      end
     end
   end
 end

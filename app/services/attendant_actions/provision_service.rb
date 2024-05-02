@@ -6,7 +6,7 @@ module AttendantActions
       AuthenticationAccessPoint.bsa_olts.map(&:olt_title_with_value)
     end
 
-    def provision_onu(olt_id, contract, sernum, connection_id, user_id, cto)
+    def provision_onu(olt_id, contract, sernum, connection_id, user_id, cto = nil)
       missing_params = [olt_id, contract, sernum, connection_id].select(&:nil?)
       unless missing_params.empty?
         return { error: "Missing parameters: #{missing_params.join(", ")}" }
