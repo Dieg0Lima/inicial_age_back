@@ -1,21 +1,27 @@
-require 'rest-client'
-require 'json'
+require "rest-client"
+require "tempfile"
 
 module BilletServices
   class GetBilletService
-    include Authenticatable
-
-    def initialize
-      @api_base_url = "https://erp.agetelecom.com.br:45715/external/integrations/thirdparty/GetBillet/5541623"
+    def initialize(billet_id)
+      @api_base_url = "https://erp.agetelecom.com.br:45715/external/integrations/thirdparty/GetBillet/#{billet_id}"
     end
 
-    def get_billet()
+    def get_billet_stream
       access_token = APIAuthentication.access_token
-      response = RestClient.get "#{@api_base_url}",
-                                { Authorization: "Bearer #{access_token}",
-                                  content_type: :json, accept: :json }
+      response = RestClient::Request.execute(
+        method: :get,
+        url: @api_base_url,
+        headers: { Authorization: "Bearer #{access_token}", accept: :pdf },
+        raw_response: true,
+      )
 
-      JSON.parse(response.body)
+      Tempfile.open(['billet', '.pdf']) do |file|
+        file.binmode
+        file.write(response.body)
+        file.rewind
+        yield(file)
+      end
     rescue RestClient::ExceptionWithResponse => e
       e.response
     end

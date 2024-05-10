@@ -19,6 +19,8 @@ Rails.application.configure do
 
   Rails.application.config.hosts << "ageatende"
 
+  Rails.application.config.hosts << "acdf-206-204-248-51.ngrok-free.app"
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
