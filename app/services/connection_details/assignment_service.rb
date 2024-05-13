@@ -3,7 +3,7 @@ module ConnectionDetails
     def fetch_assignment_data(authentication_contract_id)
       authentication_contract = AuthenticationContract.includes(contract: { contract_service_tags: { assignment_incidents: [:incident_type, :assignment => [:person, :team, :report]] } })
                                                       .find_by(id: authentication_contract_id)
-    
+
       if authentication_contract && authentication_contract.contract
         contract_service_tags = authentication_contract.contract.contract_service_tags
         if contract_service_tags.any?
@@ -13,10 +13,15 @@ module ConnectionDetails
               format_assignment_data(assignment, incidents)
             end
           end
-    
+
+          recent_assignments_count = assignments_data.count { |data| data[:beginning_date] >= 30.days.ago.to_date }
+
           sorted_assignments = assignments_data.sort_by { |data| data[:beginning_date] }.reverse
-    
-          sorted_assignments.presence || { error: "No assignments found for provided ID." }
+
+          {
+            assignments: sorted_assignments.presence || { error: "No assignments found for provided ID." },
+            recent_assignments_count: recent_assignments_count,
+          }
         else
           { error: "No contract service tags found for provided ID." }
         end
@@ -24,7 +29,6 @@ module ConnectionDetails
         { error: "No contract found for provided ID." }
       end
     end
-    
 
     private
 
@@ -39,7 +43,6 @@ module ConnectionDetails
         description: format_description(assignment.description),
         incidents: incidents.map { |incident| format_incident_data(incident, assignment) },
         reports: assignment.report.map { |report| format_report_data(report) },
-
       }
     end
 
@@ -69,11 +72,8 @@ module ConnectionDetails
       ActionController::Base.helpers.strip_tags(description)
     end
 
-    require "sanitize"
-
     def format_description(description)
-      sanitized_description = Sanitize.fragment(description)
-      sanitized_description.gsub(/\r\n/, "<br>").html_safe
+      Sanitize.fragment(description).gsub(/\r\n/, "<br>").html_safe
     end
   end
 end

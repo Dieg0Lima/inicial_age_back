@@ -33,8 +33,8 @@ module Api
         end
 
         assignment_service = ConnectionDetails::AssignmentService.new
-        assignment = assignment_service.fetch_assignment_data(params[:id])
-        unless assignment
+        assignment_result = assignment_service.fetch_assignment_data(params[:id])
+        unless assignment_result.is_a?(Hash) && assignment_result[:assignments]
           render json: { error: "Assignment not found" }, status: :not_found
           return
         end
@@ -44,7 +44,8 @@ module Api
           contract: contract.as_json,
           connection: connection.as_json,
           financial: financial.as_json,
-          assignment: assignment.as_json,
+          assignment: assignment_result[:assignments].as_json,
+          recent_assignments_count: assignment_result[:recent_assignments_count]
         }
       end
     end
