@@ -15,56 +15,38 @@ module Api
 
         billet_service = BilletServices::GetBilletService.new(billet_id)
 
-        billet_service.get_billet_stream do |pdf_stream|
-          uploader_service = AwsServices::S3UploaderBilletService.new
-          public_url = uploader_service.upload_from_stream(pdf_stream)
+        begin
+          billet_service.get_billet_stream do |pdf_stream|
+            uploader_service = AwsServices::S3UploaderBilletService.new
+            public_url = uploader_service.upload_from_stream(pdf_stream)
 
-          infobip_service = InfobipServices::BilletWhatsappService.new
-          response = infobip_service.send_billet_message(to, placeholder, public_url)
+            infobip_service = InfobipServices::BilletWhatsappService.new
+            response = infobip_service.send_billet_message(to, placeholder, public_url)
 
-          if response && response["messages"][0]["status"]["groupName"] == "PENDING"
-            render json: { media_url: public_url, message: "Fatura enviada com sucesso para o WhatsApp" }, status: :ok
-          else
-            render json: { error: "Erro ao enviar fatura para o WhatsApp" }, status: :internal_server_error
+            if response && response["messages"][0]["status"]["groupName"] == "PENDING"
+              render json: { media_url: public_url, message: "Fatura enviada com sucesso para o WhatsApp" }, status: :ok
+            else
+              render json: { error: "Erro ao enviar fatura para o WhatsApp" }, status: :internal_server_error
+            end
           end
+        rescue StandardError => e
+          render json: { error: e.message }, status: :internal_server_error
         end
-      rescue StandardError => e
-        render json: { error: e.message }, status: :internal_server_error
       end
 
       private
 
       def normalize_phone_number(phone_number)
         normalized_number = phone_number.gsub(/\s+|\D+/, "")
-
         normalized_number = "55#{normalized_number}" unless normalized_number.start_with?("55")
-
-        unless normalized_number[4] == "9"
-          normalized_number.insert(4, "9")
-        end
-
+        normalized_number.insert(4, "9") unless normalized_number[4] == "9"
         normalized_number
-      end
-
-      def has_ninth_digit?(phone_number)
-        ddd_length = 2
-        has_ninth = phone_number[ddd_length + 1] == "9"
-        has_ninth
-      end
-
-      def add_ninth_digit(phone_number)
-        phone_number_with_ninth_digit = phone_number.dup
-        phone_number_with_ninth_digit.insert(4, "9") unless phone_number_with_ninth_digit[4] == "9"
-        phone_number_with_ninth_digit
       end
 
       def valid_phone_number?(phone_number)
         phone_number = phone_number.gsub(/\D/, "")
-
         return false unless phone_number.match?(/^55\d{11}$/)
-
         ddd = phone_number.match(/(?<=55)\d{2}/)[0].to_i
-
         valid_ddd?(ddd)
       end
 
