@@ -39,13 +39,18 @@ module Api
           return
         end
 
+        assignment_response = {
+          assignments: assignment_result[:assignments],
+          total_assignments_count: assignment_result[:total_assignments_count],
+          recent_assignments_count: assignment_result[:recent_assignments_count],
+        }
+
         render json: {
           client: client.as_json,
           contract: contract.as_json,
           connection: connection.as_json,
           financial: financial.as_json,
-          assignment: assignment_result[:assignments].as_json,
-          recent_assignments_count: assignment_result[:recent_assignments_count]
+          assignment: assignment_response,
         }
       end
     end

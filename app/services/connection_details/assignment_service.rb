@@ -14,12 +14,17 @@ module ConnectionDetails
             end
           end
 
-          recent_assignments_count = assignments_data.count { |data| data[:beginning_date] >= 30.days.ago.to_date }
+          total_assignments_count = assignments_data.count
+
+          recent_assignments_count = assignments_data.count do |data|
+            data[:beginning_date] >= 30.days.ago.to_date && data[:incidents].any? { |incident| incident[:incident_type] == "Visita técnica" }
+          end
 
           sorted_assignments = assignments_data.sort_by { |data| data[:beginning_date] }.reverse
 
           {
             assignments: sorted_assignments.presence || { error: "No assignments found for provided ID." },
+            total_assignments_count: total_assignments_count,
             recent_assignments_count: recent_assignments_count,
           }
         else
