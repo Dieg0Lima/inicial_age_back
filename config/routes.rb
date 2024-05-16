@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  resources :business_partners, only: [:create]
+
   namespace :api do
     get "authentication_details/authentication_details"
     get "attendant_details/attendat_details"
@@ -104,7 +106,15 @@ Rails.application.routes.draw do
     resources :whatsapp, only: [] do
       collection do
         post :infobip
-      end 
+      end
+    end
+  end
+
+  namespace :sap do
+    resources :business_partners, only: [] do
+      collection do
+        post :create
+      end
     end
   end
 end
