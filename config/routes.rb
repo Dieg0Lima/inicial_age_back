@@ -116,5 +116,17 @@ Rails.application.routes.draw do
         post :create
       end
     end
+
+    resources :invoices, only: [] do
+      collection do
+        post :create
+      end
+    end
+
+    resources :items, only: [] do
+      collection do
+        post :create
+      end
+    end
   end
 end
