@@ -14,20 +14,23 @@ module Sap
     def invoice_params
       params.require(:invoice).permit(
         :DocEntry, :DocNum, :DocType, :DocDate, :DocDueDate, :CardCode, :CardName, :Comments,
+        :BPL_IDAssignedToInvoice, :DocTotal, :Incoterms, :SequenceModel, :SequenceCode, :SequenceSerial, :SeriesString,
         DocumentLines: [
-          :LineNum, :ItemCode, :ItemDescription, :Quantity, :Price, :DiscountPercent, :TaxCode, :WarehouseCode, :AccountCode, :Usage
+          :LineNum, :ItemCode, :ItemDescription, :Quantity, :Price, :DiscountPercent,
+          :TaxCode, :WarehouseCode, :AccountCode, :Usage,
         ],
         AddressExtension: [
-          :ShipToStreet, :ShipToBlock, :ShipToZipCode, :ShipToCity, :ShipToState, :ShipToCountry
-        ]
+          :ShipToStreet, :ShipToBlock, :ShipToZipCode, :ShipToCity, :ShipToState, :ShipToCountry,
+        ],
+        Package: {},
       )
-    end    
+    end
 
     def prepare_invoice_data(data)
       data[:DocDate] = format_date(data[:DocDate])
       data[:DocDueDate] = format_date(data[:DocDueDate])
       data
-    end    
+    end
 
     def format_date(date)
       Date.parse(date).strftime("%Y-%m-%d") rescue date

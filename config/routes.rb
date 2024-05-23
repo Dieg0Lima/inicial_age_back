@@ -129,4 +129,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :intelbras do
+    get '/open_door', to: 'access_control#open_door'
+  end
 end
