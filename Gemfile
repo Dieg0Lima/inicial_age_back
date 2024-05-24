@@ -23,7 +23,11 @@ gem "net-ssh"
 
 gem "net-sftp"
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 6.0'
+
+gem 'redis'
+
+gem 'sidekiq-scheduler'
 
 gem 'addressable'
 

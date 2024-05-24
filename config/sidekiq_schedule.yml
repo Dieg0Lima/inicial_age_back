@@ -1,0 +1,5 @@
+:schedule:
+  customer_export:
+    cron: "0 0 * * *"
+    class: CustomerExportWorker
+    queue: default
