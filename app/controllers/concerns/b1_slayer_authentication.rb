@@ -16,7 +16,7 @@ module B1SlayerAuthentication
     if response[:error]
       render json: { error: response[:error] }, status: :unauthorized
     else
-      @b1_cookies = response[:cookies].map { |cookie| cookie.split("; ")[0] }.join("; ")
+      @b1_cookies = B1SlayerIntegration.parse_cookies(response[:cookies])
     end
   end
 

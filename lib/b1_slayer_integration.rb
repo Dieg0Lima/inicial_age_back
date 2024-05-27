@@ -66,4 +66,8 @@ module B1SlayerIntegration
       { error: response.message, code: response.code, body: JSON.parse(response.body) }
     end
   end
+
+  def self.parse_cookies(cookies)
+    cookies.map { |cookie| cookie.split('; ')[0] }.join('; ')
+  end
 end

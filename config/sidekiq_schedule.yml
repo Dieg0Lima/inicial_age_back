@@ -1,5 +1,7 @@
 :schedule:
-  customer_export:
-    cron: "0 0 * * *"
-    class: CustomerExportWorker
+  sap_integration_worker:
+    cron: "30 21 * * *" 
+    class: "SapIntegrationWorker"
     queue: default
+    args:
+      - 5
