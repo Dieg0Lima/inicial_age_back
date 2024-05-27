@@ -36,19 +36,29 @@ module SapServices
 
       Person.where(client: true).find_each do |person|
         tx_id = person.tx_id
-        if tx_id && !customer_exists_in_sap?(tx_id)
-          begin
-            data = customer_data_for_export(person)
-            puts "JSON enviado para o SAP: #{data.to_json}"
-            response = B1SlayerIntegration.create_business_partner(data, @b1_cookies)
-            if response.is_a?(Hash) && response[:error]
-              puts "Erro ao exportar cliente #{person.name} ao SAP: #{response[:error]}"
-              puts "Detalhes do erro: #{response[:body]}"
-            else
-              puts "Cliente #{person.name} exportado com sucesso ao SAP."
+        next unless tx_id
+
+        if customer_exists_in_sap?(tx_id)
+          puts "Cliente #{tx_id} já encontrado no SAP. Verificando notas fiscais..."
+          export_customer_invoices(person)
+        else
+          if all_invoices_exported?(person)
+            puts "Todas as notas fiscais do cliente #{person.name} já foram exportadas. Não é necessário exportar o cliente."
+          else
+            begin
+              data = customer_data_for_export(person)
+              puts "JSON enviado para o SAP: #{data.to_json}"
+              response = B1SlayerIntegration.create_business_partner(data, @b1_cookies)
+              if response.is_a?(Hash) && response[:error]
+                puts "Erro ao exportar cliente #{person.name} ao SAP: #{response[:error]}"
+                puts "Detalhes do erro: #{response[:body]}"
+              else
+                puts "Cliente #{person.name} exportado com sucesso ao SAP."
+                export_customer_invoices(person)
+              end
+            rescue StandardError => e
+              puts "Erro ao exportar cliente #{person.name}: #{e.message}"
             end
-          rescue StandardError => e
-            puts "Erro ao exportar cliente #{person.name}: #{e.message}"
           end
           customers_processed += 1
           break if customers_processed >= limit
@@ -80,6 +90,8 @@ module SapServices
         CardName: person.name,
         AliasName: person.name_2,
         CardType: "C",
+        GroupCode: "101",
+        Series: -1,
         EmailAddress: person.email,
         FederalTaxID: person.tx_id,
         U_ALF_CNPJ: person.tx_id,
@@ -94,7 +106,7 @@ module SapServices
             ZipCode: address.postal_code,
             City: address.city,
             County: "",
-            Country: "BR",
+            Country: person.country,
             State: person.state,
             StreetNo: address.number
           },
@@ -106,7 +118,7 @@ module SapServices
             ZipCode: address.postal_code,
             City: address.city,
             County: "",
-            Country: "BR",
+            Country: person.country,
             State: person.state,
             StreetNo: address.number
           }
@@ -149,6 +161,42 @@ module SapServices
       last_code_number = last_card_code.gsub(/[^\d]/, '').to_i
       next_code_number = last_code_number + 1
       "J%04d" % next_code_number
+    end
+
+    def export_customer_invoices(person)
+      invoices = Invoice.where(person_id: person.id, exported: false)
+      invoices.each do |invoice|
+        data = invoice_data_for_export(invoice)
+        puts "JSON da fatura enviado para o SAP: #{data.to_json}"
+        response = B1SlayerIntegration.create_invoice(data, @b1_cookies)
+        if response.is_a?(Hash) && response[:error]
+          puts "Erro ao exportar fatura #{invoice.id} ao SAP: #{response[:error]}"
+          puts "Detalhes do erro: #{response[:body]}"
+        else
+          puts "Fatura #{invoice.id} exportada com sucesso ao SAP."
+          invoice.update(exported: true)
+        end
+      end
+    end
+
+    def invoice_data_for_export(invoice)
+      {
+        CardCode: invoice.card_code,
+        DocDate: invoice.doc_date.strftime("%Y-%m-%d"),
+        DocDueDate: invoice.doc_due_date.strftime("%Y-%m-%d"),
+        DocumentLines: invoice.line_items.map do |item|
+          {
+            ItemCode: item.item_code,
+            Quantity: item.quantity,
+            UnitPrice: item.unit_price,
+            TaxCode: item.tax_code
+          }
+        end
+      }
+    end
+
+    def all_invoices_exported?(person)
+      Invoice.where(person_id: person.id, exported: false).count.zero?
     end
   end
 end
