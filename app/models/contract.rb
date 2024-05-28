@@ -4,4 +4,5 @@ class Contract < VoalleDataBase
   has_many :people_addresses
   has_many :financial_receivable_title
   has_many :contract_service_tags
+  has_many :invoice_notes
 end

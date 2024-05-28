@@ -18,16 +18,21 @@ module SapServices
 
       if response.is_a?(Net::HTTPSuccess)
         result = JSON.parse(response.body)
-        found = result["value"].any?
-        puts "Cliente #{tx_id} #{found ? 'encontrado' : 'não encontrado'} no SAP."
-        found
+        if result["value"].any?
+          card_code = result["value"].first["CardCode"]
+          puts "Cliente #{tx_id} encontrado no SAP com CardCode #{card_code}."
+          card_code
+        else
+          puts "Cliente #{tx_id} não encontrado no SAP."
+          nil
+        end
       else
         puts "Erro ao verificar cliente no SAP: #{response.message}"
-        false
+        nil
       end
     rescue StandardError => e
       puts "Erro ao verificar cliente no SAP: #{e.message}"
-      false
+      nil
     end
 
     def check_and_export_customers(limit = 5)
@@ -38,31 +43,31 @@ module SapServices
         tx_id = person.tx_id
         next unless tx_id
 
-        if customer_exists_in_sap?(tx_id)
+        card_code = customer_exists_in_sap?(tx_id)
+        if card_code
           puts "Cliente #{tx_id} já encontrado no SAP. Verificando notas fiscais..."
-          export_customer_invoices(person)
-        else
-          if all_invoices_exported?(person)
-            puts "Todas as notas fiscais do cliente #{person.name} já foram exportadas. Não é necessário exportar o cliente."
-          else
-            begin
-              data = customer_data_for_export(person)
-              puts "JSON enviado para o SAP: #{data.to_json}"
-              response = B1SlayerIntegration.create_business_partner(data, @b1_cookies)
-              if response.is_a?(Hash) && response[:error]
-                puts "Erro ao exportar cliente #{person.name} ao SAP: #{response[:error]}"
-                puts "Detalhes do erro: #{response[:body]}"
-              else
-                puts "Cliente #{person.name} exportado com sucesso ao SAP."
-                export_customer_invoices(person)
-              end
-            rescue StandardError => e
-              puts "Erro ao exportar cliente #{person.name}: #{e.message}"
-            end
+          unless invoices_exported_to_sap?(card_code, tx_id)
+            export_customer_invoices(person, card_code)
           end
-          customers_processed += 1
-          break if customers_processed >= limit
+        else
+          begin
+            data = customer_data_for_export(person)
+            puts "JSON enviado para o SAP: #{data.to_json}"
+            response = B1SlayerIntegration.create_business_partner(data, @b1_cookies)
+            if response.is_a?(Hash) && response[:error]
+              puts "Erro ao exportar cliente #{person.name} ao SAP: #{response[:error]}"
+              puts "Detalhes do erro: #{response[:body]}"
+            else
+              puts "Cliente #{person.name} exportado com sucesso ao SAP."
+              card_code = response["CardCode"]
+              export_customer_invoices(person, card_code)
+            end
+          rescue StandardError => e
+            puts "Erro ao exportar cliente #{person.name}: #{e.message}"
+          end
         end
+        customers_processed += 1
+        break if customers_processed >= limit
       end
 
       puts "Nenhum cliente novo para exportar." if customers_processed == 0
@@ -86,12 +91,9 @@ module SapServices
       address = PeopleAddress.find(contract.people_address_id)
 
       {
-        CardCode: next_card_code,
         CardName: person.name,
         AliasName: person.name_2,
         CardType: "C",
-        GroupCode: "101",
-        Series: -1,
         EmailAddress: person.email,
         FederalTaxID: person.tx_id,
         U_ALF_CNPJ: person.tx_id,
@@ -133,40 +135,10 @@ module SapServices
       }
     end
 
-    def next_card_code
-      authenticate_with_b1_slayer
-      b1_url = ENV["B1_API_URL"]
-      uri = URI("#{b1_url}/BusinessPartners?$orderby=CardCode desc&$top=1")
-
-      request = Net::HTTP::Get.new(uri, { "Accept" => "application/json", "Cookie" => @b1_cookies })
-      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-        http.request(request)
-      end
-
-      if response.is_a?(Net::HTTPSuccess)
-        result = JSON.parse(response.body)
-        last_card_code = result["value"].first["CardCode"]
-        new_card_code = increment_card_code(last_card_code)
-        puts "Último CardCode: #{last_card_code}, Próximo CardCode: #{new_card_code}"
-        new_card_code
-      else
-        raise "Erro ao obter o último CardCode: #{response.message}"
-      end
-    rescue StandardError => e
-      puts "Erro ao obter o último CardCode: #{e.message}"
-      raise
-    end
-
-    def increment_card_code(last_card_code)
-      last_code_number = last_card_code.gsub(/[^\d]/, '').to_i
-      next_code_number = last_code_number + 1
-      "J%04d" % next_code_number
-    end
-
-    def export_customer_invoices(person)
-      invoices = Invoice.where(person_id: person.id, exported: false)
+    def export_customer_invoices(person, card_code)
+      invoices = fetch_pending_invoices(person.tx_id)
       invoices.each do |invoice|
-        data = invoice_data_for_export(invoice)
+        data = invoice_data_for_export(invoice, card_code)
         puts "JSON da fatura enviado para o SAP: #{data.to_json}"
         response = B1SlayerIntegration.create_invoice(data, @b1_cookies)
         if response.is_a?(Hash) && response[:error]
@@ -179,24 +151,83 @@ module SapServices
       end
     end
 
-    def invoice_data_for_export(invoice)
+    def invoice_data_for_export(invoice, card_code)
+      document_lines = invoice.invoice_note_items.map do |item|
+        item_code, sequence_model, usage = map_item_code(item.description)
+        {
+          ItemCode: item_code,
+          Quantity: item.quantity,
+          Price: item.total_amount,
+          Usage: usage
+        }
+      end
+
       {
-        CardCode: invoice.card_code,
-        DocDate: invoice.doc_date.strftime("%Y-%m-%d"),
-        DocDueDate: invoice.doc_due_date.strftime("%Y-%m-%d"),
-        DocumentLines: invoice.line_items.map do |item|
-          {
-            ItemCode: item.item_code,
-            Quantity: item.quantity,
-            UnitPrice: item.unit_price,
-            TaxCode: item.tax_code
-          }
-        end
+        invoice: {
+          BPL_IDAssignedToInvoice: 2,
+          CardCode: card_code,
+          DocDate: invoice.issue_date.strftime("%Y-%m-%d"),
+          DocDueDate: invoice.issue_date.strftime("%Y-%m-%d"),
+          DocTotal: invoice.invoice_note_items.sum(&:total_amount),
+          Incoterms: "9",
+          SequenceCode: "-1",
+          SequenceSerial: invoice.document_number,
+          SequenceModel: document_lines.first[:SequenceModel],
+          SeriesString: "1",
+          DocumentLines: document_lines
+        }
       }
     end
 
-    def all_invoices_exported?(person)
-      Invoice.where(person_id: person.id, exported: false).count.zero?
+    def map_item_code(description)
+      case description
+      when 'TI1 - Manutenção e Serviços de Informática'
+        ['Venda01', '18', '18']
+      when 'TI2 - Suporte Técnico'
+        ['Venda02', '19', '19']
+      when 'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )'
+        ['Venda03', '20', '20']
+      when 'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31'
+        ['Venda04', '21', '21']
+      else
+        ['ItemPadrão', '1', '1'] 
+      end
+    end
+
+    def invoices_exported_to_sap?(card_code, tx_id)
+      authenticate_with_b1_slayer
+      b1_url = ENV["B1_API_URL"]
+      uri = URI("#{b1_url}/Invoices?$filter=CardCode eq '#{card_code}'")
+
+      request = Net::HTTP::Get.new(uri, { "Accept" => "application/json", "Cookie" => @b1_cookies })
+      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+        http.request(request)
+      end
+
+      if response.is_a?(Net::HTTPSuccess)
+        result = JSON.parse(response.body)
+        db_invoices = fetch_pending_invoices(tx_id)
+        sap_invoices = result["value"]
+
+        db_invoices.all? do |db_invoice|
+          sap_invoices.any? do |sap_invoice|
+            sap_invoice["DocumentLines"].any? { |line| line["ItemCode"] == map_item_code(db_invoice.description).first }
+          end
+        end
+      else
+        puts "Erro ao verificar notas fiscais no SAP: #{response.message}"
+        false
+      end
+    rescue StandardError => e
+      puts "Erro ao verificar notas fiscais no SAP: #{e.message}"
+      false
+    end
+
+    def fetch_pending_invoices(tx_id)
+      InvoiceNote.joins(:invoice_note_items, contract: :person)
+                 .select('invoice_notes.id, people.tx_id, invoice_note_items.description, invoice_note_items.item_code, invoice_note_items.quantity, invoice_note_items.total_amount, invoice_notes.document_number, invoice_notes.issue_date')
+                 .where(people: { tx_id: tx_id })
+                 .where("invoice_notes.issue_date >= ?", 1.month.ago.beginning_of_month)
     end
   end
 end
