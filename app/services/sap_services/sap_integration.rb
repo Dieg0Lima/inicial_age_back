@@ -156,7 +156,7 @@ module SapServices
         item_code, sequence_model, usage = map_item_code(item.description)
         {
           ItemCode: item_code,
-          Quantity: item.quantity,
+          Quantity: 1,
           Price: item.total_amount,
           Usage: usage
         }
@@ -181,16 +181,52 @@ module SapServices
 
     def map_item_code(description)
       case description
-      when 'TI1 - Manutenção e Serviços de Informática'
+      when 'TI1 - Manutenção e Serviços de Informática',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03.',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (condomínio)',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (valor)',
+           'TI1 - Manutenção e Serviços de Informática',
+           'TI1 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação'
         ['Venda01', '18', '18']
-      when 'TI2 - Suporte Técnico'
-        ['Venda02', '19', '19']
-      when 'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )'
+      when 'TI2 - Suporte Técnico',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55.',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (condomínio)',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (valor)',
+           'TI2 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação' 
+        ['Venda05', '46', '22']
+      when 'Aluguel de Equipamento - SVA',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Boleto )',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio )',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio ))',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( débito automático)',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 (valor)'
         ['Venda03', '20', '20']
-      when 'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31'
+      when 'SCI – Conexão de Internet',
+           'SCI – Conexão de Internet - R$ 15,20',
+           'SCI – Conexão de Internet - R$ 25,20',
+           'SCI – Conexão de Internet - R$ 5,20',
+           'SCI – Conexão de Internet - R$ 55,20',
+           'SCI – Conexão de Internet - R$ 65,20',
+           'Serviço de Conexão à Internet - SCI',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,69)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (25,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (2,75)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (45,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (4,70)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (5,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (59,20)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (75,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (condomínio).',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (Emp 2.5)'
         ['Venda04', '21', '21']
       else
-        ['ItemPadrão', '1', '1'] 
+        ['ItemPadrão', '1', '1']
       end
     end
 
