@@ -6,4 +6,5 @@ class Person < VoalleDataBase
   has_many :assignment
   has_many :report
   belongs_to :insignia, class_name: "Insignia", foreign_key: "insignia_id"
+  has_many :invoice_notes, through: :contracts
 end

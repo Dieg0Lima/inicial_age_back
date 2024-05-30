@@ -18,14 +18,10 @@ module SapServices
 
       if response.is_a?(Net::HTTPSuccess)
         result = JSON.parse(response.body)
-        if result["value"].any?
-          card_code = result["value"].first["CardCode"]
-          puts "Cliente #{tx_id} encontrado no SAP com CardCode #{card_code}."
-          card_code
-        else
-          puts "Cliente #{tx_id} não encontrado no SAP."
-          nil
-        end
+        found = result["value"].any?
+        card_code = found ? result["value"].first["CardCode"] : nil
+        puts "Cliente #{tx_id} #{found ? "encontrado" : "não encontrado"} no SAP com CardCode #{card_code}."
+        card_code
       else
         puts "Erro ao verificar cliente no SAP: #{response.message}"
         nil
@@ -46,7 +42,9 @@ module SapServices
         card_code = customer_exists_in_sap?(tx_id)
         if card_code
           puts "Cliente #{tx_id} já encontrado no SAP. Verificando notas fiscais..."
-          unless invoices_exported_to_sap?(card_code, tx_id)
+          if invoices_exported_to_sap?(card_code, tx_id)
+            puts "Todas as notas fiscais do cliente #{person.name} já foram exportadas."
+          else
             export_customer_invoices(person, card_code)
           end
         else
@@ -110,7 +108,7 @@ module SapServices
             County: "",
             Country: person.country,
             State: person.state,
-            StreetNo: address.number
+            StreetNo: address.number,
           },
           {
             AddressName: "Endereço de Entrega",
@@ -122,16 +120,16 @@ module SapServices
             County: "",
             Country: person.country,
             State: person.state,
-            StreetNo: address.number
-          }
+            StreetNo: address.number,
+          },
         ],
         BPFiscalTaxIDCollection: [
           {
             Address: "",
             TaxId0: person.tx_id,
-            TaxId1: ""
-          }
-        ]
+            TaxId1: "",
+          },
+        ],
       }
     end
 
@@ -146,7 +144,6 @@ module SapServices
           puts "Detalhes do erro: #{response[:body]}"
         else
           puts "Fatura #{invoice.id} exportada com sucesso ao SAP."
-          invoice.update(exported: true)
         end
       end
     end
@@ -158,76 +155,108 @@ module SapServices
           ItemCode: item_code,
           Quantity: 1,
           Price: item.total_amount,
-          Usage: usage
+          Usage: usage,
+          SequenceModel: sequence_model,
         }
       end
 
+      first_sequence_model = document_lines.first[:SequenceModel]
+
       {
-        invoice: {
-          BPL_IDAssignedToInvoice: 2,
-          CardCode: card_code,
-          DocDate: invoice.issue_date.strftime("%Y-%m-%d"),
-          DocDueDate: invoice.issue_date.strftime("%Y-%m-%d"),
-          DocTotal: invoice.invoice_note_items.sum(&:total_amount),
-          Incoterms: "9",
-          SequenceCode: "-1",
-          SequenceSerial: invoice.document_number,
-          SequenceModel: document_lines.first[:SequenceModel],
-          SeriesString: "1",
-          DocumentLines: document_lines
-        }
+        BPL_IDAssignedToInvoice: 2,
+        CardCode: card_code,
+        DocDate: invoice.issue_date.strftime("%Y-%m-%d"),
+        DocDueDate: invoice.issue_date.strftime("%Y-%m-%d"),
+        DocTotal: invoice.total_amount_service,
+        Incoterms: "9",
+        SequenceCode: "-1",
+        SequenceSerial: invoice.document_number,
+        SequenceModel: first_sequence_model,
+        SeriesString: "1",
+        DocumentLines: document_lines.map { |line| line.except(:SequenceModel) },
       }
     end
 
     def map_item_code(description)
       case description
-      when 'TI1 - Manutenção e Serviços de Informática',
-           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03',
-           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03.',
-           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (condomínio)',
-           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (valor)',
-           'TI1 - Manutenção e Serviços de Informática',
-           'TI1 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação'
-        ['Venda01', '18', '18']
-      when 'TI2 - Suporte Técnico',
-           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55',
-           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55.',
-           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (condomínio)',
-           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (valor)',
-           'TI2 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação' 
-        ['Venda05', '46', '22']
-      when 'Aluguel de Equipamento - SVA',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Boleto )',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio )',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio ))',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( débito automático)',
-           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 (valor)'
-        ['Venda03', '20', '20']
-      when 'SCI – Conexão de Internet',
-           'SCI – Conexão de Internet - R$ 15,20',
-           'SCI – Conexão de Internet - R$ 25,20',
-           'SCI – Conexão de Internet - R$ 5,20',
-           'SCI – Conexão de Internet - R$ 55,20',
-           'SCI – Conexão de Internet - R$ 65,20',
-           'Serviço de Conexão à Internet - SCI',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,60)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,69)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (25,60)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (2,75)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (45,60)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (4,70)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (5,60)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (59,20)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (75,60)',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (condomínio).',
-           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (Emp 2.5)'
-        ['Venda04', '21', '21']
+      when "TI1 - Manutenção e Serviços de Informática",
+           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03",
+           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03.",
+           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (condomínio)",
+           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (valor)",
+           "TI1 - Manutenção e Serviços de Informática",
+           "TI1 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação"
+        ["Venda04", "46", "21"]
+      when "TI2 - Suporte Técnico",
+           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55",
+           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55.",
+           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (condomínio)",
+           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (valor)",
+           "TI2 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação"
+        ["Venda05", "46", "22"]
+      when "Aluguel de Equipamento - SVA",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Boleto )",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio )",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio ))",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( débito automático)",
+           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 (valor)"
+        ["Venda03", "55", "20"]
+      when "SCI – Conexão de Internet",
+           "SCI – Conexão de Internet - R$ 15,20",
+           "SCI – Conexão de Internet - R$ 25,20",
+           "SCI – Conexão de Internet - R$ 5,20",
+           "SCI – Conexão de Internet - R$ 55,20",
+           "SCI – Conexão de Internet - R$ 65,20",
+           "Serviço de Conexão à Internet - SCI",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,60)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,69)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (25,60)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (2,75)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (45,60)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (4,70)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (5,60)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (59,20)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (75,60)",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (condomínio).",
+           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (Emp 2.5)"
+        ["Venda02", "55", "19"]
+      when "SCM - Serviço de Comunicação Multimídia",
+           "SCM - Serviço de Comunicação Multimídia 100 Mbps",
+           "SCM - Serviço de Comunicação Multimídia 1 GB",
+           "SCM - Serviço de Comunicação Multimídia 200 Mbps",
+           "SCM - Serviço de Comunicação Multimídia 300 Mbps",
+           "SCM - Serviço de Comunicação Multimídia 500 Mbps",
+           "SCM - Serviço de Comunicação Multimídia 50 Mbps",
+           "SCM - Serviço de Comunicação Multimídia ( PJ )",
+           "SCM - Serviço de Comunicação Multimídia - R$ 17,50",
+           "SCM - Serviço de Comunicação Multimídia - R$ 17,50 ( PJ )",
+           "Serviço de Comunicação Multimídia - SCM",
+           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20",
+           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( Condomínio )",
+           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PF )",
+           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PJ )",
+           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( valor )"
+        ["Venda01", "18", "18"]
       else
-        ['ItemPadrão', '1', '1']
+        ["ItemPadrão", "1", "1"]
       end
+    end
+
+    def fetch_pending_invoices(tx_id)
+      puts "Iniciando fetch_pending_invoices para tx_id: #{tx_id}"
+      invoices = InvoiceNote.joins(contract: :person)
+                            .joins(:invoice_note_items)
+                            .select("invoice_notes.id, people.tx_id, invoice_note_items.description, invoice_notes.document_number, invoice_notes.issue_date, invoice_notes.total_amount_service, invoice_note_items.total_amount, invoice_notes.document_number")
+                            .where(people: { tx_id: tx_id })
+                            .where("invoice_notes.issue_date >= ?", 1.month.ago.beginning_of_month)
+      puts "Invoices encontrados: #{invoices.map(&:id)}"
+      invoices
+    rescue => e
+      puts "Erro ao buscar invoices: #{e.message}"
+      []
     end
 
     def invoices_exported_to_sap?(card_code, tx_id)
@@ -242,14 +271,13 @@ module SapServices
 
       if response.is_a?(Net::HTTPSuccess)
         result = JSON.parse(response.body)
-        db_invoices = fetch_pending_invoices(tx_id)
-        sap_invoices = result["value"]
+        sap_total_amount = result["value"].sum { |invoice| invoice["DocumentLines"].sum { |line| line["LineTotal"].to_f } }
 
-        db_invoices.all? do |db_invoice|
-          sap_invoices.any? do |sap_invoice|
-            sap_invoice["DocumentLines"].any? { |line| line["ItemCode"] == map_item_code(db_invoice.description).first }
-          end
-        end
+        db_total_amount = fetch_pending_invoices(tx_id).sum(&:total_amount)
+
+        all_exported = (sap_total_amount >= db_total_amount)
+        puts "Verificação de notas fiscais no SAP para o cliente #{tx_id}: #{all_exported ? "Todas exportadas" : "Notas pendentes"}"
+        all_exported
       else
         puts "Erro ao verificar notas fiscais no SAP: #{response.message}"
         false
@@ -257,13 +285,6 @@ module SapServices
     rescue StandardError => e
       puts "Erro ao verificar notas fiscais no SAP: #{e.message}"
       false
-    end
-
-    def fetch_pending_invoices(tx_id)
-      InvoiceNote.joins(:invoice_note_items, contract: :person)
-                 .select('invoice_notes.id, people.tx_id, invoice_note_items.description, invoice_note_items.item_code, invoice_note_items.quantity, invoice_note_items.total_amount, invoice_notes.document_number, invoice_notes.issue_date')
-                 .where(people: { tx_id: tx_id })
-                 .where("invoice_notes.issue_date >= ?", 1.month.ago.beginning_of_month)
     end
   end
 end
