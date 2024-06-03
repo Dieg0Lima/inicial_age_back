@@ -14,7 +14,7 @@ module Sap
     def invoice_params
       params.require(:invoice).permit(
         :DocEntry, :DocNum, :DocType, :DocDate, :DocDueDate, :CardCode, :CardName, :Comments,
-        :BPL_IDAssignedToInvoice, :DocTotal, :Incoterms, :SequenceModel, :SequenceCode, :SequenceSerial, :SeriesString,
+        :BPL_IDAssignedToInvoice, :DocTotal, :Incoterms, :SequenceModel, :SequenceCode, :SequenceSerial, :SeriesString, :IndFinal,
         DocumentLines: [
           :LineNum, :ItemCode, :ItemDescription, :Quantity, :Price, :DiscountPercent,
           :TaxCode, :WarehouseCode, :AccountCode, :Usage,

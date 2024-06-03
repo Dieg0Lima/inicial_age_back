@@ -137,7 +137,11 @@ module SapServices
       invoices = fetch_pending_invoices(person.tx_id)
       invoices.each do |invoice|
         data = invoice_data_for_export(invoice, card_code)
-        puts "JSON da fatura enviado para o SAP: #{data.to_json}"
+        next if data[:DocumentLines].empty?
+        
+        json_data = { invoice: data }.to_json
+        puts "JSON da fatura enviado para o SAP: #{json_data}"
+        
         response = B1SlayerIntegration.create_invoice(data, @b1_cookies)
         if response.is_a?(Hash) && response[:error]
           puts "Erro ao exportar fatura #{invoice.id} ao SAP: #{response[:error]}"
@@ -147,104 +151,111 @@ module SapServices
         end
       end
     end
-
+    
     def invoice_data_for_export(invoice, card_code)
       document_lines = invoice.invoice_note_items.map do |item|
-        item_code, sequence_model, usage = map_item_code(item.description)
+        item_code, sequence_model, usage, bpl_id_assigned = map_item_code(item.description)
+        next if item_code.nil?
         {
           ItemCode: item_code,
           Quantity: 1,
           Price: item.total_amount,
           Usage: usage,
           SequenceModel: sequence_model,
+          BPL_IDAssignedToInvoice: bpl_id_assigned
         }
+      end.compact
+    
+      if document_lines.any?
+        first_sequence_model = document_lines.first[:SequenceModel]
+        first_bpl_id_assigned = document_lines.first[:BPL_IDAssignedToInvoice]
       end
-
-      first_sequence_model = document_lines.first[:SequenceModel]
-
+    
       {
-        BPL_IDAssignedToInvoice: 2,
+        BPL_IDAssignedToInvoice: first_bpl_id_assigned,
         CardCode: card_code,
         DocDate: invoice.issue_date.strftime("%Y-%m-%d"),
         DocDueDate: invoice.issue_date.strftime("%Y-%m-%d"),
         DocTotal: invoice.total_amount_service,
         Incoterms: "9",
         SequenceCode: "-1",
-        SequenceSerial: invoice.document_number,
+        SequenceSerial: invoice.document_number.to_i.to_s,
         SequenceModel: first_sequence_model,
         SeriesString: "1",
-        DocumentLines: document_lines.map { |line| line.except(:SequenceModel) },
+        IndFinal: "tYES",
+        DocumentLines: document_lines.map { |line| line.except(:SequenceModel, :BPL_IDAssignedToInvoice) }
       }
     end
-
+    
     def map_item_code(description)
       case description
-      when "TI1 - Manutenção e Serviços de Informática",
-           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03",
-           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03.",
-           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (condomínio)",
-           "TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (valor)",
-           "TI1 - Manutenção e Serviços de Informática",
-           "TI1 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação"
-        ["Venda04", "46", "21"]
-      when "TI2 - Suporte Técnico",
-           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55",
-           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55.",
-           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (condomínio)",
-           "TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (valor)",
-           "TI2 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação"
-        ["Venda05", "46", "22"]
-      when "Aluguel de Equipamento - SVA",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Boleto )",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio )",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio ))",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( débito automático)",
-           "Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 (valor)"
-        ["Venda03", "55", "20"]
-      when "SCI – Conexão de Internet",
-           "SCI – Conexão de Internet - R$ 15,20",
-           "SCI – Conexão de Internet - R$ 25,20",
-           "SCI – Conexão de Internet - R$ 5,20",
-           "SCI – Conexão de Internet - R$ 55,20",
-           "SCI – Conexão de Internet - R$ 65,20",
-           "Serviço de Conexão à Internet - SCI",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,60)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,69)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (25,60)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (2,75)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (45,60)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (4,70)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (5,60)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (59,20)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (75,60)",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (condomínio).",
-           "Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (Emp 2.5)"
-        ["Venda02", "55", "19"]
-      when "SCM - Serviço de Comunicação Multimídia",
-           "SCM - Serviço de Comunicação Multimídia 100 Mbps",
-           "SCM - Serviço de Comunicação Multimídia 1 GB",
-           "SCM - Serviço de Comunicação Multimídia 200 Mbps",
-           "SCM - Serviço de Comunicação Multimídia 300 Mbps",
-           "SCM - Serviço de Comunicação Multimídia 500 Mbps",
-           "SCM - Serviço de Comunicação Multimídia 50 Mbps",
-           "SCM - Serviço de Comunicação Multimídia ( PJ )",
-           "SCM - Serviço de Comunicação Multimídia - R$ 17,50",
-           "SCM - Serviço de Comunicação Multimídia - R$ 17,50 ( PJ )",
-           "Serviço de Comunicação Multimídia - SCM",
-           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20",
-           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( Condomínio )",
-           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PF )",
-           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PJ )",
-           "Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( valor )"
-        ["Venda01", "18", "18"]
+      when 'TI1 - Manutenção e Serviços de Informática',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03.',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (condomínio)',
+           'TI1 - Manutenção e outros Serviços de Informática - CNPJ: 40.085.602/0001-03 (valor)',
+           'TI1 - Manutenção e Serviços de Informática',
+           'TI1 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação'
+        ['Venda04', '46', '21', 5]
+      when 'TI2 - Suporte Técnico',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55.',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (condomínio)',
+           'TI2 - Suporte Técnico - CNPJ 40.085.642/0001-55 (valor)',
+           'TI2 - Suporte Técnico, Manutenção e outros Serviços em Tecnologia da Informação' 
+        ['Venda05', '46', '22', 6]
+      when 'Aluguel de Equipamento - SVA',
+           'SVA - Aluguel de Equipamento', 
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Boleto )',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( Colaborador )',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio )',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( condomínio ))',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 ( débito automático)',
+           'Aluguel de Equipamento - SVA - CNPJ: 40.120.934/0001-81 (valor)'
+        ['Venda03', '55', '20', 4]
+      when 'SCI – Conexão de Internet',
+           'SCI – Conexão de Internet - R$ 15,20',
+           'SCI – Conexão de Internet - R$ 25,20',
+           'SCI – Conexão de Internet - R$ 5,20',
+           'SCI – Conexão de Internet - R$ 55,20',
+           'SCI – Conexão de Internet - R$ 65,20',
+           'Serviço de Conexão à Internet - SCI',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (15,69)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (25,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (2,75)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (45,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (4,70)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (5,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (59,20)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (75,60)',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (condomínio).',
+           'Serviço de Conexão à Internet - SCI - CNPJ: 40.086.752/0001-31 (Emp 2.5)'
+        ['Venda02', '55', '19', 3]
+      when 'SCM - Serviço de Comunicação Multimídia',
+           'SCM - Serviço de Comunicação Multimídia 100 Mbps',
+           'SCM - Serviço de Comunicação Multimídia 1 GB',
+           'SCM - Serviço de Comunicação Multimídia 200 Mbps',
+           'SCM - Serviço de Comunicação Multimídia 300 Mbps',
+           'SCM - Serviço de Comunicação Multimídia 500 Mbps',
+           'SCM - Serviço de Comunicação Multimídia 50 Mbps',
+           'SCM - Serviço de Comunicação Multimídia ( PJ )',
+           'SCM - Serviço de Comunicação Multimídia - R$ 17,50',
+           'SCM - Serviço de Comunicação Multimídia - R$ 17,50 ( PJ )',
+           'Serviço de Comunicação Multimídia - SCM',
+           'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20',
+           'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( Condomínio )',
+           'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PF )',
+           'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PJ )',
+           'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( valor )'
+        ['Venda01', '18', '18', 2]
       else
-        ["ItemPadrão", "1", "1"]
+        [nil, nil, nil, nil]
       end
     end
-
+        
     def fetch_pending_invoices(tx_id)
       puts "Iniciando fetch_pending_invoices para tx_id: #{tx_id}"
       invoices = InvoiceNote.joins(contract: :person)
