@@ -26,10 +26,10 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: authentication_manegements; Type: TABLE; Schema: public; Owner: -
+-- Name: insignia; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.authentication_manegements (
+CREATE TABLE public.insignia (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -37,10 +37,10 @@ CREATE TABLE public.authentication_manegements (
 
 
 --
--- Name: authentication_manegements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: insignia_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.authentication_manegements_id_seq
+CREATE SEQUENCE public.insignia_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -49,10 +49,10 @@ CREATE SEQUENCE public.authentication_manegements_id_seq
 
 
 --
--- Name: authentication_manegements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: insignia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.authentication_manegements_id_seq OWNED BY public.authentication_manegements.id;
+ALTER SEQUENCE public.insignia_id_seq OWNED BY public.insignia.id;
 
 
 --
@@ -104,46 +104,15 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: secondary_bases; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.secondary_bases (
-    id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: secondary_bases_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.secondary_bases_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: secondary_bases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.secondary_bases_id_seq OWNED BY public.secondary_bases.id;
-
-
---
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
+    name character varying,
     username character varying,
-    email character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    name character varying
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -167,10 +136,10 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: authentication_manegements id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: insignia id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.authentication_manegements ALTER COLUMN id SET DEFAULT nextval('public.authentication_manegements_id_seq'::regclass);
+ALTER TABLE ONLY public.insignia ALTER COLUMN id SET DEFAULT nextval('public.insignia_id_seq'::regclass);
 
 
 --
@@ -178,13 +147,6 @@ ALTER TABLE ONLY public.authentication_manegements ALTER COLUMN id SET DEFAULT n
 --
 
 ALTER TABLE ONLY public.provision_onus ALTER COLUMN id SET DEFAULT nextval('public.provision_onus_id_seq'::regclass);
-
-
---
--- Name: secondary_bases id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.secondary_bases ALTER COLUMN id SET DEFAULT nextval('public.secondary_bases_id_seq'::regclass);
 
 
 --
@@ -203,11 +165,11 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
--- Name: authentication_manegements authentication_manegements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: insignia insignia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.authentication_manegements
-    ADD CONSTRAINT authentication_manegements_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.insignia
+    ADD CONSTRAINT insignia_pkey PRIMARY KEY (id);
 
 
 --
@@ -227,14 +189,6 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: secondary_bases secondary_bases_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.secondary_bases
-    ADD CONSTRAINT secondary_bases_pkey PRIMARY KEY (id);
-
-
---
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -247,13 +201,6 @@ ALTER TABLE ONLY public.users
 --
 
 CREATE UNIQUE INDEX index_provision_onus_on_sernum ON public.provision_onus USING btree (sernum);
-
-
---
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
@@ -270,10 +217,8 @@ CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (usernam
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240614133615'),
+('20240425142248'),
 ('20240422181830'),
-('20240422141727'),
-('20240319170355'),
-('20240319160350'),
-('20240221173921'),
-('20240221173719');
+('20240422141727');
 

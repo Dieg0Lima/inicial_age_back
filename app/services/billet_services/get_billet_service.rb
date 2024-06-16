@@ -1,5 +1,5 @@
-require "rest-client"
-require "tempfile"
+require 'rest-client'
+require 'tempfile'
 
 module BilletServices
   class GetBilletService
@@ -8,7 +8,8 @@ module BilletServices
     end
 
     def get_billet_stream
-      access_token = APIAuthentication.access_token
+      VoalleAuthenticationService.fetch_access_token if APIAuthenticationService.access_token.nil?
+      access_token = APIAuthenticationService.access_token
       response = RestClient::Request.execute(
         method: :get,
         url: @api_base_url,

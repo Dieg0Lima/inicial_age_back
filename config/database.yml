@@ -9,7 +9,7 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: age_atende_user
+  username: <%= ENV['AGE_ATENDE_DATABASE_USER'] %>
   password: <%= ENV['AGE_ATENDE_DATABASE_PASSWORD'] %>
   host: localhost
 
@@ -42,8 +42,8 @@ test:
 
 production:
   <<: *default
-  database: age_atende_back_production
-  username: age_atende_production_user
-  password: <%= ENV['AGE_ATENDE_DATABASE_PRODUCTION_PASSWORD'] %>
-  host: production_database_host
+  database: <%= ENV['AGE_ATENDE_DATABASE'] %>
+  username: <%= ENV['AGE_ATENDE_DATABASE_USER'] %>
+  password: <%= ENV['AGE_ATENDE_DATABASE_PASSWORD'] %>
+  host: db
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>

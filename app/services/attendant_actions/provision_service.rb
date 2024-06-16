@@ -8,45 +8,42 @@ module AttendantActions
 
     def provision_onu(olt_id, contract, sernum, connection_id, user_id, cto = nil)
       missing_params = [olt_id, contract, sernum, connection_id].select(&:nil?)
-      unless missing_params.empty?
-        return { error: "Missing parameters: #{missing_params.join(", ")}" }
-      end
-
+      return { error: "Missing parameters: #{missing_params.join(", ")}" } unless missing_params.empty?
+    
       ip = fetch_olt_with_ip(olt_id)
       return { error: "Erro ao obter IP da OLT." } unless ip
-
+    
       position_check = check_onu_position(ip, sernum)
       return position_check unless position_check[:success]
-
+    
       gpon_index = position_check[:details][:gpon_index]
       _, _, slot, pon = gpon_index.split("/")
-
-      full_gpon_index = "1/1/#{slot}/#{pon}"
-      ont_status = check_ont_status(ip, full_gpon_index)
+    
+      ont_status = check_ont_status(ip, "1/1/#{slot}/#{pon}")
       return ont_status unless ont_status[:success]
-
+    
       if ont_status[:available_ports].nil? || ont_status[:available_ports].empty?
         return { error: "No available ports found." }
       end
+    
       port = ont_status[:available_ports].first
-
       vlan_id = fetch_vlan_id_from_configuration(olt_id, slot, pon)
       return { error: "Nenhuma VLAN IPoE correspondente encontrada." } if vlan_id.nil?
-
+    
       adjusted_sernum = sernum.sub(/^ALCL/, "")
       equipment_serial_with_prefix = "ALCL#{adjusted_sernum}"
-
+    
       configure_response = configure_onu(ip, slot, pon, port, contract, adjusted_sernum, vlan_id)
       return configure_response unless configure_response[:success]
-
+    
       token_response = obtain_authentication_token(equipment_serial_with_prefix)
       return token_response unless token_response[:success]
-
+    
       update_connection_response = update_connection(token_response[:token], connection_id, vlan_id, slot, pon, port, equipment_serial_with_prefix, olt_id)
       return update_connection_response unless update_connection_response[:success]
-
+    
       create_or_update_onu(connection_id, olt_id, contract, sernum, slot, pon, port, user_id, cto)
-
+    
       { success: true, message: "ONU provisionada com sucesso." }
     end
 
@@ -82,58 +79,76 @@ module AttendantActions
     def check_ont_status(ip, gpon_index)
       command = "show equipment ont status pon #{gpon_index}"
       response = post_olt_command(ip, command)
-
-      if response[:success]
-        ont_ports = parse_ont_ports(response[:result])
-        if ont_ports[:success]
-          occupied_ports = ont_ports[:data]
-          available_ports = find_available_ports(occupied_ports)
-          { success: true, available_ports: available_ports }
-        else
-          { success: false, error: ont_ports[:error], available_ports: [] }
-        end
-      else
-        { success: false, error: response[:error], available_ports: [] }
-      end
+    
+      return { success: false, error: response[:error], available_ports: [] } unless response[:success]
+    
+      ont_ports = parse_ont_ports(response[:result])
+    
+      return { success: false, error: ont_ports[:error], available_ports: [] } unless ont_ports[:success]
+    
+      occupied_ports = ont_ports[:data]
+      available_ports = find_available_ports(occupied_ports)
+      { success: true, available_ports: available_ports }
     end
-
+    
     def parse_ont_ports(response)
-      parsed_data = []
-
-      lines = response.split("\n")
-      lines.each do |line|
-        if line =~ /^\d+\/\d+\/\d+\/\d+/
-          data = line.match(/(\d+\/\d+\/\d+\/\d+) (\d+\/\d+\/\d+\/\d+\/\d+) (\w+):(\w+) (\w+) (\w+) ([-\.\d]+) ([-\.\d]+) (\d+) - (\w+)/)
-          next unless data
-
-          parsed_data << {
-            gpon_index: data[1],
-            ont_index: data[2],
-            sernum: data[3],
-            admin_status: data[5],
-            oper_status: data[6],
-            rx_level: data[7].to_f,
-            distance: data[8].to_f,
-            desc1: data[9],
-            hostname: data[10],
-          }
+      begin
+        parsed_data = []
+    
+        lines = response.split("\n")
+        lines.each do |line|
+          if line =~ /^\d+\/\d+\/\d+\/\d+/
+            data = line.match(/(\d+\/\d+\/\d+\/\d+) (\d+\/\d+\/\d+\/\d+\/\d+) (\w+):(\w+) (\w+) (\w+) ([-\.\d]+) ([-\.\d]+) (\d+) - (\w+)/)
+            next unless data
+    
+            parsed_data << {
+              gpon_index: data[1],
+              ont_index: data[2],
+              sernum: data[3],
+              admin_status: data[5],
+              oper_status: data[6],
+              rx_level: data[7].to_f,
+              distance: data[8].to_f,
+              desc1: data[9],
+              hostname: data[10],
+            }
+          end
         end
+    
+        if response.include?("pon count : 0")
+          return { success: true, data: parsed_data }
+        end
+    
+        if parsed_data.empty?
+          { success: false, error: "No PON info available" }
+        else
+          { success: true, data: parsed_data }
+        end
+      rescue => e
+        { success: false, error: "Error parsing response: #{e.message}" }
       end
-
-      if parsed_data.empty?
-        { error: "No PON info available", success: false }
-      else
-        { success: true, data: parsed_data }
-      end
-    rescue => e
-      { error: "Error parsing response: #{e.message}", success: false }
     end
-
+    
     def find_available_ports(occupied_ports)
       all_ports = (1..128).to_a
       occupied_port_numbers = occupied_ports.map { |p| p[:ont_index].split("/").last.to_i }
       available_ports = all_ports - occupied_port_numbers
       available_ports
+    end
+    
+    
+    def get_available_port(ip, slot, pon)
+      full_gpon_index = "1/1/#{slot}/#{pon}"
+      ont_status = check_ont_status(ip, full_gpon_index)
+    
+      return { error: "Failed to get ONT status: #{ont_status[:error]}" } unless ont_status[:success]
+    
+      if ont_status[:available_ports].nil? || ont_status[:available_ports].empty?
+        return { error: "No available ports found." }
+      end
+    
+      port = ont_status[:available_ports].first
+      { success: true, available_port: port }
     end
 
     def parse_unprovisioned_onus(raw_output)
@@ -176,14 +191,6 @@ module AttendantActions
       response = post_olt_command(ip, command)
       unless response[:success]
         return { error: "Failed to configure ONT: #{response[:error]}" }
-      end
-
-      additional_command = "..."
-      additional_response = post_olt_command(ip, additional_command)
-      if additional_response[:success]
-        { success: true, message: "Configuration successful" }
-      else
-        { success: false, error: additional_response[:error], message: "Failed during additional configuration" }
       end
     end
 
