@@ -2,42 +2,59 @@ module OltServices
   require "net/telnet"
   require "json"
   require "csv"
+  require "logger"
 
   class OltCommandService
+    def initialize
+      @logger = Logger.new(STDOUT)
+      @logger.level = Logger::INFO
+    end
+
     def execute_command(ip, command)
+      olt_username = ENV.fetch("OLT_USERNAME", "default_username")
+      olt_password = ENV.fetch("OLT_PASSWORD", "default_password")
 
-      olt_username = ENV["OLT_USERNAME"]
-      olt_password = ENV["OLT_PASSWORD"]
-
-      olt_host = ip
-      olt_username = "#{olt_username}"
-      olt_password = "#{olt_password}"
-      command_to_execute = command
-
+      telnet = nil
       begin
-        telnet = Net::Telnet.new(
-          "Host" => olt_host,
-          "Timeout" => 180,
-          "Prompt" => /[$%#>] \z/n,
-        )
+        telnet = establish_connection(ip, olt_username, olt_password)
+        @logger.info("Telnet connection established.")
 
-        telnet.login(olt_username, olt_password)
-        puts "Telnet connection established."
-
-        result = telnet.cmd(command_to_execute)
-
-        result.gsub!("*", "")
-        result.squeeze!(" ")
-
-        puts result
-
-        telnet.close
-
+        result = execute_telnet_command(telnet, command)
+        result = sanitize_result(result)
+        
+        puts "Comando: #{command}"
+        puts "Resultado: #{result}"
+        @logger.info("Command executed successfully.")
         { success: true, result: result }
       rescue StandardError => e
-        puts "Error: #{e.message}"
+        @logger.error("Error executing command: #{e.message}")
         { success: false, error: e.message }
+      ensure
+        telnet&.close
+        @logger.info("Telnet connection closed.") if telnet
       end
+    end
+
+    private
+
+    def establish_connection(ip, username, password)
+      Net::Telnet.new(
+        "Host" => ip,
+        "Timeout" => 180,
+        "Prompt" => /[$%#>] \z/n,
+      ).tap do |telnet|
+        telnet.login(username, password)
+      end
+    end
+
+    def execute_telnet_command(telnet, command)
+      telnet.cmd(command)
+    end
+
+    def sanitize_result(result)
+      result.gsub!("*", "")
+      result.squeeze!(" ")
+      result
     end
   end
 end

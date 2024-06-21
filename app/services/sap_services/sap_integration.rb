@@ -251,6 +251,8 @@ module SapServices
            'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( PJ )',
            'Serviço de Comunicação Multimídia - SCM - CNPJ: 36.230.547/0001-20 ( valor )'
         ['Venda01', '18', '18', 2]
+      when 'COMBO SVA - PLANO LAKE SIDE'
+        ['Venda05.02', '46', '22']
       else
         [nil, nil, nil, nil]
       end

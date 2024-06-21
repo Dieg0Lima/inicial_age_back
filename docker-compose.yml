@@ -13,6 +13,8 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - SECRET_KEY_BASE_DUMMY=1
     env_file:
       - .env
     depends_on:

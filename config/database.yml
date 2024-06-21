@@ -23,6 +23,16 @@ voalle_db:
   password: <%= ENV['AGE_VOALLE_DATABASE_PASSWORD'] %>
   database: dbemp00489
 
+native_db:
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  host: 10.25.3.171
+  username: <%= ENV['AGE_NATIVE_DATABASE_USER'] %>
+  password: <%= ENV['AGE_NATIVE_DATABASE_PASSWORD'] %>
+  database: db_monitoramento
+
 # sinapse_db:
 #   adapter: firebird
 #   encoding: utf8
