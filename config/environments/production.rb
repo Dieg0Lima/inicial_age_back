@@ -25,6 +25,7 @@ Rails.application.configure do
   config.hosts << "ageatende"
   config.hosts << "0.0.0.0"
   config.hosts << "192.168.68.220"
+  config.hosts << "192.168.69.79"
 
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
   # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
